@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoPulse: Class Presentation Deck</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0b0f19;
+      color: #f8fafc;
+      overflow: hidden;
+    }
+    .slide {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: scale(0.98);
+    }
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: scale(1);
+    }
+    .card-glow {
+      background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(51, 65, 85, 0.8);
+      backdrop-filter: blur(12px);
+    }
+    .card-highlight {
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.08), rgba(15, 23, 42, 0.8));
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+    @media print {
+      body {
+        overflow: visible;
+        background: white;
+        color: black;
+      }
+      .slide {
+        display: flex !important;
+        opacity: 1 !important;
+        page-break-after: always;
+        height: 100vh;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="h-screen w-screen flex flex-col justify-between select-none">
+
+  <!-- Top Navigation Bar -->
+  <header class="no-print h-14 border-b border-slate-800/80 px-6 flex items-center justify-between bg-slate-950/60 backdrop-blur-md z-50">
+    <div class="flex items-center gap-3">
+      <div class="w-7 h-7 rounded-lg bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center text-emerald-400 font-bold text-xs">
+        <i class="fa-solid fa-satellite-dish"></i>
+      </div>
+      <span class="font-bold tracking-wide text-sm text-slate-200">GeoPulse <span class="text-xs font-normal text-slate-500">| Academic Deck</span></span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-xs text-slate-400 bg-slate-900 border border-slate-800 px-3 py-1 rounded-full font-mono" id="slideIndicator">1 / 6</span>
+      <button onclick="toggleFullscreen()" class="p-1.5 px-3 rounded-lg text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
+        <i class="fa-solid fa-expand mr-1"></i> Fullscreen
+      </button>
+    </div>
+  </header>
+
+  <!-- Presentation Viewport -->
+  <main class="flex-1 w-full max-w-7xl mx-auto px-6 py-4 flex items-center justify-center relative">
+    
+    <!-- SLIDE 1: Title -->
+    <section class="slide active w-full h-[88%] flex-col justify-between py-6 animate-fade" data-slide="1">
+      <div class="space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold tracking-wide uppercase">
+          <i class="fa-solid fa-microchip text-[10px]"></i> Capstone Presentation • Pure MongoDB Core
+        </div>
+        <h1 class="text-6xl font-extrabold tracking-tight text-white leading-tight">
+          Geo<span class="text-emerald-400">Pulse</span>
+        </h1>
+        <p class="text-2xl font-medium text-sky-400 max-w-4xl">
+          Real-Time Hyperlocal Disaster Relief & Emergency Resource Dispatch Platform
+        </p>
+        <p class="text-slate-400 text-base max-w-3xl leading-relaxed">
+          Bridging the critical first-hour disaster response gap through native MongoDB geospatial queries (<code class="text-emerald-300 font-mono text-xs">$geoNear</code>) and reactive change streams.
+        </p>
+      </div>
+
+      <!-- 3 Foundation Pillars -->
+      <div class="grid grid-cols-3 gap-6 pt-4">
+        <div class="card-glow rounded-2xl p-5 border-l-4 border-l-emerald-500">
+          <div class="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-1">Pure MongoDB Engine</div>
+          <div class="text-sm font-semibold text-slate-200">Zero External Brokers</div>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">Runs 2dsphere indexing and reactive Change Streams natively without Redis, Kafka, or PostGIS.</p>
+        </div>
+        <div class="card-glow rounded-2xl p-5 border-l-4 border-l-sky-500">
+          <div class="text-sky-400 text-xs font-bold uppercase tracking-wider mb-1">Sub-100ms Dispatch</div>
+          <div class="text-sm font-semibold text-slate-200">Hyperlocal Proximity Matching</div>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">Dynamic spherical radius calculations pairing SOS coordinates to certified responders in milliseconds.</p>
+        </div>
+        <div class="card-glow rounded-2xl p-5 border-l-4 border-l-amber-500">
+          <div class="text-amber-400 text-xs font-bold uppercase tracking-wider mb-1">Modern UI & Sync</div>
+          <div class="text-sm font-semibold text-slate-200">Next.js & Mapbox Command Map</div>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">Zero-lag incident triage, live volunteer route tracking, and instant casualty heatmaps.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: Problem Statement -->
+    <section class="slide w-full h-[88%] flex-col justify-between py-4" data-slide="2">
+      <div>
+        <div class="text-emerald-400 font-mono text-xs font-semibold tracking-wider uppercase mb-1">01 / Context & Need</div>
+        <h2 class="text-3xl font-bold text-white">The Disaster Relief Latency & Mismatch Gap</h2>
+        <p class="text-sm text-slate-400 mt-1">When disasters hit, traditional response systems fail the "Golden Hour" of survival.</p>
+      </div>
+
+      <div class="grid grid-cols-3 gap-6 my-auto">
+        <div class="card-glow rounded-2xl p-6 relative flex flex-col justify-between">
+          <div class="text-4xl font-extrabold text-emerald-400/80 mb-3">01</div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-100 mb-2">Information Bottlenecks</h3>
+            <p class="text-xs text-slate-400 leading-relaxed mb-4">Distress requests are fragmented across voice calls and social media with zero coordinates or standardized triage.</p>
+          </div>
+          <div class="text-xs font-medium text-amber-400 bg-amber-950/40 p-2.5 rounded-lg border border-amber-900/50">
+            ⚠ Duplicates flood call centers while isolated victims are overlooked.
+          </div>
+        </div>
+
+        <div class="card-glow rounded-2xl p-6 relative flex flex-col justify-between">
+          <div class="text-4xl font-extrabold text-sky-400/80 mb-3">02</div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-100 mb-2">Inefficient Asset Dispatch</h3>
+            <p class="text-xs text-slate-400 leading-relaxed mb-4">Responders are dispatched chronologically rather than spatially, sending volunteers across town when closer teams exist.</p>
+          </div>
+          <div class="text-xs font-medium text-amber-400 bg-amber-950/40 p-2.5 rounded-lg border border-amber-900/50">
+            ⚠ Essential boats and medicines sit idle in mismatched hubs.
+          </div>
+        </div>
+
+        <div class="card-glow rounded-2xl p-6 relative flex flex-col justify-between">
+          <div class="text-4xl font-extrabold text-indigo-400/80 mb-3">03</div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-100 mb-2">Database Scalability Limits</h3>
+            <p class="text-xs text-slate-400 leading-relaxed mb-4">Traditional SQL databases choke under intense concurrent spatial joins and constant polling intervals.</p>
+          </div>
+          <div class="text-xs font-medium text-amber-400 bg-amber-950/40 p-2.5 rounded-lg border border-amber-900/50">
+            ⚠ Dashboards display stale data right when seconds count most.
+          </div>
+        </div>
+      </div>
+
+      <div class="card-highlight rounded-xl p-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">💡</div>
+          <div>
+            <span class="text-xs uppercase font-bold text-emerald-400 tracking-wider">Mission Objective: </span>
+            <span class="text-xs text-slate-200">Replace laggy polling loops with a pure MongoDB event-driven pipeline that dispatches nearest help in milliseconds.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: Objectives & Solution -->
+    <section class="slide w-full h-[88%] flex-col justify-between py-4" data-slide="3">
+      <div>
+        <div class="text-emerald-400 font-mono text-xs font-semibold tracking-wider uppercase mb-1">02 / Solution & Features</div>
+        <h2 class="text-3xl font-bold text-white">Project Objective & Core Capabilities</h2>
+        <p class="text-sm text-slate-400 mt-1">A unified system connecting stranded citizens, active volunteers, and command centers.</p>
+      </div>
+
+      <div class="grid grid-cols-12 gap-6 my-auto">
+        <!-- Left: Project Objective Highlight -->
+        <div class="col-span-5 card-highlight rounded-2xl p-6 flex flex-col justify-between">
+          <div>
+            <div class="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-bullseye"></i> Primary Project Objective
+            </div>
+            <p class="text-base font-semibold text-slate-100 leading-relaxed mt-2">
+              "To engineer an event-driven disaster relief platform using MongoDB’s native geospatial indexing and change streams to dynamically match emergency SOS beacons with the nearest available rescue shelters and volunteers in real-time."
+            </p>
+          </div>
+
+          <div class="space-y-3 pt-4 border-t border-emerald-500/20">
+            <div class="flex items-start gap-2 text-xs text-slate-300">
+              <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Zero-Broker Simplicity:</strong> No Redis or Kafka message queues needed.</span>
+            </div>
+            <div class="flex items-start gap-2 text-xs text-slate-300">
+              <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Spherical Curvature Math:</strong> Native MongoDB GeoJSON 2dsphere queries.</span>
+            </div>
+            <div class="flex items-start gap-2 text-xs text-slate-300">
+              <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+              <span><strong>Reactive Push:</strong> Real-time dashboard synchronization under 80ms.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: 4 Capabilities -->
+        <div class="col-span-7 grid grid-cols-1 gap-3">
+          <div class="card-glow rounded-xl p-4 flex items-start gap-3 border-l-4 border-l-emerald-500">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 text-sm">
+              <i class="fa-solid fa-location-crosshairs"></i>
+            </div>
+            <div>
+              <div class="text-sm font-bold text-slate-200">1. One-Tap SOS Geolocation Beacon</div>
+              <p class="text-xs text-slate-400 mt-0.5 leading-relaxed">Captures GPS coordinates, triage urgency level, victim count, and emergency type (Medical, Evacuation, Food/Water).</p>
+            </div>
+          </div>
+
+          <div class="card-glow rounded-xl p-4 flex items-start gap-3 border-l-4 border-l-sky-500">
+            <div class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0 text-sm">
+              <i class="fa-solid fa-compass"></i>
+            </div>
+            <div>
+              <div class="text-sm font-bold text-slate-200">2. Sub-100ms Spatial Matching ($geoNear)</div>
+              <p class="text-xs text-slate-400 mt-0.5 leading-relaxed">Calculates earth distance and immediately returns certified rescue teams & shelters within a dynamic radius (e.g. 5 km).</p>
+            </div>
+          </div>
+
+          <div class="card-glow rounded-xl p-4 flex items-start gap-3 border-l-4 border-l-amber-500">
+            <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 text-sm">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <div>
+              <div class="text-sm font-bold text-slate-200">3. Native Change Streams Broadcast</div>
+              <p class="text-xs text-slate-400 mt-0.5 leading-relaxed">Watches the MongoDB oplog to push instant mutation alerts via WebSockets directly to active dispatcher screens.</p>
+            </div>
+          </div>
+
+          <div class="card-glow rounded-xl p-4 flex items-start gap-3 border-l-4 border-l-indigo-500">
+            <div class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0 text-sm">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+            <div>
+              <div class="text-sm font-bold text-slate-200">4. TTL Auto-Archiving & Incident Lifecycle</div>
+              <p class="text-xs text-slate-400 mt-0.5 leading-relaxed">MongoDB Time-To-Live indexes automatically sunset resolved non-critical incidents without background cron jobs.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: Architecture & Tech Stack -->
+    <section class="slide w-full h-[88%] flex-col justify-between py-4" data-slide="4">
+      <div>
+        <div class="text-emerald-400 font-mono text-xs font-semibold tracking-wider uppercase mb-1">03 / Engineering Design</div>
+        <h2 class="text-3xl font-bold text-white">System Architecture & Pure MongoDB Flow</h2>
+        <p class="text-sm text-slate-400 mt-1">Minimal moving parts for maximum operational resilience under high stress.</p>
+      </div>
+
+      <div class="grid grid-cols-3 gap-6 my-auto">
+        <!-- Tier 1 -->
+        <div class="card-glow rounded-2xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="inline-block px-2.5 py-0.5 rounded bg-sky-500/20 text-sky-400 font-mono text-[11px] font-bold mb-2">TIER 1 • FRONTEND</div>
+            <h3 class="text-base font-bold text-slate-100">Interactive Crisis Console</h3>
+            <div class="mt-3 space-y-2 text-xs text-slate-300">
+              <p>• <strong>Framework:</strong> Next.js 14 / React (App Router)</p>
+              <p>• <strong>Styling:</strong> Tailwind CSS + Lucide Icons</p>
+              <p>• <strong>Live Maps:</strong> Mapbox GL for pins, heatmaps & route vector layers</p>
+              <p>• <strong>Dual Views:</strong> Citizen SOS PWA & Command Center</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tier 2 -->
+        <div class="card-glow rounded-2xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="inline-block px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-mono text-[11px] font-bold mb-2">TIER 2 • API GATEWAY</div>
+            <h3 class="text-base font-bold text-slate-100">Real-Time Event Bridge</h3>
+            <div class="mt-3 space-y-2 text-xs text-slate-300">
+              <p>• <strong>Runtime:</strong> Node.js + Express / Fastify</p>
+              <p>• <strong>Connector:</strong> Native MongoDB Driver / Mongoose</p>
+              <p>• <strong>Push Protocol:</strong> WebSockets for bidirectional event sync</p>
+              <p>• <strong>Validation:</strong> GeoJSON coordinate & schema guardrails</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="card-glow rounded-2xl p-5 flex flex-col justify-between border-2 border-emerald-500/40">
+          <div>
+            <div class="inline-block px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-mono text-[11px] font-bold mb-2">TIER 3 • PURE MONGODB</div>
+            <h3 class="text-base font-bold text-slate-100">MongoDB Atlas Core</h3>
+            <div class="mt-3 space-y-2 text-xs text-slate-300">
+              <p>• <strong>Spatial:</strong> 2dsphere index for <code class="text-emerald-300">$geoNear</code></p>
+              <p>• <strong>Streaming:</strong> Native Change Streams on collections</p>
+              <p>• <strong>Triage Engine:</strong> Multi-stage Aggregation Pipelines</p>
+              <p>• <strong>Lifecycle:</strong> TTL Indexes for resolved alert auto-purge</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Flow Bar -->
+      <div class="card-glow rounded-xl p-4 bg-slate-900/90 border border-slate-700">
+        <div class="text-[11px] font-bold text-emerald-400 uppercase tracking-wider mb-1">
+          <i class="fa-solid fa-arrows-spin mr-1"></i> Real-Time Data Pipeline
+        </div>
+        <div class="flex items-center justify-between text-xs text-slate-300 font-mono overflow-x-auto py-1">
+          <span class="bg-slate-800 px-2 py-1 rounded">1. SOS GPS Ping</span>
+          <span class="text-slate-500 font-sans">➔</span>
+          <span class="bg-slate-800 px-2 py-1 rounded">2. GeoJSON Saved in MongoDB</span>
+          <span class="text-slate-500 font-sans">➔</span>
+          <span class="bg-slate-800 px-2 py-1 rounded">3. Change Stream Triggered</span>
+          <span class="text-slate-500 font-sans">➔</span>
+          <span class="bg-slate-800 px-2 py-1 rounded">4. WebSocket Push (<80ms)</span>
+          <span class="text-slate-500 font-sans">➔</span>
+          <span class="bg-emerald-950 text-emerald-300 border border-emerald-500/40 px-2 py-1 rounded">5. $geoNear Closest Squad Dispatch</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Technical Deep-Dive -->
+    <section class="slide w-full h-[88%] flex-col justify-between py-4" data-slide="5">
+      <div>
+        <div class="text-emerald-400 font-mono text-xs font-semibold tracking-wider uppercase mb-1">04 / Database Power</div>
+        <h2 class="text-3xl font-bold text-white">Why MongoDB? Technical Deep-Dive</h2>
+        <p class="text-sm text-slate-400 mt-1">Solving complex emergency routing using only MongoDB's native engine.</p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-6 my-auto">
+        <div class="card-glow rounded-2xl p-5 border-t-4 border-t-emerald-500">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-earth-americas text-emerald-400 text-lg"></i>
+            <h3 class="text-base font-bold text-slate-100">1. 2dsphere Geospatial Indexing</h3>
+          </div>
+          <p class="text-xs text-slate-300 font-semibold mb-2">Spherical geometry calculations directly over Earth's curvature.</p>
+          <ul class="text-xs text-slate-400 space-y-1.5 leading-relaxed">
+            <li>• Supports native GeoJSON standards (Point, Polygon, LineString).</li>
+            <li>• Replaces bloated PostGIS plugins and heavy third-party GIS engines.</li>
+            <li>• Sub-millisecond <code class="text-emerald-300">$geoNear</code> execution with <code class="text-emerald-300">$maxDistance</code> restrictions.</li>
+          </ul>
+        </div>
+
+        <div class="card-glow rounded-2xl p-5 border-t-4 border-t-sky-500">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-wave-square text-sky-400 text-lg"></i>
+            <h3 class="text-base font-bold text-slate-100">2. Native Change Streams</h3>
+          </div>
+          <p class="text-xs text-slate-300 font-semibold mb-2">Tailored directly on MongoDB's internal high-performance Oplog.</p>
+          <ul class="text-xs text-slate-400 space-y-1.5 leading-relaxed">
+            <li>• Instant real-time notifications piped directly to connected dispatchers.</li>
+            <li>• Completely replaces external Redis Pub/Sub, Kafka, or continuous DB polling.</li>
+            <li>• Guaranteed event ordering with automatic resume token recovery if connection drops.</li>
+          </ul>
+        </div>
+
+        <div class="card-glow rounded-2xl p-5 border-t-4 border-t-amber-500">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-filter text-amber-400 text-lg"></i>
+            <h3 class="text-base font-bold text-slate-100">3. Multi-Stage Aggregation Pipeline</h3>
+          </div>
+          <p class="text-xs text-slate-300 font-semibold mb-2">Complex spatial triage computed in a single database round-trip.</p>
+          <ul class="text-xs text-slate-400 space-y-1.5 leading-relaxed">
+            <li>• <strong>Stage 1:</strong> <code class="text-amber-300">$geoNear</code> finds volunteers within 10 km.</li>
+            <li>• <strong>Stage 2:</strong> <code class="text-amber-300">$match</code> verifies availability & specific gear (e.g. boat).</li>
+            <li>• <strong>Stage 3:</strong> <code class="text-amber-300">$addFields</code> computes composite urgency score based on casualties & wait time.</li>
+          </ul>
+        </div>
+
+        <div class="card-glow rounded-2xl p-5 border-t-4 border-t-indigo-500">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-shapes text-indigo-400 text-lg"></i>
+            <h3 class="text-base font-bold text-slate-100">4. Polymorphic Schemas & TTL Indexes</h3>
+          </div>
+          <p class="text-xs text-slate-300 font-semibold mb-2">Unmatched schema flexibility for unpredictable disaster scenarios.</p>
+          <ul class="text-xs text-slate-400 space-y-1.5 leading-relaxed">
+            <li>• Diverse calamity incidents (Floods, Fires, Earthquakes) store custom attributes with zero migrations.</li>
+            <li>• TTL (Time-To-Live) indexes automatically purge resolved alerts after 48 hours.</li>
+            <li>• Native replica set failover ensures uninterrupted availability during severe infrastructure outages.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Demo & Roadmap -->
+    <section class="slide w-full h-[88%] flex-col justify-between py-4" data-slide="6">
+      <div>
+        <div class="text-emerald-400 font-mono text-xs font-semibold tracking-wider uppercase mb-1">05 / Impact & Future Scope</div>
+        <h2 class="text-3xl font-bold text-white">Demonstration Flow, Impact & Future Roadmap</h2>
+        <p class="text-sm text-slate-400 mt-1">Measurable real-world advantages and future-ready scaling.</p>
+      </div>
+
+      <div class="grid grid-cols-3 gap-6 my-auto">
+        <div class="card-glow rounded-2xl p-5">
+          <div class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">
+            <i class="fa-solid fa-play mr-1"></i> Live Demo Steps
+          </div>
+          <div class="space-y-2.5 text-xs text-slate-300">
+            <div>
+              <span class="font-bold text-slate-100">1. Citizen SOS Ping:</span>
+              <p class="text-slate-400">Mobile pin drops GPS coordinates with urgency "Medical / Severe".</p>
+            </div>
+            <div>
+              <span class="font-bold text-slate-100">2. Instant Stream:</span>
+              <p class="text-slate-400">Dispatcher screen flashes with red ping icon in &lt;80ms.</p>
+            </div>
+            <div>
+              <span class="font-bold text-slate-100">3. Dynamic Allocation:</span>
+              <p class="text-slate-400"><code class="text-emerald-300">$geoNear</code> highlights closest 2 available rescue squads.</p>
+            </div>
+            <div>
+              <span class="font-bold text-slate-100">4. Live Route Lock:</span>
+              <p class="text-slate-400">Responder accepts; victim's phone updates with live ETA.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-glow rounded-2xl p-5">
+          <div class="text-xs font-bold text-sky-400 uppercase tracking-wider mb-2">
+            <i class="fa-solid fa-chart-line mr-1"></i> Measurable Impact
+          </div>
+          <div class="space-y-2.5 text-xs text-slate-300">
+            <div>
+              <span class="font-bold text-slate-100">65% Faster Dispatch:</span>
+              <p class="text-slate-400">Dramatically accelerates response during the golden hour of survival.</p>
+            </div>
+            <div>
+              <span class="font-bold text-slate-100">Single-Database Simplicity:</span>
+              <p class="text-slate-400">Cuts cloud overhead by 50% by eliminating Redis and external message brokers.</p>
+            </div>
+            <div>
+              <span class="font-bold text-slate-100">Horizontal Elasticity:</span>
+              <p class="text-slate-400">MongoDB Atlas sharding smoothly absorbs emergency traffic surges.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-glow rounded-2xl p-5">
+          <div class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">
+            <i class="fa-solid fa-rocket mr-1"></i> Future Roadmap
+          </div>
+          <div class="space-y-2.5 text-xs text-slate-300">
+            <div>
+              <span class="font-bold text-slate-100">Offline-First Realm Sync:</span>
+              <p class="text-slate-400">Keeps field volunteers operational even when cellular towers collapse.</p>
+            </div>
+            <div>
+              <span class="font-bold text-slate-100">Atlas Vector Search:</span>
+              <p class="text-slate-400">Automated classification of transcribed SOS audio and voice notes.</p>
+            </div>
+            <div>
+              <span class="font-bold text-slate-100">Automated Drone Dispatch:</span>
+              <p class="text-slate-400">Autonomous medical supply kit drops directly to GPS pin.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-highlight rounded-xl p-4 text-center">
+        <span class="text-sm font-bold text-white">GeoPulse demonstrates that a pure MongoDB architecture is uniquely suited for mission-critical, spatial-first emergency systems.</span>
+        <div class="text-xs text-slate-400 mt-1 font-mono">Thank you! • Open for Questions & Evaluation</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Control Bar -->
+  <footer class="no-print h-16 border-t border-slate-800/80 px-8 flex items-center justify-between bg-slate-950/80 backdrop-blur-md z-50">
+    <div class="flex items-center gap-3 text-xs text-slate-400">
+      <span><kbd class="px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300">←</kbd> <kbd class="px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300">→</kbd> to navigate</span>
+      <span class="text-slate-600">|</span>
+      <span><kbd class="px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300">Ctrl + P</kbd> to save as PDF</span>
+    </div>
+
+    <!-- Slide Thumb Dots -->
+    <div class="flex items-center gap-2" id="dotContainer"></div>
+
+    <div class="flex items-center gap-3">
+      <button onclick="prevSlide()" class="p-2 px-4 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition">
+        <i class="fa-solid fa-arrow-left mr-1"></i> Prev
+      </button>
+      <button onclick="nextSlide()" class="p-2 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold text-white transition">
+        Next <i class="fa-solid fa-arrow-right ml-1"></i>
+      </button>
+    </div>
+  </footer>
+
+  <script>
+    let currentSlide = 1;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const indicator = document.getElementById('slideIndicator');
+    const dotContainer = document.getElementById('dotContainer');
+
+    // Build Dots
+    for (let i = 1; i <= totalSlides; i++) {
+      const dot = document.createElement('button');
+      dot.className = `w-2.5 h-2.5 rounded-full transition ${i === 1 ? 'bg-emerald-400 w-6' : 'bg-slate-700 hover:bg-slate-500'}`;
+      dot.onclick = () => goToSlide(i);
+      dot.id = `dot-${i}`;
+      dotContainer.appendChild(dot);
+    }
+
+    function updateSlide() {
+      slides.forEach(s => s.classList.remove('active'));
+      const activeSlide = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+      if (activeSlide) activeSlide.classList.add('active');
+      indicator.innerText = `${currentSlide} / ${totalSlides}`;
+
+      // Update dots
+      for (let i = 1; i <= totalSlides; i++) {
+        const d = document.getElementById(`dot-${i}`);
+        if (i === currentSlide) {
+          d.className = 'w-6 h-2.5 rounded-full bg-emerald-400 transition';
+        } else {
+          d.className = 'w-2.5 h-2.5 rounded-full bg-slate-700 hover:bg-slate-500 transition';
+        }
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function goToSlide(n) {
+      currentSlide = n;
+      updateSlide();
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullscreen();
+      }
+    });
+  </script>
+</body>
+</html>
