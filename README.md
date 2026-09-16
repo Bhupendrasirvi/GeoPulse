@@ -20,6 +20,30 @@
 
 ---
 
+## 🎯 Academic & Technical Objectives (CSE494 Syllabus Mapped)
+
+The platform is designed and engineered to fulfill the course outcomes of **CSE494: Intelligent NoSQL Databases**:
+
+1. **Sub-100ms Hyperlocal Proximity Dispatch (`CO4 / Unit IV`):**  
+   Implement MongoDB native `2dsphere` geospatial indexing and the `$geoNear` aggregation pipeline to dynamically pair emergency distress calls with the closest certified rescue teams and relief shelters within a 15 km radius in under 18ms.
+
+2. **Polymorphic Disaster Document Modeling (`CO3 / Unit III`):**  
+   Leverage MongoDB's flexible BSON document structure and embedded GeoJSON schema patterns (`{ type: "Point", coordinates: [lng, lat] }`) to accommodate diverse disaster scenarios (floods, medical trauma, structural fires) without rigid schema migrations during active calamities.
+
+3. **Multi-Stage Priority Aggregation Pipeline (`CO4 / Unit IV`):**  
+   Execute server-side triage calculations in a single aggregation pipeline roundtrip, combining incident urgency, victim casualty count, and spherical distance over the Earth's curvature.
+
+4. **Zero-Broker Real-Time Streaming (`CO5 / Unit V`):**  
+   Eliminate external message brokers (Redis Pub/Sub, Apache Kafka) by streaming database mutations directly to dispatchers via MongoDB Change Streams and WebSockets.
+
+5. **Autonomous TTL Data Lifecycle Management (`CO2 / Unit II`):**  
+   Automate incident archiving by utilizing MongoDB's native Time-To-Live (TTL) index on the `resolvedAt` timestamp to automatically purge closed records after 48 hours with zero cron maintenance.
+
+6. **Hyperlocal Fleet Auto-Provisioning & Resilience (`CO6 / Unit VI`):**  
+   Incorporate fallback dispatch mechanisms that dynamically register local community rapid units in MongoDB when no pre-stationed squad exists within range, ensuring zero victims are left unattended.
+
+---
+
 ## 🏗️ System Architecture
 
 ```
