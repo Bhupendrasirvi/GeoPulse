@@ -15,15 +15,15 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Clean Human Typography: Inter & Plus Jakarta Sans -->
+  <!-- Clean Typography: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #0d1117;
+      background-color: #0b0f17;
       color: #e6edf3;
     }
     .font-mono {
@@ -32,78 +32,104 @@
     #map {
       height: 100%;
       width: 100%;
-      background: #0d1117;
+      background: #090d14;
       z-index: 1;
+    }
+    /* High-contrast dark cartography filter for ultra-crisp vector readability */
+    .leaflet-tile-pane {
+      filter: brightness(0.9) contrast(1.4) saturate(1.1);
     }
     .leaflet-popup-content-wrapper {
       background: #161b22;
       color: #e6edf3;
       border: 1px solid #30363d;
       border-radius: 12px;
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.6);
     }
     .leaflet-popup-tip {
       background: #161b22;
     }
+    /* Custom Interactive Map Hover Tooltip */
+    .custom-map-tooltip {
+      background: #161b22 !important;
+      color: #f0f6fc !important;
+      border: 1px solid #30363d !important;
+      border-radius: 8px !important;
+      font-family: 'Inter', sans-serif !important;
+      font-size: 11px !important;
+      padding: 6px 10px !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55) !important;
+    }
+    .custom-map-tooltip::before {
+      border-top-color: #161b22 !important;
+    }
     @keyframes pulse-ring {
       0% { transform: scale(0.9); opacity: 0.9; }
-      70% { transform: scale(1.8); opacity: 0.15; }
-      100% { transform: scale(2.2); opacity: 0; }
+      70% { transform: scale(1.9); opacity: 0.15; }
+      100% { transform: scale(2.4); opacity: 0; }
     }
     .pulse-ring {
-      animation: pulse-ring 2.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+      animation: pulse-ring 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
     }
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0d1117; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #0b0f17; }
     ::-webkit-scrollbar-thumb { background: #21262d; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #30363d; }
+    
+    /* Keyboard active selection highlight */
+    .incident-card.active-selected {
+      outline: 2px solid #38bdf8;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+    }
   </style>
 </head>
-<body class="h-screen w-screen flex flex-col overflow-hidden select-none bg-[#0d1117]">
+<body class="h-screen w-screen flex flex-col overflow-hidden select-none bg-[#0b0f17]">
 
   <!-- ========================================================= -->
-  <!-- TOP NAVIGATION: Clean Civic Command Header                -->
+  <!-- TOP NAVIGATION BAR                                        -->
   <!-- ========================================================= -->
-  <header class="h-16 border-b border-[#30363d] bg-[#161b22]/95 backdrop-blur px-6 flex items-center justify-between z-30 shrink-0">
+  <header class="h-14 border-b border-[#262c36] bg-[#121720]/95 backdrop-blur px-5 flex items-center justify-between z-30 shrink-0">
     
     <!-- Left Branding -->
-    <div class="flex items-center gap-3.5">
-      <div class="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-semibold shadow-sm">
-        <i class="fa-solid fa-tower-broadcast text-sm"></i>
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-sm shadow-sm">
+        <i class="fa-solid fa-tower-broadcast"></i>
       </div>
       <div>
-        <div class="flex items-center gap-2.5">
-          <span class="font-bold text-base text-white tracking-tight">GeoPulse</span>
-          <span class="px-2 py-0.5 text-[11px] font-medium bg-slate-800 text-slate-300 border border-slate-700 rounded-md">Emergency Dispatch Ops</span>
+        <div class="flex items-center gap-2">
+          <span class="font-extrabold text-sm text-white tracking-tight">GeoPulse</span>
+          <span class="px-2 py-0.2 text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded">Dispatch Ops</span>
         </div>
-        <p class="text-[11px] text-slate-400">Hyperlocal Disaster Response & Volunteer Fleet Routing</p>
+        <p class="text-[10px] text-slate-400">Hyperlocal Disaster Response & Volunteer Fleet Routing</p>
       </div>
     </div>
 
     <!-- Center Mode Switcher -->
-    <div class="flex items-center bg-[#0d1117] p-1 rounded-xl border border-[#30363d]">
-      <button id="btnModeDispatch" onclick="switchView('dispatch')" class="px-4 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-2 bg-emerald-600 text-white shadow-sm">
+    <div class="flex items-center bg-[#090d14] p-1 rounded-xl border border-[#262c36]">
+      <button id="btnModeDispatch" onclick="switchView('dispatch')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 bg-emerald-600 text-white shadow-sm">
         <i class="fa-solid fa-map-location-dot"></i> Dispatch Console
       </button>
-      <button id="btnModeCitizen" onclick="switchView('citizen')" class="px-4 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-2 text-slate-400 hover:text-slate-200">
+      <button id="btnModeCitizen" onclick="switchView('citizen')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
         <i class="fa-solid fa-circle-exclamation text-rose-400"></i> Citizen SOS Form
       </button>
     </div>
 
-    <!-- Right Controls: Status & Simulated Influx -->
-    <div class="flex items-center gap-3">
-      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0d1117] border border-[#30363d] text-xs">
+    <!-- Right Quick Actions & Inspector -->
+    <div class="flex items-center gap-2.5">
+      <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#090d14] border border-[#262c36] text-[11px]">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span class="text-slate-300 text-[11px]">Database: <span class="text-emerald-400 font-medium" id="dbStatus">MongoDB Connected</span></span>
+        <span class="text-slate-300">Database: <span class="text-emerald-400 font-medium" id="dbStatus">MongoDB Connected</span></span>
       </div>
 
       <!-- Quick Emergency Influx Simulator -->
-      <button onclick="triggerDemoSOS()" class="px-3.5 py-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] border border-[#30363d] text-xs font-medium text-slate-200 hover:text-white transition flex items-center gap-1.5 shadow-sm" title="Simulate incoming real-time disaster distress calls">
-        <i class="fa-solid fa-plus text-amber-400"></i> New Incident Simulation
+      <button onclick="triggerDemoSOS()" class="px-3 py-1 rounded-md bg-[#1e2531] hover:bg-[#283242] border border-[#323d4f] text-xs font-semibold text-slate-200 hover:text-white transition flex items-center gap-1.5 shadow-sm" title="Shortcut: Press [N] or click">
+        <i class="fa-solid fa-plus text-amber-400 text-xs"></i>
+        <span>Simulate SOS</span>
+        <kbd class="hidden md:inline-block px-1 py-0.2 rounded bg-black/40 text-[9px] text-slate-400 font-mono">[N]</kbd>
       </button>
 
-      <!-- Inspector Button for Viva/Evaluator -->
-      <button onclick="toggleInspector()" class="px-2.5 py-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] border border-[#30363d] text-xs text-slate-300 hover:text-white transition" title="Inspect Live MongoDB Query & 2dsphere Pipeline">
+      <!-- Inspector Button for Viva/Defense -->
+      <button onclick="toggleInspector()" class="p-1.5 px-2 rounded-md bg-[#1e2531] hover:bg-[#283242] border border-[#323d4f] text-xs text-slate-300 hover:text-white transition" title="Inspect Live MongoDB Query & 2dsphere Pipeline">
         <i class="fa-solid fa-code"></i>
       </button>
     </div>
@@ -114,55 +140,71 @@
   <!-- ========================================================= -->
   <div class="flex-1 flex overflow-hidden relative">
 
-    <!-- LEFT SIDEBAR: Operational Feed (Width: 410px) -->
-    <aside class="w-[410px] border-r border-[#30363d] bg-[#161b22]/90 flex flex-col z-20 shrink-0 backdrop-blur-sm">
+    <!-- LEFT SIDEBAR: Operational Feed (Width: 420px) -->
+    <aside class="w-[420px] border-r border-[#262c36] bg-[#121720]/95 flex flex-col z-20 shrink-0 backdrop-blur-sm">
       
       <!-- VIEW A: DISPATCHER CONSOLE -->
       <div id="panelDispatch" class="flex-1 flex flex-col overflow-hidden">
         
-        <!-- Live Triage Status Bar -->
-        <div class="p-3.5 border-b border-[#30363d] grid grid-cols-3 gap-2 bg-[#0d1117]/60">
-          <div class="bg-[#161b22] border border-[#30363d] p-2.5 rounded-xl">
-            <div class="text-[10px] uppercase font-semibold text-slate-400">Pending Triage</div>
-            <div class="text-lg font-bold text-rose-400 font-mono mt-0.5" id="metricActiveCount">0</div>
+        <!-- COMPACT HORIZONTAL METRICS STRIP (Saves 55px vertical space) -->
+        <div class="px-3.5 py-2 border-b border-[#262c36] bg-[#090d14] flex items-center justify-between text-xs">
+          <div class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+            <span class="text-slate-400 text-[11px] font-medium">Pending:</span>
+            <span class="text-rose-400 font-bold font-mono text-xs" id="metricActiveCount">0</span>
           </div>
-          <div class="bg-[#161b22] border border-[#30363d] p-2.5 rounded-xl">
-            <div class="text-[10px] uppercase font-semibold text-slate-400">Deployed Fleet</div>
-            <div class="text-lg font-bold text-sky-400 font-mono mt-0.5" id="metricResponders">4 Units</div>
+          <div class="h-3.5 w-[1px] bg-[#262c36]"></div>
+          <div class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+            <span class="text-slate-400 text-[11px] font-medium">Fleet:</span>
+            <span class="text-sky-400 font-bold font-mono text-xs" id="metricResponders">4 Units</span>
           </div>
-          <div class="bg-[#161b22] border border-[#30363d] p-2.5 rounded-xl">
-            <div class="text-[10px] uppercase font-semibold text-slate-400">Query Time</div>
-            <div class="text-lg font-bold text-emerald-400 font-mono mt-0.5">14ms</div>
+          <div class="h-3.5 w-[1px] bg-[#262c36]"></div>
+          <div class="flex items-center gap-1.5">
+            <i class="fa-solid fa-bolt text-emerald-400 text-[10px]"></i>
+            <span class="text-slate-400 text-[11px] font-medium">Geo-Time:</span>
+            <span class="text-emerald-400 font-bold font-mono text-xs">14ms</span>
+          </div>
+          <div class="h-3.5 w-[1px] bg-[#262c36]"></div>
+          <div class="flex items-center gap-1 text-[11px] text-slate-400 font-mono">
+            <span>R: 15km</span>
           </div>
         </div>
 
-        <!-- Filter & Search Bar -->
-        <div class="p-3 border-b border-[#30363d] space-y-2">
-          <div class="relative">
-            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-slate-500"></i>
-            <input type="text" id="inputSearch" oninput="filterIncidents()" placeholder="Search by landmark, contact, or ID..." class="w-full pl-8 pr-3 py-1.5 rounded-lg bg-[#0d1117] border border-[#30363d] text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+        <!-- Filter & Search Bar with Visible Keyboard Indicator -->
+        <div class="p-2.5 border-b border-[#262c36] space-y-2 bg-[#121720]">
+          <div class="relative flex items-center">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 text-xs text-slate-500 pointer-events-none"></i>
+            <input type="text" id="inputSearch" oninput="filterIncidents()" placeholder="Search landmark, caller, or category..." class="w-full pl-8 pr-12 py-1.5 rounded-lg bg-[#090d14] border border-[#262c36] text-xs text-slate-200 focus:outline-none focus:border-emerald-500 transition">
+            <kbd class="absolute right-2.5 px-1.5 py-0.5 rounded bg-[#1e2531] border border-[#323d4f] text-[10px] text-slate-400 font-mono pointer-events-none">[/]</kbd>
           </div>
           
-          <div class="flex items-center gap-1.5 text-xs">
-            <button onclick="setFilterCategory('ALL')" class="filter-chip active px-2.5 py-1 rounded-md text-[11px] font-medium bg-[#21262d] text-white border border-[#30363d]">All</button>
-            <button onclick="setFilterCategory('CRITICAL')" class="filter-chip px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-400 hover:text-slate-200">Critical</button>
-            <button onclick="setFilterCategory('Medical / Trauma')" class="filter-chip px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-400 hover:text-slate-200">Medical</button>
-            <button onclick="setFilterCategory('Flood / Rescue')" class="filter-chip px-2.5 py-1 rounded-md text-[11px] font-medium text-slate-400 hover:text-slate-200">Flood</button>
+          <div class="flex items-center justify-between gap-1 text-xs">
+            <div class="flex items-center gap-1">
+              <button onclick="setFilterCategory('ALL')" class="filter-chip active px-2 py-0.5 rounded text-[11px] font-semibold bg-[#1e2531] text-white border border-[#323d4f]">All</button>
+              <button onclick="setFilterCategory('OPEN')" class="filter-chip px-2 py-0.5 rounded text-[11px] font-semibold text-rose-400 hover:bg-rose-950/30">Action Req</button>
+              <button onclick="setFilterCategory('DISPATCHED')" class="filter-chip px-2 py-0.5 rounded text-[11px] font-semibold text-sky-400 hover:bg-sky-950/30">En Route</button>
+              <button onclick="setFilterCategory('RESOLVED')" class="filter-chip px-2 py-0.5 rounded text-[11px] font-semibold text-emerald-400 hover:bg-emerald-950/30">Resolved</button>
+            </div>
+            <button onclick="clearAllResolved()" class="text-[10px] text-slate-500 hover:text-slate-300 font-medium" title="Clear resolved incidents">
+              <i class="fa-solid fa-broom"></i> Clean
+            </button>
           </div>
         </div>
 
         <!-- Incident Feed (Scrollable) -->
-        <div id="incidentList" class="flex-1 overflow-y-auto p-3 space-y-2.5">
-          <!-- Populated dynamically with human-like incident cards -->
+        <div id="incidentList" class="flex-1 overflow-y-auto p-2.5 space-y-2">
+          <!-- Populated dynamically with differentiated status cards & stacking badges -->
         </div>
 
-        <!-- Dispatcher Summary Bar -->
-        <div class="p-2.5 border-t border-[#30363d] bg-[#0d1117] text-[11px] text-slate-400 flex items-center justify-between">
-          <span class="flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span>$geoNear Radius: <strong>15.0 km</strong></span>
-          </span>
-          <span class="text-slate-500">Auto-refresh active</span>
+        <!-- KEYBOARD SHORTCUT ACCELERATOR STRIP -->
+        <div class="px-3 py-1.5 border-t border-[#262c36] bg-[#090d14] text-[10px] text-slate-400 flex items-center justify-between font-mono">
+          <div class="flex items-center gap-2">
+            <span><kbd class="px-1 py-0.2 rounded bg-[#1e2531] text-slate-300 border border-[#323d4f]">J/K</kbd> Select</span>
+            <span><kbd class="px-1 py-0.2 rounded bg-[#1e2531] text-slate-300 border border-[#323d4f]">M</kbd> Match</span>
+            <span><kbd class="px-1 py-0.2 rounded bg-[#1e2531] text-slate-300 border border-[#323d4f]">R</kbd> Resolve</span>
+          </div>
+          <span class="text-slate-500 font-sans text-[10px]">Real-time Sync</span>
         </div>
       </div>
 
@@ -170,11 +212,11 @@
       <div id="panelCitizen" class="flex-1 flex-col overflow-y-auto p-5 hidden space-y-4">
         <div>
           <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-semibold mb-2">
-            <i class="fa-solid fa-shield-halved"></i> Emergency Assistance Request
+            <i class="fa-solid fa-shield-halved"></i> Emergency Distress Portal
           </div>
-          <h2 class="text-lg font-bold text-white tracking-tight">Request Emergency Relief</h2>
+          <h2 class="text-lg font-bold text-white tracking-tight">Broadcast SOS Beacon</h2>
           <p class="text-xs text-slate-400 mt-1 leading-relaxed">
-            Fill in your details or tap your location on the map. Nearby rescue teams will receive your coordinates instantly.
+            Report stranded individuals, trauma, or flood entrapment. Nearest rescue boats and medical vans will be dispatched automatically.
           </p>
         </div>
 
@@ -183,28 +225,28 @@
           <div class="grid grid-cols-2 gap-2">
             <div>
               <label class="block text-[11px] font-medium text-slate-300 mb-1">Your Name</label>
-              <input type="text" id="inputCallerName" placeholder="e.g. Gurpreet Singh" value="Gurpreet Singh" class="w-full px-3 py-2 rounded-lg bg-[#0d1117] border border-[#30363d] text-slate-200 focus:outline-none focus:border-emerald-500">
+              <input type="text" id="inputCallerName" placeholder="e.g. Gurpreet Singh" value="Gurpreet Singh" class="w-full px-3 py-2 rounded-lg bg-[#090d14] border border-[#262c36] text-slate-200 focus:outline-none focus:border-emerald-500">
             </div>
             <div>
-              <label class="block text-[11px] font-medium text-slate-300 mb-1">Contact Number</label>
-              <input type="text" id="inputCallerPhone" placeholder="e.g. +91 98721-XXXXX" value="+91 98721-44321" class="w-full px-3 py-2 rounded-lg bg-[#0d1117] border border-[#30363d] text-slate-200 focus:outline-none focus:border-emerald-500">
+              <label class="block text-[11px] font-medium text-slate-300 mb-1">Contact Phone</label>
+              <input type="text" id="inputCallerPhone" placeholder="e.g. +91 98721-XXXXX" value="+91 98721-44321" class="w-full px-3 py-2 rounded-lg bg-[#090d14] border border-[#262c36] text-slate-200 focus:outline-none focus:border-emerald-500">
             </div>
           </div>
 
           <!-- Emergency Type -->
           <div>
-            <label class="block text-[11px] font-medium text-slate-300 mb-1.5">What assistance do you need?</label>
+            <label class="block text-[11px] font-medium text-slate-300 mb-1.5">Emergency Classification</label>
             <div class="grid grid-cols-2 gap-2">
-              <button type="button" onclick="selectCategory(this, 'Medical / Trauma')" class="cat-btn active p-2.5 rounded-xl border border-emerald-500/50 bg-emerald-950/20 text-emerald-300 font-medium flex items-center gap-2 text-left">
+              <button type="button" onclick="selectCategory(this, 'Medical / Trauma')" class="cat-btn active p-2.5 rounded-xl border border-emerald-500/60 bg-emerald-950/30 text-emerald-300 font-medium flex items-center gap-2 text-left">
                 <i class="fa-solid fa-heart-pulse text-rose-400"></i> Medical / Trauma
               </button>
-              <button type="button" onclick="selectCategory(this, 'Flood / Rescue')" class="cat-btn p-2.5 rounded-xl border border-[#30363d] bg-[#0d1117] text-slate-300 font-medium flex items-center gap-2 text-left">
+              <button type="button" onclick="selectCategory(this, 'Flood / Rescue')" class="cat-btn p-2.5 rounded-xl border border-[#262c36] bg-[#090d14] text-slate-300 font-medium flex items-center gap-2 text-left">
                 <i class="fa-solid fa-water text-sky-400"></i> Flood Evacuation
               </button>
-              <button type="button" onclick="selectCategory(this, 'Food / Supplies')" class="cat-btn p-2.5 rounded-xl border border-[#30363d] bg-[#0d1117] text-slate-300 font-medium flex items-center gap-2 text-left">
+              <button type="button" onclick="selectCategory(this, 'Food / Supplies')" class="cat-btn p-2.5 rounded-xl border border-[#262c36] bg-[#090d14] text-slate-300 font-medium flex items-center gap-2 text-left">
                 <i class="fa-solid fa-box-open text-amber-400"></i> Food & Potable Water
               </button>
-              <button type="button" onclick="selectCategory(this, 'Fire / Hazard')" class="cat-btn p-2.5 rounded-xl border border-[#30363d] bg-[#0d1117] text-slate-300 font-medium flex items-center gap-2 text-left">
+              <button type="button" onclick="selectCategory(this, 'Fire / Hazard')" class="cat-btn p-2.5 rounded-xl border border-[#262c36] bg-[#090d14] text-slate-300 font-medium flex items-center gap-2 text-left">
                 <i class="fa-solid fa-fire text-orange-400"></i> Fire / Collapse
               </button>
             </div>
@@ -212,22 +254,22 @@
 
           <!-- Severity Level -->
           <div>
-            <label class="block text-[11px] font-medium text-slate-300 mb-1.5">Severity Level</label>
+            <label class="block text-[11px] font-medium text-slate-300 mb-1.5">Urgency Level</label>
             <div class="flex gap-2">
-              <label class="flex-1 text-center p-2 rounded-lg border border-[#30363d] bg-[#0d1117] cursor-pointer text-slate-300 has-[:checked]:border-rose-500 has-[:checked]:bg-rose-950/30 has-[:checked]:text-rose-300">
+              <label class="flex-1 text-center p-2 rounded-lg border border-[#262c36] bg-[#090d14] cursor-pointer text-slate-300 has-[:checked]:border-rose-500 has-[:checked]:bg-rose-950/40 has-[:checked]:text-rose-200">
                 <input type="radio" name="severity" value="CRITICAL" checked class="hidden">
-                <span class="font-semibold">Critical</span>
+                <span class="font-bold">Critical</span>
                 <div class="text-[10px] text-slate-500">Life Threatening</div>
               </label>
-              <label class="flex-1 text-center p-2 rounded-lg border border-[#30363d] bg-[#0d1117] cursor-pointer text-slate-300 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-950/30 has-[:checked]:text-amber-300">
+              <label class="flex-1 text-center p-2 rounded-lg border border-[#262c36] bg-[#090d14] cursor-pointer text-slate-300 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-950/40 has-[:checked]:text-amber-200">
                 <input type="radio" name="severity" value="URGENT" class="hidden">
-                <span class="font-semibold">Urgent</span>
+                <span class="font-bold">Urgent</span>
                 <div class="text-[10px] text-slate-500">Immediate Need</div>
               </label>
-              <label class="flex-1 text-center p-2 rounded-lg border border-[#30363d] bg-[#0d1117] cursor-pointer text-slate-300 has-[:checked]:border-sky-500 has-[:checked]:bg-sky-950/30 has-[:checked]:text-sky-300">
+              <label class="flex-1 text-center p-2 rounded-lg border border-[#262c36] bg-[#090d14] cursor-pointer text-slate-300 has-[:checked]:border-sky-500 has-[:checked]:bg-sky-950/40 has-[:checked]:text-sky-200">
                 <input type="radio" name="severity" value="STANDARD" class="hidden">
-                <span class="font-semibold">Standard</span>
-                <div class="text-[10px] text-slate-500">Supplies/Relief</div>
+                <span class="font-bold">Standard</span>
+                <div class="text-[10px] text-slate-500">Relief / Shelter</div>
               </label>
             </div>
           </div>
@@ -235,33 +277,33 @@
           <!-- Number of People Stranded -->
           <div>
             <div class="flex justify-between items-center mb-1">
-              <label class="text-[11px] font-medium text-slate-300">Number of people with you</label>
+              <label class="text-[11px] font-medium text-slate-300">Number of people needing assistance</label>
               <span class="font-mono text-emerald-400 font-bold text-xs" id="lblVictimCount">3 Persons</span>
             </div>
-            <input type="range" min="1" max="20" value="3" id="inputVictims" oninput="document.getElementById('lblVictimCount').innerText = this.value + ' Persons'" class="w-full accent-emerald-500 cursor-pointer">
+            <input type="range" min="1" max="25" value="3" id="inputVictims" oninput="document.getElementById('lblVictimCount').innerText = this.value + ' Persons'" class="w-full accent-emerald-500 cursor-pointer">
           </div>
 
           <!-- Pinned GPS & Landmark -->
-          <div class="bg-[#0d1117] p-3 rounded-xl border border-[#30363d] space-y-1.5">
+          <div class="bg-[#090d14] p-3 rounded-xl border border-[#262c36] space-y-1.5">
             <div class="flex items-center justify-between text-[11px]">
-              <span class="text-slate-400 font-medium">GPS Location:</span>
+              <span class="text-slate-400 font-medium">Pinned Location:</span>
               <button type="button" onclick="getUserLocation()" class="text-emerald-400 hover:underline flex items-center gap-1 font-sans">
-                <i class="fa-solid fa-location-crosshairs"></i> Detect GPS
+                <i class="fa-solid fa-location-crosshairs"></i> Use My GPS
               </button>
             </div>
             <div class="text-slate-200 font-mono text-xs font-semibold" id="dispCoordinates">[75.7035, 31.2540]</div>
-            <div class="text-[10px] text-slate-500" id="dispLandmark">Near LPU Law Gate / Phagwara Bypass</div>
+            <div class="text-[10px] text-slate-500" id="dispLandmark">Near LPU Campus / Phagwara Bypass</div>
           </div>
 
           <!-- Natural Situation Note -->
           <div>
-            <label class="block text-[11px] font-medium text-slate-300 mb-1">Describe what is happening (Landmark / Floor / Specific Needs)</label>
-            <textarea id="inputNote" rows="2" placeholder="e.g. Ground floor flooded, 3 people on terrace including elderly patient needing oxygen" class="w-full px-3 py-2 rounded-lg bg-[#0d1117] border border-[#30363d] text-slate-200 focus:outline-none focus:border-emerald-500 text-xs">Ground floor flooded, 3 people on 1st floor terrace, elderly person with mobility issue.</textarea>
+            <label class="block text-[11px] font-medium text-slate-300 mb-1">Specific Situation (Floor / Medical needs / Landmark)</label>
+            <textarea id="inputNote" rows="2" placeholder="e.g. Ground floor flooded, 3 people on terrace including elderly patient needing oxygen" class="w-full px-3 py-2 rounded-lg bg-[#090d14] border border-[#262c36] text-slate-200 focus:outline-none focus:border-emerald-500 text-xs">Ground floor flooded, 3 people on 1st floor terrace, elderly person with mobility issue.</textarea>
           </div>
 
           <!-- Submit Button -->
-          <button type="button" onclick="submitSOSBeacon()" class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm shadow-md flex items-center justify-center gap-2 transition active:scale-[0.98]">
-            <i class="fa-solid fa-paper-plane"></i> Send Emergency Distress Beacon
+          <button type="button" onclick="submitSOSBeacon()" class="w-full py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-md shadow-rose-600/30 flex items-center justify-center gap-2 transition active:scale-[0.98]">
+            <i class="fa-solid fa-paper-plane"></i> Transmit Emergency SOS Beacon
           </button>
         </div>
       </div>
@@ -272,34 +314,38 @@
       <div id="map"></div>
 
       <!-- Map Floating Overlay Legend -->
-      <div class="absolute top-4 right-4 z-20 bg-[#161b22]/95 backdrop-blur p-3.5 rounded-xl border border-[#30363d] text-xs space-y-2 shadow-xl">
-        <div class="font-semibold text-[11px] uppercase tracking-wider text-slate-400">Map Legend</div>
-        <div class="flex items-center gap-2 text-slate-300">
-          <span class="w-3 h-3 rounded-full bg-rose-500 border border-white"></span>
-          <span>Active SOS Distress Pin</span>
+      <div class="absolute top-4 right-4 z-20 bg-[#121720]/95 backdrop-blur p-3 rounded-xl border border-[#262c36] text-xs space-y-2 shadow-2xl">
+        <div class="font-bold text-[10px] uppercase tracking-wider text-slate-400">Map Overlays & Clusters</div>
+        <div class="flex items-center gap-2 text-slate-300 text-[11px]">
+          <span class="w-3 h-3 rounded-full bg-rose-500 border border-white shrink-0"></span>
+          <span>Open SOS Pin (Pulsing)</span>
         </div>
-        <div class="flex items-center gap-2 text-slate-300">
-          <span class="w-3 h-3 rounded-full bg-sky-400 border border-white"></span>
-          <span>Rescue Squad / Ambulance</span>
+        <div class="flex items-center gap-2 text-slate-300 text-[11px]">
+          <span class="w-3 h-3 rounded-full bg-sky-400 border border-white shrink-0"></span>
+          <span>Assigned Emergency Squad</span>
         </div>
-        <div class="flex items-center gap-2 text-slate-300">
-          <span class="w-3 h-3 rounded-full bg-emerald-500 border border-white"></span>
-          <span>Emergency Shelter Hub</span>
+        <div class="flex items-center gap-2 text-slate-300 text-[11px]">
+          <span class="w-3 h-3 rounded-full bg-emerald-500 border border-white shrink-0"></span>
+          <span>Relief Shelter / Medical Hub</span>
         </div>
-        <div class="flex items-center gap-2 text-slate-300">
-          <span class="w-3 h-1 bg-sky-400/80"></span>
-          <span>$geoNear Proximity Route</span>
+        <div class="flex items-center gap-2 text-slate-300 text-[11px]">
+          <span class="w-3 h-1 bg-sky-400 rounded shrink-0"></span>
+          <span>$geoNear Dynamic Dispatch Route</span>
+        </div>
+        <div class="pt-1 border-t border-[#262c36] text-[10px] text-slate-400 flex items-center gap-1">
+          <i class="fa-regular fa-hand-pointer text-emerald-400"></i>
+          <span>Hover pins for live tooltips</span>
         </div>
       </div>
 
-      <!-- Bottom Hint Bar -->
-      <div class="absolute bottom-6 left-6 z-20 bg-[#161b22]/90 backdrop-blur px-4 py-2 rounded-xl border border-[#30363d] text-xs text-slate-300 flex items-center gap-2.5 shadow-lg">
+      <!-- Bottom Status Tip Bar -->
+      <div class="absolute bottom-6 left-6 z-20 bg-[#121720]/90 backdrop-blur px-3.5 py-1.5 rounded-lg border border-[#262c36] text-xs text-slate-300 flex items-center gap-2 shadow-lg">
         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-        <span>Click anywhere on the map to target an emergency point or view closest responders.</span>
+        <span class="text-[11px]">Click anywhere on map to target a coordinate or inspect distance vectors.</span>
       </div>
 
       <!-- Floating Toast Notification -->
-      <div id="toastNotification" class="absolute top-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-xl bg-emerald-950/90 border border-emerald-500/50 text-emerald-200 text-xs font-medium shadow-2xl flex items-center gap-2.5 transition-all duration-300 opacity-0 pointer-events-none">
+      <div id="toastNotification" class="absolute top-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-xl bg-emerald-950/95 border border-emerald-500/50 text-emerald-200 text-xs font-semibold shadow-2xl flex items-center gap-2 transition-all duration-300 opacity-0 pointer-events-none">
         <i class="fa-solid fa-circle-check text-emerald-400"></i>
         <span id="toastMessage">Distress Beacon dispatched to MongoDB</span>
       </div>
@@ -307,11 +353,11 @@
   </div>
 
   <!-- ========================================================= -->
-  <!-- INSPECTOR MODAL: For Evaluators & Viva Defense            -->
+  <!-- INSPECTOR MODAL: Live MongoDB Aggregation Inspection      -->
   <!-- ========================================================= -->
-  <div id="modalInspector" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="w-full max-w-2xl bg-[#161b22] border border-[#30363d] rounded-2xl overflow-hidden shadow-2xl">
-      <div class="px-6 py-4 border-b border-[#30363d] flex items-center justify-between bg-[#0d1117]">
+  <div id="modalInspector" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-[#121720] border border-[#262c36] rounded-2xl overflow-hidden shadow-2xl">
+      <div class="px-6 py-3.5 border-b border-[#262c36] flex items-center justify-between bg-[#090d14]">
         <div class="flex items-center gap-2">
           <i class="fa-solid fa-database text-emerald-400"></i>
           <h3 class="font-bold text-sm text-white">MongoDB Aggregation & Index Inspector</h3>
@@ -321,10 +367,10 @@
         </button>
       </div>
 
-      <div class="p-6 space-y-4 text-xs font-mono">
+      <div class="p-5 space-y-3.5 text-xs font-mono">
         <div>
           <div class="text-slate-400 font-sans font-semibold mb-1">Active Database Indexing Strategy:</div>
-          <div class="p-3 bg-[#0d1117] border border-[#30363d] rounded-xl text-emerald-300 leading-relaxed">
+          <div class="p-3 bg-[#090d14] border border-[#262c36] rounded-xl text-emerald-300 leading-relaxed text-[11px]">
             db.incidents.createIndex({ location: "2dsphere" })<br>
             db.responders.createIndex({ location: "2dsphere" })<br>
             db.incidents.createIndex({ resolvedAt: 1 }, { expireAfterSeconds: 172800 }) // TTL 48h
@@ -333,7 +379,7 @@
 
         <div>
           <div class="text-slate-400 font-sans font-semibold mb-1">Live Multi-Stage Aggregation Pipeline:</div>
-          <div class="p-3 bg-[#0d1117] border border-[#30363d] rounded-xl text-sky-300 leading-relaxed overflow-x-auto" id="modalPipelineCode">
+          <div class="p-3 bg-[#090d14] border border-[#262c36] rounded-xl text-sky-300 leading-relaxed text-[11px] overflow-x-auto" id="modalPipelineCode">
             db.responders.aggregate([<br>
             &nbsp;&nbsp;{ $geoNear: { near: { type: "Point", coordinates: [75.7035, 31.2540] }, distanceField: "distanceMeters", spherical: true, maxDistance: 15000 } },<br>
             &nbsp;&nbsp;{ $limit: 1 }<br>
@@ -341,8 +387,8 @@
           </div>
         </div>
 
-        <div class="pt-2 text-slate-400 font-sans text-xs">
-          💡 <strong>Evaluator Note:</strong> Spherical calculations execute directly in MongoDB's B-Tree engine over Earth's curvature, eliminating external GIS dependencies.
+        <div class="pt-1 text-slate-400 font-sans text-[11px]">
+          💡 <strong>Spherical Distance Calculation:</strong> Computed directly over Earth's curvature via MongoDB's native 2dsphere engine in sub-20ms.
         </div>
       </div>
     </div>
@@ -350,14 +396,14 @@
 
   <script>
     // Audio synthesizer for dispatch ping
-    function playBeep(freq = 750, duration = 0.12) {
+    function playBeep(freq = 750, duration = 0.1) {
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.type = 'sine';
         osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
@@ -370,7 +416,7 @@
       const toast = document.getElementById('toastNotification');
       document.getElementById('toastMessage').innerText = msg;
       toast.classList.remove('opacity-0', 'pointer-events-none');
-      setTimeout(() => toast.classList.add('opacity-0', 'pointer-events-none'), 3200);
+      setTimeout(() => toast.classList.add('opacity-0', 'pointer-events-none'), 3000);
     }
 
     function toggleInspector() {
@@ -388,6 +434,7 @@
     let activeFilter = "ALL";
     let activeRadiusCircle = null;
     let dispatchLine = null;
+    let selectedIncidentIndex = 0; // For J/K keyboard navigation
 
     // Local Responders (Stationed locally near LPU / Phagwara / Jalandhar)
     let responders = [
@@ -403,7 +450,7 @@
       { id: "S-PB2", name: "Phagwara Community Relief Hub", lat: 31.2210, lng: 75.7680, capacity: "80/200 Beds", phone: "01824-520002" }
     ];
 
-    // Realistic human-described incidents
+    // Realistic human-described incidents with report stacking counters
     let incidents = [
       {
         id: "SOS-104",
@@ -418,6 +465,7 @@
         lng: 75.7050,
         status: "OPEN",
         timestamp: "3m ago",
+        reportCount: 3, // Grouped/stacked duplicate calls
         assignedTo: null
       },
       {
@@ -433,11 +481,13 @@
         lng: 75.7110,
         status: "DISPATCHED",
         timestamp: "9m ago",
+        reportCount: 1,
         assignedTo: "Phagwara Civil Mobile Med 01"
       }
     ];
 
     let incidentMarkers = {};
+    let responderMarkers = {};
 
     function initMap() {
       map = L.map('map', {
@@ -448,36 +498,45 @@
 
       L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-      // Clean, professional Esri Dark Gray canvas (100% Free, zero watermark)
+      // High-contrast clean dark cartography (Esri Dark Canvas with CSS contrast boost)
       L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
         attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
         maxZoom: 16
       }).addTo(map);
 
-      // Plot Shelters
+      // Plot Shelters with Interactive Hover Tooltips
       shelters.forEach(s => {
         const shelterIcon = L.divIcon({
           className: 'custom-shelter',
-          html: `<div class="w-7 h-7 rounded-lg bg-emerald-500 border border-emerald-300 flex items-center justify-center text-[#0d1117] font-bold text-xs shadow-lg">
+          html: `<div class="w-7 h-7 rounded-lg bg-emerald-500 border-2 border-emerald-200 flex items-center justify-center text-[#090d14] font-bold text-xs shadow-lg">
                   <i class="fa-solid fa-hospital"></i>
                  </div>`,
           iconSize: [28, 28],
           iconAnchor: [14, 14]
         });
-        L.marker([s.lat, s.lng], { icon: shelterIcon })
-          .addTo(map)
-          .bindPopup(`<b>${s.name}</b><br><span class="text-xs text-slate-400">Capacity: ${s.capacity}</span><br><span class="text-xs text-slate-400">Phone: ${s.phone}</span>`);
+        const m = L.marker([s.lat, s.lng], { icon: shelterIcon }).addTo(map);
+        
+        // Interactive Hover Tooltip
+        m.bindTooltip(`
+          <div class="font-sans text-[11px] leading-tight">
+            <span class="font-bold text-emerald-400">${s.name}</span><br>
+            <span class="text-slate-300">Capacity: ${s.capacity}</span> &bull; <span class="text-slate-400">${s.phone}</span>
+          </div>
+        `, { direction: 'top', className: 'custom-map-tooltip', offset: [0, -12] });
+
+        m.bindPopup(`<b>${s.name}</b><br><span class="text-xs text-slate-400">Capacity: ${s.capacity}</span><br><span class="text-xs text-slate-400">Emergency Phone: ${s.phone}</span>`);
       });
 
       renderResponders();
       renderIncidents();
       checkMongoConnection();
+      setupKeyboardShortcuts();
 
       // Click on map to place pin
       map.on('click', function (e) {
         selectedCoords = [parseFloat(e.latlng.lng.toFixed(4)), parseFloat(e.latlng.lat.toFixed(4))];
         document.getElementById('dispCoordinates').innerText = `[${selectedCoords[0]}, ${selectedCoords[1]}]`;
-        document.getElementById('dispLandmark').innerText = `Near Selected Map Pin (${selectedCoords[1]}° N, ${selectedCoords[0]}° E)`;
+        document.getElementById('dispLandmark').innerText = `Target Coordinate (${selectedCoords[1]}° N, ${selectedCoords[0]}° E)`;
         showTargetPin(e.latlng.lat, e.latlng.lng);
       });
     }
@@ -489,23 +548,33 @@
         radius: 7,
         color: '#f43f5e',
         fillColor: '#f43f5e',
-        fillOpacity: 0.9,
+        fillOpacity: 0.95,
         weight: 2
-      }).addTo(map).bindPopup("Target Incident Location").openPopup();
+      }).addTo(map).bindPopup("Target Location for Incident").openPopup();
     }
 
     function renderResponders() {
       responders.forEach(r => {
         const respIcon = L.divIcon({
           className: 'custom-responder',
-          html: `<div class="w-6 h-6 rounded-full bg-sky-400 border border-white flex items-center justify-center text-[#0d1117] text-[11px] shadow-lg">
+          html: `<div class="w-6 h-6 rounded-full bg-sky-400 border-2 border-slate-900 flex items-center justify-center text-slate-950 text-[10px] shadow-lg shadow-sky-500/50">
                   <i class="fa-solid fa-truck-medical"></i>
                  </div>`,
           iconSize: [24, 24],
           iconAnchor: [12, 12]
         });
         const m = L.marker([r.lat, r.lng], { icon: respIcon }).addTo(map);
-        m.bindPopup(`<b>${r.name}</b><br><span class="text-xs text-sky-400">Status: ${r.status}</span><br><span class="text-xs text-slate-400">Contact: ${r.contact || 'Base Command'}</span>`);
+
+        // Interactive Hover Tooltip for Responders
+        m.bindTooltip(`
+          <div class="font-sans text-[11px] leading-tight">
+            <span class="font-bold text-sky-400">${r.name}</span><br>
+            <span class="text-slate-300">${r.type} Unit</span> &bull; <span class="text-emerald-400 font-semibold">${r.status}</span>
+          </div>
+        `, { direction: 'top', className: 'custom-map-tooltip', offset: [0, -10] });
+
+        m.bindPopup(`<b>${r.name}</b><br><span class="text-xs text-sky-400">Type: ${r.type}</span><br><span class="text-xs text-slate-300">Status: ${r.status}</span><br><span class="text-xs text-slate-400">Comms: ${r.contact || 'Base Command'}</span>`);
+        responderMarkers[r.id] = m;
       });
     }
 
@@ -515,99 +584,162 @@
       let pendingCount = 0;
 
       const filtered = incidents.filter(inc => {
-        if (activeFilter === 'CRITICAL') return inc.severity === 'CRITICAL';
-        if (activeFilter !== 'ALL') return inc.category === activeFilter;
+        if (activeFilter === 'OPEN') return inc.status === 'OPEN';
+        if (activeFilter === 'DISPATCHED') return inc.status === 'DISPATCHED';
+        if (activeFilter === 'RESOLVED') return inc.status === 'RESOLVED';
         return true;
       });
 
       incidents.forEach(inc => {
-        if (inc.status !== 'RESOLVED') pendingCount++;
+        if (inc.status === 'OPEN') pendingCount++;
       });
 
-      filtered.forEach(inc => {
-        // Map marker
+      filtered.forEach((inc, idx) => {
+        // Map marker with Interactive Hover Tooltip & Visual Clustering indicator
         if (!incidentMarkers[inc.id] && inc.status !== 'RESOLVED') {
-          const colorBg = inc.severity === 'CRITICAL' ? 'bg-rose-500' : 'bg-amber-400';
+          const isOpen = inc.status === 'OPEN';
+          const isCritical = inc.severity === 'CRITICAL';
+          const colorBg = isOpen ? (isCritical ? 'bg-rose-500' : 'bg-amber-400') : 'bg-sky-400';
+          const clusterBadge = inc.reportCount > 1 ? `<span class="absolute -top-1.5 -right-1.5 bg-amber-500 text-black text-[9px] font-extrabold px-1 rounded-full border border-black">${inc.reportCount}</span>` : '';
+
           const incIcon = L.divIcon({
             className: 'custom-incident',
             html: `<div class="relative flex items-center justify-center w-7 h-7">
-                    <div class="absolute w-full h-full rounded-full ${colorBg} pulse-ring"></div>
-                    <div class="w-5 h-5 rounded-full ${colorBg} border border-white flex items-center justify-center text-[10px] text-white shadow-lg font-bold">
-                      !
+                    ${isOpen ? `<div class="absolute w-full h-full rounded-full ${colorBg} pulse-ring"></div>` : ''}
+                    <div class="w-5 h-5 rounded-full ${colorBg} border-2 border-white flex items-center justify-center text-[10px] text-black shadow-lg font-black">
+                      ${isOpen ? '!' : '<i class="fa-solid fa-check text-[8px]"></i>'}
                     </div>
+                    ${clusterBadge}
                    </div>`,
             iconSize: [28, 28],
             iconAnchor: [14, 14]
           });
           
           const marker = L.marker([inc.lat, inc.lng], { icon: incIcon }).addTo(map);
+
+          // Rich Interactive Hover Tooltip
+          marker.bindTooltip(`
+            <div class="font-sans text-[11px] leading-snug">
+              <div class="flex items-center gap-1.5">
+                <span class="font-bold text-white">${inc.id}</span>
+                <span class="text-[9px] px-1 rounded font-extrabold ${isCritical ? 'bg-rose-950 text-rose-300' : 'bg-amber-950 text-amber-300'}">${inc.severity}</span>
+                ${inc.reportCount > 1 ? `<span class="text-[9px] text-amber-400 font-bold">x${inc.reportCount} calls</span>` : ''}
+              </div>
+              <div class="text-slate-300 text-[10px] mt-0.5">${inc.category} &bull; ${inc.victims} victims</div>
+              <div class="text-[10px] mt-0.5 ${isOpen ? 'text-rose-400 font-semibold' : 'text-sky-400'}">${isOpen ? '⚡ Action Required: Click to Match' : '🚙 ' + inc.assignedTo}</div>
+            </div>
+          `, { direction: 'top', className: 'custom-map-tooltip', offset: [0, -12] });
+
           marker.bindPopup(`
-            <div class="text-xs space-y-1">
+            <div class="text-xs space-y-1.5 p-1">
               <div class="font-bold text-white flex items-center justify-between">
                 <span>${inc.id}</span>
-                <span class="text-[10px] px-1.5 py-0.5 rounded font-semibold ${inc.severity === 'CRITICAL' ? 'bg-rose-950 text-rose-300' : 'bg-amber-950 text-amber-300'}">${inc.severity}</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded font-bold ${isCritical ? 'bg-rose-950 text-rose-300' : 'bg-amber-950 text-amber-300'}">${inc.severity}</span>
               </div>
-              <div class="text-slate-300 font-medium">${inc.caller ? inc.caller : 'Anonymous'} &bull; ${inc.category}</div>
+              <div class="text-slate-200 font-medium">${inc.caller} &bull; ${inc.category}</div>
               <div class="text-slate-400 text-[11px]">${inc.note}</div>
-              <div class="pt-2">
-                <button onclick="triggerGeoNearMatch('${inc.id}', ${inc.lat}, ${inc.lng})" class="w-full py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition">
-                  Dispatch Nearest Responder
-                </button>
-              </div>
+              ${isOpen ? `
+                <div class="pt-1.5">
+                  <button onclick="triggerGeoNearMatch('${inc.id}', ${inc.lat}, ${inc.lng})" class="w-full py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition shadow">
+                    <i class="fa-solid fa-route"></i> Match Nearest Unit ($geoNear)
+                  </button>
+                </div>
+              ` : `
+                <div class="text-sky-400 text-[11px] font-semibold">Assigned Unit: ${inc.assignedTo}</div>
+              `}
             </div>
           `);
           incidentMarkers[inc.id] = marker;
         }
 
-        // Sidebar Card with human crisis details
+        // =========================================================================
+        // DISTINCT CARD STYLES BY STATUS (Layout & Visual Hierarchy Enhancement)
+        // =========================================================================
         const card = document.createElement('div');
+        const isOpen = inc.status === 'OPEN';
+        const isDispatched = inc.status === 'DISPATCHED';
+        const isResolved = inc.status === 'RESOLVED';
         const isCritical = inc.severity === 'CRITICAL';
-        card.className = `p-3.5 rounded-xl border ${isCritical ? 'border-rose-500/30 bg-rose-950/10' : 'border-[#30363d] bg-[#161b22]'} hover:border-emerald-500/50 transition cursor-pointer space-y-2`;
+
+        let statusClasses = "";
+        let statusBadge = "";
+
+        if (isOpen) {
+          // OPEN: Solid Red/Orange border, urgent red background tint, prominent Action badge
+          statusClasses = isCritical 
+            ? "border-rose-500/70 border-l-4 border-l-rose-500 bg-rose-950/25 shadow-md shadow-rose-950/40" 
+            : "border-amber-500/60 border-l-4 border-l-amber-500 bg-amber-950/20";
+          statusBadge = `<span class="text-[9px] font-extrabold px-2 py-0.5 rounded bg-rose-500 text-white tracking-wide shadow animate-pulse">ACTION REQUIRED</span>`;
+        } else if (isDispatched) {
+          // DISPATCHED: Muted Cool Blue/Slate border, blue background tint, En Route badge
+          statusClasses = "border-sky-500/40 border-l-4 border-l-sky-400 bg-sky-950/20";
+          statusBadge = `<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">EN ROUTE</span>`;
+        } else {
+          // RESOLVED: Subdued emerald/gray, lower opacity
+          statusClasses = "border-slate-800 border-l-4 border-l-emerald-600 bg-[#121720]/40 opacity-70";
+          statusBadge = `<span class="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-emerald-950/40 text-emerald-400 border border-emerald-500/30">✓ RESOLVED • TTL 48H</span>`;
+        }
+
+        card.className = `incident-card p-3 rounded-xl border ${statusClasses} hover:brightness-110 transition cursor-pointer space-y-2 ${idx === selectedIncidentIndex ? 'active-selected' : ''}`;
+        card.setAttribute('data-inc-id', inc.id);
+        card.setAttribute('data-index', idx);
+
         card.onclick = () => {
-          map.flyTo([inc.lat, inc.lng], 15, { duration: 1.2 });
-          triggerGeoNearMatch(inc.id, inc.lat, inc.lng);
+          selectIncident(idx);
         };
+
+        // Report Stacking / Grouping Badge
+        const stackBadge = inc.reportCount > 1 
+          ? `<span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-bold flex items-center gap-1" title="Aggregated duplicate calls from this sector">
+               <i class="fa-solid fa-layer-group text-[9px]"></i> x${inc.reportCount} reports
+             </span>` 
+          : '';
 
         card.innerHTML = `
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full ${isCritical ? 'bg-rose-500' : 'bg-amber-400'}"></span>
-              <span class="font-bold text-xs text-white">${inc.id}</span>
-              <span class="text-[11px] text-slate-500">&bull; ${inc.timestamp}</span>
+              <span class="w-2 h-2 rounded-full ${isOpen ? (isCritical ? 'bg-rose-500 animate-ping' : 'bg-amber-400') : (isDispatched ? 'bg-sky-400' : 'bg-emerald-500')}"></span>
+              <span class="font-bold text-xs text-white font-mono">${inc.id}</span>
+              <span class="text-[10px] text-slate-400 font-mono">${inc.timestamp}</span>
+              ${stackBadge}
             </div>
-            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full ${inc.status === 'DISPATCHED' ? 'bg-sky-500/20 text-sky-400' : (inc.status === 'RESOLVED' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400')}">
-              ${inc.status}
-            </span>
+            ${statusBadge}
           </div>
 
           <div>
-            <div class="text-xs font-semibold text-slate-200">${inc.category}</div>
-            <div class="text-[11px] text-slate-400 flex items-center justify-between mt-0.5">
-              <span>${inc.caller ? inc.caller : 'Caller'} &bull; <span class="text-slate-500">${inc.phone || 'No phone'}</span></span>
-              <span class="text-emerald-400 font-semibold font-mono">${inc.victims} ${inc.victims > 1 ? 'people' : 'person'}</span>
+            <div class="text-xs font-bold text-slate-100 flex items-center justify-between">
+              <span>${inc.category}</span>
+              <span class="text-emerald-400 font-mono text-[11px] font-semibold">${inc.victims} ${inc.victims > 1 ? 'victims' : 'victim'}</span>
+            </div>
+            <div class="text-[10px] text-slate-400 mt-0.5 flex items-center justify-between">
+              <span><i class="fa-solid fa-user text-slate-500 text-[9px]"></i> ${inc.caller} &bull; ${inc.phone || 'No phone'}</span>
+              <span class="text-slate-500">${inc.landmark || 'Nearby'}</span>
             </div>
           </div>
 
-          <p class="text-xs text-slate-300 bg-[#0d1117] p-2 rounded-lg border border-[#21262d] leading-relaxed">${inc.note}</p>
+          <p class="text-[11px] text-slate-300 bg-[#090d14]/70 p-1.5 rounded-lg border border-[#262c36] leading-snug">${inc.note}</p>
 
-          <div class="pt-1.5 border-t border-[#30363d] flex items-center justify-between text-[11px]">
-            <span class="text-slate-400">
-              ${inc.assignedTo ? 'Unit: <b class="text-sky-300">' + inc.assignedTo + '</b>' : '<span class="text-amber-400 flex items-center gap-1"><i class="fa-regular fa-clock"></i> Awaiting Dispatch</span>'}
+          <!-- Assigned Unit or Action Buttons with High-Contrast Primary CTAs -->
+          <div class="pt-1.5 border-t border-[#262c36]/60 flex items-center justify-between text-[11px]">
+            <span class="text-slate-400 text-[10px]">
+              ${inc.assignedTo ? `<span class="text-sky-300 font-semibold flex items-center gap-1"><i class="fa-solid fa-truck-medical text-[9px]"></i> ${inc.assignedTo}</span>` : '<span class="text-amber-400 font-semibold flex items-center gap-1"><i class="fa-solid fa-clock-rotate-left text-[9px]"></i> Awaiting match</span>'}
             </span>
 
             <div class="flex items-center gap-1.5">
-              ${inc.status === 'DISPATCHED' ? `
-                <button onclick="event.stopPropagation(); resolveIncident('${inc.id}')" class="px-2.5 py-1 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs flex items-center gap-1 shadow-sm transition">
-                  <i class="fa-solid fa-check text-[10px]"></i> Resolve
-                </button>
-              ` : (inc.status === 'RESOLVED' ? `
-                <span class="text-emerald-400 font-mono text-[10px] font-semibold flex items-center gap-1">
-                  <i class="fa-solid fa-clock-rotate-left"></i> TTL 48h
-                </span>
-              ` : `
-                <button onclick="event.stopPropagation(); triggerGeoNearMatch('${inc.id}', ${inc.lat}, ${inc.lng})" class="px-2.5 py-1 rounded-md bg-[#21262d] hover:bg-emerald-600 text-slate-200 hover:text-white font-medium text-xs flex items-center gap-1 transition">
+              ${isOpen ? `
+                <!-- PRIMARY ACTION CTA: High Visibility Match Unit -->
+                <button onclick="event.stopPropagation(); triggerGeoNearMatch('${inc.id}', ${inc.lat}, ${inc.lng})" class="px-3 py-1 rounded-md bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center gap-1 shadow-md shadow-emerald-500/25 transition active:scale-95">
                   <i class="fa-solid fa-route text-[10px]"></i> Match Unit
+                  <kbd class="hidden md:inline text-[9px] px-1 rounded bg-black/20 font-mono text-slate-900">[M]</kbd>
                 </button>
+              ` : (isDispatched ? `
+                <!-- PRIMARY ACTION CTA: Prominent Resolve Button -->
+                <button onclick="event.stopPropagation(); resolveIncident('${inc.id}')" class="px-3 py-1 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1 shadow transition active:scale-95">
+                  <i class="fa-solid fa-check text-[10px]"></i> Resolve
+                  <kbd class="hidden md:inline text-[9px] px-1 rounded bg-black/30 font-mono text-emerald-200">[R]</kbd>
+                </button>
+              ` : `
+                <span class="text-emerald-400/80 font-mono text-[10px] font-semibold">Closed</span>
               `)}
             </div>
           </div>
@@ -616,6 +748,93 @@
       });
 
       document.getElementById('metricActiveCount').innerText = pendingCount;
+    }
+
+    function selectIncident(index) {
+      const cards = document.querySelectorAll('.incident-card');
+      if (cards.length === 0) return;
+      if (index < 0) index = 0;
+      if (index >= cards.length) index = cards.length - 1;
+      selectedIncidentIndex = index;
+
+      cards.forEach((c, idx) => {
+        if (idx === index) {
+          c.classList.add('active-selected');
+          c.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          const incId = c.getAttribute('data-inc-id');
+          const target = incidents.find(i => i.id === incId);
+          if (target) {
+            map.flyTo([target.lat, target.lng], 15, { duration: 1.0 });
+            if (incidentMarkers[target.id]) {
+              incidentMarkers[target.id].openPopup();
+            }
+          }
+        } else {
+          c.classList.remove('active-selected');
+        }
+      });
+    }
+
+    // =========================================================================
+    // KEYBOARD NAVIGATION (Interaction & Accessibility Enhancement)
+    // =========================================================================
+    function setupKeyboardShortcuts() {
+      window.addEventListener('keydown', (e) => {
+        // If user is typing in input or textarea, don't trigger hotkeys except Esc
+        const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+        if (activeTag === 'input' || activeTag === 'textarea') {
+          if (e.key === 'Escape') {
+            document.activeElement.blur();
+          }
+          return;
+        }
+
+        const cards = document.querySelectorAll('.incident-card');
+        const count = cards.length;
+
+        if (e.key === '/' || e.code === 'Slash') {
+          e.preventDefault();
+          const search = document.getElementById('inputSearch');
+          if (search) {
+            search.focus();
+            search.select();
+          }
+        } else if (e.key === 'j' || e.key === 'J' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          selectIncident(selectedIncidentIndex + 1);
+        } else if (e.key === 'k' || e.key === 'K' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          selectIncident(selectedIncidentIndex - 1);
+        } else if (e.key === 'm' || e.key === 'M') {
+          e.preventDefault();
+          if (count > 0 && selectedIncidentIndex < count) {
+            const card = cards[selectedIncidentIndex];
+            const incId = card.getAttribute('data-inc-id');
+            const target = incidents.find(i => i.id === incId);
+            if (target && target.status === 'OPEN') {
+              triggerGeoNearMatch(target.id, target.lat, target.lng);
+            }
+          }
+        } else if (e.key === 'r' || e.key === 'R') {
+          e.preventDefault();
+          if (count > 0 && selectedIncidentIndex < count) {
+            const card = cards[selectedIncidentIndex];
+            const incId = card.getAttribute('data-inc-id');
+            const target = incidents.find(i => i.id === incId);
+            if (target && target.status === 'DISPATCHED') {
+              resolveIncident(target.id);
+            }
+          }
+        } else if (e.key === 'n' || e.key === 'N' || e.key === 's' || e.key === 'S') {
+          e.preventDefault();
+          triggerDemoSOS();
+        } else if (e.key === 'Escape') {
+          const m = document.getElementById('modalInspector');
+          if (!m.classList.contains('hidden')) {
+            m.classList.add('hidden');
+          }
+        }
+      });
     }
 
     const API_BASE = 'http://localhost:5000/api';
@@ -644,6 +863,7 @@
               lng: item.location?.coordinates[0] || item.lng,
               status: item.status,
               timestamp: item.createdAt ? new Date(item.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Just now',
+              reportCount: item.reportCount || 1,
               assignedTo: item.assignedTo
             }));
             renderIncidents();
@@ -660,14 +880,22 @@
                 const rLng = r.location?.coordinates[0] || r.lng;
                 const respIcon = L.divIcon({
                   className: 'custom-responder',
-                  html: `<div class="w-6 h-6 rounded-full bg-sky-400 border border-white flex items-center justify-center text-[#0d1117] text-[11px] shadow-lg">
+                  html: `<div class="w-6 h-6 rounded-full bg-sky-400 border-2 border-slate-900 flex items-center justify-center text-slate-950 text-[10px] shadow-lg shadow-sky-500/50">
                           <i class="fa-solid fa-truck-medical"></i>
                          </div>`,
                   iconSize: [24, 24],
                   iconAnchor: [12, 12]
                 });
-                L.marker([rLat, rLng], { icon: respIcon }).addTo(map)
-                  .bindPopup(`<b>${r.name}</b><br><span class="text-xs text-sky-400">Status: ${r.status}</span>`);
+                const m = L.marker([rLat, rLng], { icon: respIcon }).addTo(map);
+
+                m.bindTooltip(`
+                  <div class="font-sans text-[11px] leading-tight">
+                    <span class="font-bold text-sky-400">${r.name}</span><br>
+                    <span class="text-slate-300">${r.type}</span> &bull; <span class="text-emerald-400 font-semibold">${r.status}</span>
+                  </div>
+                `, { direction: 'top', className: 'custom-map-tooltip', offset: [0, -10] });
+
+                m.bindPopup(`<b>${r.name}</b><br><span class="text-xs text-sky-400">Status: ${r.status}</span>`);
               });
             }
           } catch (re) {}
@@ -678,7 +906,7 @@
     }
 
     async function triggerGeoNearMatch(incId, incLat, incLng) {
-      playBeep(800, 0.1);
+      playBeep(820, 0.1);
 
       document.getElementById('modalPipelineCode').innerHTML = 
         `db.responders.aggregate([<br>` +
@@ -698,7 +926,7 @@
 
       let closestLat = null;
       let closestLng = null;
-      let matchedName = "LPU Campus Disaster Response Unit";
+      let matchedName = "LPU Campus Quick Response Squad";
       let distanceFormatted = "450 meters away";
 
       if (isMongoConnected) {
@@ -730,7 +958,7 @@
       if (dispatchLine) map.removeLayer(dispatchLine);
       dispatchLine = L.polyline([[closestLat, closestLng], [incLat, incLng]], {
         color: '#38bdf8',
-        weight: 3,
+        weight: 3.5,
         dashArray: '6, 6'
       }).addTo(map);
 
@@ -738,13 +966,13 @@
       if (target && target.status === 'OPEN') {
         target.status = 'DISPATCHED';
         target.assignedTo = matchedName;
-        setTimeout(renderIncidents, 350);
+        setTimeout(renderIncidents, 300);
         showToast(`Dispatched ${matchedName} (${distanceFormatted})`);
       }
     }
 
     async function resolveIncident(incId) {
-      playBeep(1100, 0.15);
+      playBeep(1150, 0.14);
       const target = incidents.find(i => i.id === incId);
       if (target) {
         target.status = 'RESOLVED';
@@ -761,7 +989,7 @@
           activeRadiusCircle = null;
         }
         renderIncidents();
-        showToast(`Incident ${incId} resolved. TTL 48h timer started.`);
+        showToast(`Incident ${incId} resolved. TTL 48h timer active.`);
       }
 
       if (isMongoConnected) {
@@ -777,11 +1005,11 @@
 
     function selectCategory(btn, name) {
       document.querySelectorAll('.cat-btn').forEach(b => {
-        b.classList.remove('border-emerald-500/50', 'bg-emerald-950/20', 'text-emerald-300');
-        b.classList.add('border-[#30363d]', 'bg-[#0d1117]', 'text-slate-300');
+        b.classList.remove('border-emerald-500/60', 'bg-emerald-950/30', 'text-emerald-300');
+        b.classList.add('border-[#262c36]', 'bg-[#090d14]', 'text-slate-300');
       });
-      btn.classList.add('border-emerald-500/50', 'bg-emerald-950/20', 'text-emerald-300');
-      btn.classList.remove('border-[#30363d]', 'bg-[#0d1117]', 'text-slate-300');
+      btn.classList.add('border-emerald-500/60', 'bg-emerald-950/30', 'text-emerald-300');
+      btn.classList.remove('border-[#262c36]', 'bg-[#090d14]', 'text-slate-300');
       selectedCategoryName = name;
     }
 
@@ -790,29 +1018,48 @@
         navigator.geolocation.getCurrentPosition(pos => {
           selectedCoords = [parseFloat(pos.coords.longitude.toFixed(4)), parseFloat(pos.coords.latitude.toFixed(4))];
           document.getElementById('dispCoordinates').innerText = `[${selectedCoords[0]}, ${selectedCoords[1]}]`;
-          document.getElementById('dispLandmark').innerText = "Current GPS Coordinates Detected";
+          document.getElementById('dispLandmark').innerText = "Live GPS Location Locked";
           map.flyTo([selectedCoords[1], selectedCoords[0]], 15);
           showTargetPin(selectedCoords[1], selectedCoords[0]);
           showToast("GPS location locked");
         }, () => {
-          alert("GPS unavailable or permission denied. You can click anywhere on the map to set a pin!");
+          alert("GPS permission denied or unavailable. Click on map to drop a pin!");
         });
       }
     }
 
+    // Citizen SOS Submission with Automatic Deduplication/Stacking Check
     async function submitSOSBeacon() {
       const caller = document.getElementById('inputCallerName').value || "Caller";
       const phone = document.getElementById('inputCallerPhone').value || "+91 98721-XXXXX";
       const victims = parseInt(document.getElementById('inputVictims').value);
       const note = document.getElementById('inputNote').value || "Immediate assistance requested";
       const severity = document.querySelector('input[name="severity"]:checked').value;
+
+      // Check if duplicate report exists in same sector (within ~400 meters)
+      let duplicate = incidents.find(i => 
+        i.status === 'OPEN' && 
+        Math.abs(i.lat - selectedCoords[1]) < 0.004 && 
+        Math.abs(i.lng - selectedCoords[0]) < 0.004
+      );
+
+      if (duplicate) {
+        duplicate.reportCount = (duplicate.reportCount || 1) + 1;
+        duplicate.timestamp = "Just now";
+        playBeep(920, 0.15);
+        switchView('dispatch');
+        renderIncidents();
+        map.flyTo([duplicate.lat, duplicate.lng], 15);
+        showToast(`Stacked report onto ${duplicate.id} (x${duplicate.reportCount} calls)`);
+        return;
+      }
+
       const newId = "SOS-" + Math.floor(200 + Math.random() * 800);
-      
       const newIncident = {
         id: newId,
         caller: caller,
         phone: phone,
-        landmark: "Reported via Citizen App",
+        landmark: "Citizen Pin Drop",
         category: selectedCategoryName,
         severity: severity,
         victims: victims,
@@ -821,6 +1068,7 @@
         lng: selectedCoords[0],
         status: "OPEN",
         timestamp: "Just now",
+        reportCount: 1,
         assignedTo: null
       };
 
@@ -829,6 +1077,7 @@
       
       switchView('dispatch');
       renderIncidents();
+      selectIncident(0);
       map.flyTo([newIncident.lat, newIncident.lng], 15);
       triggerGeoNearMatch(newId, newIncident.lat, newIncident.lng);
       showToast(`Beacon ${newId} logged into MongoDB`);
@@ -853,7 +1102,7 @@
       }
     }
 
-    // Realistic human emergency scenarios for presentation demo
+    // Emergency Influx Simulator with Automatic Report Clustering
     function triggerDemoSOS() {
       const demoScenarios = [
         {
@@ -878,11 +1127,23 @@
           category: "Food / Supplies",
           severity: "STANDARD",
           victims: 8,
-          note: "Community hall shelter running low on clean drinking water bottles and infant milk powder."
+          note: "Community shelter running low on clean drinking water bottles and infant milk powder."
         }
       ];
 
       const scenario = demoScenarios[Math.floor(Math.random() * demoScenarios.length)];
+      
+      // Check if matching scenario caller is already in active open queue (Deduplicate & stack count)
+      let duplicate = incidents.find(i => i.status === 'OPEN' && i.caller === scenario.caller);
+      if (duplicate) {
+        duplicate.reportCount = (duplicate.reportCount || 1) + 1;
+        duplicate.timestamp = "Just now";
+        playBeep(960, 0.15);
+        renderIncidents();
+        showToast(`Duplicate call stacked: ${duplicate.id} (x${duplicate.reportCount} reports)`);
+        return;
+      }
+
       const randLat = CENTER_LAT + (Math.random() - 0.5) * 0.02;
       const randLng = CENTER_LNG + (Math.random() - 0.5) * 0.02;
       const newId = "SOS-" + Math.floor(200 + Math.random() * 800);
@@ -891,7 +1152,7 @@
         id: newId,
         caller: scenario.caller,
         phone: scenario.phone,
-        landmark: "Simulated Field Report",
+        landmark: "Simulated Sector Report",
         category: scenario.category,
         severity: scenario.severity,
         victims: scenario.victims,
@@ -900,14 +1161,16 @@
         lng: randLng,
         status: "OPEN",
         timestamp: "Just now",
+        reportCount: 1,
         assignedTo: null
       };
 
       incidents.unshift(simInc);
-      playBeep(980, 0.18);
+      playBeep(960, 0.18);
       renderIncidents();
+      selectIncident(0);
       triggerGeoNearMatch(newId, randLat, randLng);
-      showToast(`New Incident Alert: ${newId} (${scenario.caller})`);
+      showToast(`Incoming Distress: ${newId} (${scenario.caller})`);
     }
 
     function switchView(mode) {
@@ -919,23 +1182,23 @@
       if (mode === 'dispatch') {
         pD.classList.remove('hidden');
         pC.classList.add('hidden');
-        btnD.className = "px-4 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-2 bg-emerald-600 text-white shadow-sm";
-        btnC.className = "px-4 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-2 text-slate-400 hover:text-slate-200";
+        btnD.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 bg-emerald-600 text-white shadow-sm";
+        btnC.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-slate-200";
       } else {
         pD.classList.add('hidden');
         pC.classList.remove('hidden');
-        btnC.className = "px-4 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-2 bg-rose-600 text-white shadow-sm";
-        btnD.className = "px-4 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-2 text-slate-400 hover:text-slate-200";
+        btnC.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 bg-rose-600 text-white shadow-sm";
+        btnD.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-slate-200";
       }
     }
 
     function setFilterCategory(cat) {
       activeFilter = cat;
       document.querySelectorAll('.filter-chip').forEach(btn => {
-        btn.classList.remove('bg-[#21262d]', 'text-white', 'border', 'border-[#30363d]');
+        btn.classList.remove('active', 'bg-[#1e2531]', 'text-white', 'border', 'border-[#323d4f]');
         btn.classList.add('text-slate-400');
       });
-      event.target.classList.add('bg-[#21262d]', 'text-white', 'border', 'border-[#30363d]');
+      event.target.classList.add('active', 'bg-[#1e2531]', 'text-white', 'border', 'border-[#323d4f]');
       event.target.classList.remove('text-slate-400');
       renderIncidents();
     }
@@ -946,6 +1209,12 @@
         const text = el.innerText.toLowerCase();
         el.style.display = text.includes(q) ? 'block' : 'none';
       });
+    }
+
+    function clearAllResolved() {
+      incidents = incidents.filter(i => i.status !== 'RESOLVED');
+      renderIncidents();
+      showToast("Cleared resolved incidents from feed");
     }
 
     window.addEventListener('DOMContentLoaded', initMap);
