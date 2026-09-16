@@ -167,9 +167,9 @@
     <!-- SLIDE 3: Objectives & Technical Scope -->
     <section class="slide w-full h-[88%] flex-col justify-between py-4" data-slide="3">
       <div>
-        <div class="text-emerald-400 font-mono text-xs font-semibold tracking-wider uppercase mb-1">02 / Academic & Technical Scope</div>
+        <div class="text-emerald-400 font-mono text-xs font-semibold tracking-wider uppercase mb-1">02 / Architectural Scope</div>
         <h2 class="text-3xl font-bold text-white">Project Objectives & Technical Scope</h2>
-        <p class="text-sm text-slate-400 mt-1">Engineered to fulfill CSE494 Course Outcomes (CO1-CO6) using pure MongoDB capabilities.</p>
+        <p class="text-sm text-slate-400 mt-1">Engineered for low-latency disaster response using pure native MongoDB capabilities.</p>
       </div>
 
       <div class="grid grid-cols-12 gap-6 my-auto">
@@ -187,19 +187,19 @@
           <div class="space-y-2.5 pt-3.5 border-t border-emerald-500/20 text-xs text-slate-300">
             <div class="flex items-start gap-2">
               <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
-              <span><strong>Sub-100ms Spatial Matching:</strong> Native spherical distance computation ($geoNear) over Earth's curvature (Unit IV).</span>
+              <span><strong>Sub-100ms Spatial Matching:</strong> Native spherical distance computation ($geoNear) over Earth's curvature.</span>
             </div>
             <div class="flex items-start gap-2">
               <i class="fa-solid fa-check text-sky-400 mt-0.5"></i>
-              <span><strong>Multi-Stage Aggregation Triage:</strong> Dynamic scoring combining severity, casualty count, and proximity (Unit IV).</span>
+              <span><strong>Multi-Stage Aggregation Triage:</strong> Dynamic scoring combining severity, casualty count, and proximity.</span>
             </div>
             <div class="flex items-start gap-2">
               <i class="fa-solid fa-check text-amber-400 mt-0.5"></i>
-              <span><strong>Autonomous TTL Lifecycle:</strong> Native self-cleaning of resolved alerts after 48h without background cron jobs (Unit II).</span>
+              <span><strong>Autonomous TTL Lifecycle:</strong> Native self-cleaning of resolved alerts after 48h without background cron jobs.</span>
             </div>
             <div class="flex items-start gap-2">
               <i class="fa-solid fa-check text-indigo-400 mt-0.5"></i>
-              <span><strong>Zero-Broker Streaming:</strong> Streaming live database state via MongoDB Change Streams without Redis/Kafka (Unit V).</span>
+              <span><strong>Zero-Broker Streaming:</strong> Streaming live database state via MongoDB Change Streams without external brokers.</span>
             </div>
           </div>
         </div>
