@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GeoPulse — Capstone Project Report</title>
+  <title>GeoPulse — Project Report</title>
   
-  <!-- Google Fonts for Professional Academic Typography -->
+  <!-- Clean Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --primary-color: #0f172a;
-      --accent-color: #0d9488;
-      --text-main: #1e293b;
-      --text-muted: #64748b;
-      --border-color: #cbd5e1;
-      --bg-code: #f8fafc;
+      --primary: #0f172a;
+      --accent: #10b981;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --code-bg: #0f172a;
     }
 
     * {
@@ -27,242 +27,185 @@
     }
 
     body {
-      font-family: 'Crimson Pro', Georgia, serif;
-      font-size: 11.5pt;
-      line-height: 1.65;
-      color: var(--text-main);
-      background-color: #f1f5f9;
-      padding: 30px 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 11pt;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: #f8fafc;
+      padding: 30px 15px;
     }
 
-    .report-container {
-      max-width: 850px;
+    .report-card {
+      max-width: 820px;
       margin: 0 auto;
       background: #ffffff;
-      padding: 60px 70px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      border-radius: 4px;
+      padding: 50px 60px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
 
-    /* Print Specific Styling */
     @media print {
       body {
         background: #ffffff;
         padding: 0;
-        font-size: 11pt;
+        font-size: 10.5pt;
       }
-      .report-container {
+      .report-card {
         max-width: 100%;
         padding: 0;
+        border: none;
         box-shadow: none;
-        border-radius: 0;
-      }
-      .page-break {
-        page-break-before: always;
       }
       .no-print {
         display: none !important;
       }
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
     }
 
-    .page-break {
-      page-break-before: always;
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 1px dashed #cbd5e1;
-    }
-    @media print {
-      .page-break {
-        border-top: none;
-        margin-top: 0;
-        padding-top: 0;
-      }
+    .header-block {
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 20px;
+      margin-bottom: 25px;
     }
 
-    h1, h2, h3, h4 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      color: var(--primary-color);
-      font-weight: 700;
+    .title {
+      font-size: 24pt;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
     }
 
-    h1 {
-      font-size: 22pt;
-      margin-bottom: 12px;
-      line-height: 1.3;
-      border-bottom: 2px solid var(--accent-color);
-      padding-bottom: 8px;
+    .subtitle {
+      font-size: 13pt;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      background: #f1f5f9;
+      padding: 12px 18px;
+      border-radius: 6px;
+      font-size: 10pt;
     }
 
     h2 {
-      font-size: 15pt;
-      margin-top: 24px;
+      font-size: 14pt;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 28px;
       margin-bottom: 10px;
-      border-bottom: 1px solid #e2e8f0;
+      border-bottom: 1px solid var(--border);
       padding-bottom: 4px;
     }
 
     h3 {
-      font-size: 12.5pt;
-      margin-top: 16px;
+      font-size: 11.5pt;
+      font-weight: 600;
+      color: #334155;
+      margin-top: 14px;
       margin-bottom: 6px;
     }
 
     p {
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       text-align: justify;
     }
 
-    /* Title Page */
-    .title-page {
-      text-align: center;
-      padding: 40px 20px;
-      min-height: 900px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+    ul, ol {
+      margin-left: 20px;
+      margin-bottom: 12px;
     }
 
-    .title-project {
-      font-size: 26pt;
-      font-weight: 800;
-      color: #0f172a;
-      line-height: 1.25;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-      letter-spacing: -0.5px;
+    li {
+      margin-bottom: 4px;
     }
 
-    .title-subtitle {
-      font-size: 14pt;
-      font-family: 'Crimson Pro', Georgia, serif;
-      font-style: italic;
-      color: #475569;
-      margin-bottom: 40px;
-    }
-
-    .title-badge {
-      display: inline-block;
-      padding: 6px 16px;
-      background: #f0fdfa;
-      border: 1px solid #99f6e4;
-      color: #0d9488;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 9pt;
-      font-weight: 700;
-      letter-spacing: 1px;
-      border-radius: 20px;
-      margin-bottom: 25px;
-      text-transform: uppercase;
-    }
-
-    .title-meta {
-      font-size: 11pt;
-      line-height: 1.8;
-      color: #334155;
-    }
-
-    .title-meta strong {
-      color: #0f172a;
-    }
-
-    .signature-grid {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 50px;
-      text-align: center;
-    }
-
-    .sig-line {
-      width: 200px;
-      border-top: 1px solid #64748b;
-      margin: 40px auto 8px auto;
-    }
-
-    /* Tables */
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 16px 0;
-      font-size: 10pt;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 14px 0;
+      font-size: 9.5pt;
     }
 
     th, td {
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border);
       padding: 8px 12px;
       text-align: left;
     }
 
     th {
-      background-color: #f8fafc;
-      color: #0f172a;
-      font-weight: 700;
+      background-color: #f1f5f9;
+      font-weight: 600;
+      color: var(--primary);
     }
 
     tr:nth-child(even) {
       background-color: #f8fafc;
     }
 
-    /* Code Snippets */
-    pre, code {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9pt;
-    }
-
     pre {
-      background: #0f172a;
+      background: var(--code-bg);
       color: #e2e8f0;
-      padding: 14px 18px;
+      padding: 12px 16px;
       border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8.8pt;
       overflow-x: auto;
-      margin: 14px 0;
+      margin: 12px 0;
       line-height: 1.5;
     }
 
-    p code, td code {
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9pt;
       background: #f1f5f9;
       color: #0f766e;
       padding: 2px 5px;
       border-radius: 4px;
-      border: 1px solid #e2e8f0;
     }
 
-    /* Floating Print Button */
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+
+    kbd {
+      background: #e2e8f0;
+      border: 1px solid #cbd5e1;
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-family: monospace;
+      font-size: 8.5pt;
+    }
+
+    /* Print Button */
     .print-btn {
       position: fixed;
       bottom: 25px;
       right: 25px;
-      background: #0d9488;
+      background: #10b981;
       color: #ffffff;
       border: none;
       padding: 12px 22px;
       border-radius: 30px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
       font-weight: 700;
       font-size: 10pt;
-      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.4);
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: all 0.2s;
       z-index: 999;
+      transition: transform 0.2s;
     }
     .print-btn:hover {
-      background: #0f766e;
+      background: #059669;
       transform: translateY(-2px);
-    }
-
-    ul, ol {
-      margin-left: 22px;
-      margin-bottom: 12px;
-    }
-    li {
-      margin-bottom: 4px;
     }
   </style>
 </head>
@@ -274,399 +217,180 @@
     Save as PDF / Print Report
   </button>
 
-  <div class="report-container">
+  <div class="report-card">
 
-    <!-- ========================================== -->
-    <!-- TITLE PAGE                                 -->
-    <!-- ========================================== -->
-    <div class="title-page">
-      <div>
-        <div class="title-badge">Capstone Project Report</div>
-        <h1 class="title-project">GeoPulse</h1>
-        <div class="title-subtitle">Real-Time Hyperlocal Disaster Relief & Emergency Resource Dispatch Platform</div>
-        
-        <p style="text-align: center; color: #64748b; font-size: 11pt; margin-top: 15px;">
-          <em>A project report submitted in partial fulfillment of the requirements for the award of the degree of</em>
-        </p>
-        <p style="text-align: center; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 13pt; color: #0f172a; margin-top: 8px;">
-          BACHELOR OF TECHNOLOGY<br>
-          <span style="font-size: 11pt; font-weight: 600; color: #475569;">IN COMPUTER SCIENCE & ENGINEERING</span>
-        </p>
-      </div>
-
-      <div class="title-meta">
-        <p style="text-align: center; margin-bottom: 25px;">
-          <strong>Submitted By:</strong><br>
-          <span style="font-size: 13pt; font-weight: 700; color: #0f172a;">Bhupendra Sirvi</span><br>
-          Registration No: [Your Registration Number]<br>
-          Roll No: [Your Roll Number]
-        </p>
-
-        <p style="text-align: center; margin-bottom: 30px;">
-          <strong>Under the Guidance of:</strong><br>
-          <span style="font-size: 12pt; font-weight: 600; color: #0f172a;">[Faculty Mentor / Supervisor Name]</span><br>
-          Department of Computer Science & Engineering
-        </p>
-
-        <div style="text-align: center; border-top: 1px solid #cbd5e1; padding-top: 25px;">
-          <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 12pt; color: #0f172a; margin-bottom: 2px;">
-            DEPARTMENT OF COMPUTER SCIENCE & ENGINEERING
-          </p>
-          <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 11pt; color: #0d9488; margin-bottom: 4px;">
-            LOVELY PROFESSIONAL UNIVERSITY, PUNJAB
-          </p>
-          <p style="font-size: 10pt; color: #64748b;">
-            OCTOBER 2026
-          </p>
-        </div>
+    <div class="header-block">
+      <h1 class="title">GeoPulse</h1>
+      <div class="subtitle">Real-Time Emergency Response & Resource Dispatch System</div>
+      
+      <div class="meta-grid">
+        <div><strong>Student Name:</strong> Bhupendra Sirvi</div>
+        <div><strong>Degree:</strong> B.Tech (Computer Science & Engineering)</div>
+        <div><strong>Project Type:</strong> Web & Database Capstone</div>
+        <div><strong>GitHub:</strong> github.com/Bhupendrasirvi/GeoPulse</div>
       </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- DECLARATION & CERTIFICATE                  -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Declaration</h1>
+    <!-- 1. Introduction -->
+    <h2>1. Introduction</h2>
     <p>
-      I, <strong>Bhupendra Sirvi</strong>, hereby declare that the capstone project entitled <strong>"GeoPulse: Real-Time Hyperlocal Disaster Relief & Emergency Resource Dispatch Platform"</strong> submitted to the Department of Computer Science & Engineering, Lovely Professional University, is an authentic record of original project work completed by me under the guidance and supervision of my faculty advisor.
+      During disasters like flash floods, structural fires, or building collapses, getting help quickly is critical. Traditional emergency helplines often waste precious minutes because operators have to manually write down addresses and figure out who is nearby.
     </p>
     <p>
-      The matter presented in this report has not been submitted in whole or in part to any other University or Institute for the award of any degree, diploma, or certificate. Any contribution or algorithm adopted from standard academic literature has been duly acknowledged.
-    </p>
-    <div style="margin-top: 60px;">
-      <p><strong>Place:</strong> Lovely Professional University, Punjab</p>
-      <p><strong>Date:</strong> 16th October 2026</p>
-      <div style="width: 220px; border-top: 1px solid #0f172a; margin-top: 40px; padding-top: 5px; font-weight: 700;">
-        Bhupendra Sirvi<br>
-        <span style="font-size: 9.5pt; font-weight: 400; color: #64748b;">B.Tech Computer Science & Engineering</span>
-      </div>
-    </div>
-
-    <div class="page-break"></div>
-    <h1>Certificate of Authenticity</h1>
-    <p>
-      This is to certify that the project entitled <strong>"GeoPulse: Real-Time Hyperlocal Disaster Relief & Emergency Resource Dispatch Platform"</strong>, submitted by <strong>Bhupendra Sirvi</strong> in partial fulfillment of the requirements for the award of the Degree of <strong>Bachelor of Technology in Computer Science & Engineering</strong> from Lovely Professional University, Punjab, is a bonafide record of project work completed under my supervision and guidance.
-    </p>
-    <p>
-      The results and conclusions embodied in this report have been verified and satisfy the academic rigors expected for an undergraduate capstone dissertation.
+      <strong>GeoPulse</strong> is a fast, web-based emergency dispatch platform. It allows citizens in danger to broadcast their GPS coordinates and emergency type directly to a central command map, where the system automatically finds and assigns the closest available rescue squad in seconds using <strong>MongoDB's built-in location search</strong>.
     </p>
 
-    <div class="signature-grid" style="margin-top: 80px;">
-      <div>
-        <div class="sig-line"></div>
-        <strong>[Supervisor Name]</strong><br>
-        Project Guide / Faculty Mentor<br>
-        Department of CSE
-      </div>
-      <div>
-        <div class="sig-line"></div>
-        <strong>Head of Department (HOD)</strong><br>
-        Department of Computer Science & Engg.<br>
-        Lovely Professional University
-      </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- ABSTRACT                                   -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Abstract</h1>
-    <p>
-      During major urban flash floods, structural collapse crises, and sudden residential catastrophes, the first 60 minutes—termed the <strong>"Golden Hour"</strong>—determine casualty survival rates. Conventional computer-aided dispatch architectures suffer from severe spatial query latency due to expensive multi-table trigonometric joins in relational databases (SQL + PostGIS) and complex multi-hop message queues (Redis/Kafka) that introduce serialization delays and failure points.
-    </p>
-    <p>
-      This project designs and implements <strong>GeoPulse</strong>, an event-driven, high-concurrency disaster resource coordination platform powered entirely by a native <strong>NoSQL MongoDB</strong> distributed architecture. GeoPulse combines:
-    </p>
+    <!-- 2. Objectives -->
+    <h2>2. Project Objectives</h2>
     <ul>
-      <li><strong>Native 2dsphere Geospatial Indexing:</strong> Employs Google's S2 spherical quad-tree cell projections via the <code>$geoNear</code> aggregation pipeline, completing dynamic proximity searches within a 25 km radius in <strong>under 18 milliseconds</strong>.</li>
-      <li><strong>Polymorphic BSON GeoJSON Modeling:</strong> Accommodates diverse calamity attributes (trauma triage, flood entrapment levels, oxygen requirements) without schema lockups.</li>
-      <li><strong>Multi-Stage Priority Aggregation Pipeline:</strong> Dynamically computes priority-ranked dispatch scores by synthesizing incident severity, casualty count, and geodesic distance in a single database roundtrip.</li>
-      <li><strong>Autonomous TTL Data Lifecycle Engine:</strong> Automatically purges resolved records after 48 hours using native database background worker threads without cron jobs.</li>
-      <li><strong>Dual-Console Command Interface:</strong> Incorporates a citizen distress beacon and an operations command center featuring dark cartography, spatial report stacking, and full keyboard navigation.</li>
+      <li><strong>Sub-20ms Location Matching:</strong> Use MongoDB's <code>2dsphere</code> index to find the nearest rescue team within 15 km in less than 20 milliseconds.</li>
+      <li><strong>Simple Citizen SOS Portal:</strong> Give citizens a one-tap web form to drop their pin, pick their emergency category, and request help.</li>
+      <li><strong>Autonomous 48-Hour Cleanup:</strong> Use MongoDB's Time-To-Live (TTL) feature to auto-delete resolved alerts after 48 hours without needing manual cleanup scripts.</li>
+      <li><strong>Smart Report Stacking:</strong> Group duplicate calls from the same location into a single card with a counter (e.g. <code>x3 reports</code>) to prevent screen clutter.</li>
+      <li><strong>Local Backup Team Creation:</strong> Automatically register a local community squad if no team exists within 15 km so no victim goes unattended.</li>
+      <li><strong>No Complex External Brokers:</strong> Keep the system simple with Node.js and MongoDB without needing Redis or Kafka.</li>
     </ul>
-    <p>
-      Empirical benchmark evaluations reveal that GeoPulse maintains a sub-20ms query latency under continuous multi-casualty load, achieving an <strong>84% reduction in dispatch latency</strong> compared to standard relational spatial pipelines.
-    </p>
-    <p style="margin-top: 15px; font-size: 10pt;">
-      <strong>Keywords:</strong> Disaster Logistics, NoSQL MongoDB, 2dsphere Geospatial Indexing, Aggregation Pipeline, Real-Time Systems, GeoJSON, TTL Lifecycle.
-    </p>
 
-    <!-- ========================================== -->
-    <!-- CHAPTER 1: INTRODUCTION                   -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Chapter 1: Introduction</h1>
-    
-    <h2>1.1 Background & Context</h2>
-    <p>
-      When major catastrophes strike, emergency operations centers face severe information overload. Conventional rescue mechanisms typically rely on human call dispatchers who manually record addresses and coordinate squads via two-way radios. As urban density increases, manual dispatching fails to address localized flash floods, road blockages, and isolated distress calls from unmapped informal sectors.
-    </p>
-
-    <h2>1.2 The "Golden Hour" Latency Problem</h2>
-    <p>
-      In emergency trauma medicine, survival probabilities decrease precipitously for every minute of delay during the initial 60 minutes following an incident. Existing systems struggle with three major engineering limitations:
-    </p>
-    <ol>
-      <li><strong>Information Bottlenecks:</strong> Call centers are overwhelmed by duplicate distress calls while isolated casualties in dead zones go unassisted.</li>
-      <li><strong>Chronological vs Spatial Dispatch:</strong> Units are dispatched in First-In-First-Out (FIFO) order rather than by spherical distance, causing squads to traverse town while closer units remain idle.</li>
-      <li><strong>Database Locking:</strong> Concurrent spatial queries across millions of relational rows cause CPU spikes and multi-second locking during peak crisis hours.</li>
-    </ol>
-
-    <h2>1.3 Problem Statement</h2>
-    <p style="background: #f8fafc; border-left: 4px solid var(--accent-color); padding: 12px 16px; font-style: italic;">
-      "To architect an event-driven, distributed computing engine that eliminates first-hour dispatch latency and automatically pairs stranded disaster victims with the nearest available rescue teams in sub-second time, without requiring external message brokers or rigid relational database migrations."
-    </p>
-
-    <!-- ========================================== -->
-    <!-- CHAPTER 2: PROJECT OBJECTIVES              -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Chapter 2: Project Objectives</h1>
-
-    <h2>2.1 Primary Objective</h2>
-    <p>
-      To engineer an intelligent, event-driven disaster triage platform utilizing native MongoDB <code>2dsphere</code> geospatial indexing and aggregation pipelines to achieve sub-100ms incident-to-responder matching.
-    </p>
-
-    <h2>2.2 Specific Technical & Engineering Objectives</h2>
+    <!-- 3. Tech Stack -->
+    <h2>3. Technologies Used</h2>
     <table>
       <thead>
         <tr>
-          <th style="width: 10%;">No.</th>
-          <th style="width: 35%;">Objective</th>
-          <th>Engineering Implementation</th>
+          <th>Component</th>
+          <th>Technology</th>
+          <th>Role in Project</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><strong>01</strong></td>
-          <td><strong>Sub-100ms Spatial Matching</strong></td>
-          <td>Execute native spherical distance computations over Earth's WGS84 curvature using <code>$geoNear</code> in under 18ms.</td>
+          <td><strong>Frontend</strong></td>
+          <td>HTML5, Tailwind CSS, JavaScript</td>
+          <td>Lightweight, fast dual-view interface (Citizen SOS + Dispatcher Map).</td>
         </tr>
         <tr>
-          <td><strong>02</strong></td>
-          <td><strong>Polymorphic BSON Modeling</strong></td>
-          <td>Embed standard GeoJSON point schemas supporting diverse disaster metadata without requiring database migrations.</td>
+          <td><strong>Interactive Map</strong></td>
+          <td>Leaflet.js + Esri Dark Canvas</td>
+          <td>Displays dark-mode map, live emergency pins, and route lines.</td>
         </tr>
         <tr>
-          <td><strong>03</strong></td>
-          <td><strong>Multi-Stage Aggregation Triage</strong></td>
-          <td>Dynamically rank urgency scores (severity &times; casualties &divide; distance) within a single server-side database pipeline.</td>
+          <td><strong>Backend API</strong></td>
+          <td>Node.js & Express.js</td>
+          <td>Handles HTTP REST requests and communicates with MongoDB.</td>
         </tr>
         <tr>
-          <td><strong>04</strong></td>
-          <td><strong>Zero-Broker Real-Time Streaming</strong></td>
-          <td>Stream database mutations directly over WebSockets via native Change Streams without external Redis/Kafka message queues.</td>
-        </tr>
-        <tr>
-          <td><strong>05</strong></td>
-          <td><strong>Autonomous TTL Lifecycle</strong></td>
-          <td>Purge closed emergency records after 48 hours using MongoDB's background TTL index on <code>resolvedAt</code>.</td>
-        </tr>
-        <tr>
-          <td><strong>06</strong></td>
-          <td><strong>Hyperlocal Auto-Provisioning</strong></td>
-          <td>Dynamically register and commission neighborhood volunteer squads when no pre-deployed unit exists within the dispatch radius.</td>
+          <td><strong>Database</strong></td>
+          <td>MongoDB (Local / Atlas)</td>
+          <td>Stores coordinates, runs <code>$geoNear</code> spatial queries, and handles 48h TTL cleanup.</td>
         </tr>
       </tbody>
     </table>
 
-    <!-- ========================================== -->
-    <!-- CHAPTER 3: DATABASE DESIGN & ARCHITECTURE  -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Chapter 3: System Architecture & Database Design</h1>
+    <!-- 4. How It Works -->
+    <h2>4. How the System Works</h2>
+    <h3>A. For Citizens in Need:</h3>
+    <ol>
+      <li>Open the portal and click <strong>"Use My GPS"</strong> or click on the map.</li>
+      <li>Select the emergency category (Medical, Flood, Fire, Food).</li>
+      <li>Enter contact details, number of people trapped, and a short note.</li>
+      <li>Click <strong>"Transmit Emergency SOS Beacon"</strong>. The alert is saved immediately into MongoDB.</li>
+    </ol>
 
-    <h2>3.1 High-Level Architectural Flow</h2>
-    <pre>
-[ Citizen SOS Beacon ]                  [ Dispatch Command Center ]
-(GPS, Casualties, Urgency)              (Dark Cartography, Tooltips, Keys)
-          │                                         │
-          │ HTTP REST (POST)                        │ REST / WebSockets
-          ▼                                         ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│                   NODE.JS EXPRESS API BACKEND ENGINE                   │
-│  - GeoJSON Geometry Validator      - Dynamic Candidate Route Selector  │
-│  - Fallback Squad Auto-Provisioner - Aggregation Pipeline Controller   │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ Native MongoDB Driver
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│                        MONGODB NO-SQL DATABASE                         │
-├────────────────────────────────────────────────────────────────────────┤
-│ 1. 2dsphere Geospatial Index: Sub-18ms $geoNear spherical queries      │
-│ 2. Aggregation Pipeline: Multi-stage triage scoring (Severity x Count) │
-│ 3. Autonomous TTL Thread: 48h automatic self-cleaning on resolvedAt    │
-│ 4. Change Streams: Native Oplog event emission (Zero external broker)  │
-└────────────────────────────────────────────────────────────────────────┘</pre>
+    <h3>B. For Dispatchers & Coordinators:</h3>
+    <ol>
+      <li>The dispatcher sees a clean, color-coded feed of open emergencies (Red = Action Needed, Blue = En Route, Green = Resolved).</li>
+      <li>Click <strong>"Match Unit"</strong> (or press <kbd>M</kbd>). The system queries MongoDB and draws a blue route line to the nearest squad.</li>
+      <li>When rescue is complete, click <strong>"Resolve"</strong> (or press <kbd>R</kbd>). This activates the 48-hour auto-delete timer.</li>
+    </ol>
 
-    <h2>3.2 BSON Schema Definitions</h2>
-    <h3>3.2.1 `incidents` Collection Document Structure</h3>
+    <!-- 5. Database Design -->
+    <h2>5. Database Design (Collections)</h2>
+    <p>MongoDB stores data in flexible BSON documents across 3 collections:</p>
+
+    <h3>1. `incidents` Collection</h3>
     <pre>{
-  "_id": ObjectId("64d019f2a4c1e2b58d4a1001"),
   "id": "SOS-104",
   "caller": "Kavita Sharma",
   "phone": "+91 98141-89210",
-  "landmark": "Near Block 38, Law Gate Road",
   "category": "Medical / Trauma",
   "severity": "CRITICAL",
   "victims": 2,
-  "note": "Diabetic patient experiencing chest pain; road knee-deep in water.",
+  "note": "Diabetic patient having chest pain, road flooded.",
   "location": {
     "type": "Point",
-    "coordinates": [75.7050, 31.2555]  // [Longitude, Latitude]
+    "coordinates": [75.7050, 31.2555] // [Longitude, Latitude]
   },
-  "status": "DISPATCHED",
-  "assignedTo": "LPU Campus Quick Response Squad",
-  "reportCount": 3,
-  "createdAt": ISODate("2026-10-15T14:30:00.000Z"),
+  "status": "OPEN",
+  "assignedTo": null,
+  "createdAt": "2026-10-15T14:30:00Z",
   "resolvedAt": null
 }</pre>
 
-    <h3>3.2.2 Indexing Declarations</h3>
-    <pre>// 1. Geospatial spherical 2dsphere index
-db.incidents.createIndex({ location: "2dsphere" });
-db.responders.createIndex({ location: "2dsphere" });
+    <h3>2. `responders` Collection</h3>
+    <pre>{
+  "id": "R-PB1",
+  "name": "LPU Campus Quick Response Squad",
+  "type": "Rescue Team",
+  "status": "Available",
+  "contact": "+91 98761-11001",
+  "location": {
+    "type": "Point",
+    "coordinates": [75.7045, 31.2560]
+  }
+}</pre>
 
-// 2. Autonomous 48-hour TTL self-cleaning index
-db.incidents.createIndex({ resolvedAt: 1 }, { expireAfterSeconds: 172800 });</pre>
+    <!-- 6. Key Features -->
+    <h2>6. Key Features & Implementation</h2>
 
-    <!-- ========================================== -->
-    <!-- CHAPTER 4: IMPLEMENTATION METHODOLOGY      -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Chapter 4: Implementation Methodology</h1>
-
-    <h2>4.1 Geospatial Matching Pipeline ($geoNear)</h2>
+    <h3>Feature 1: Finding Nearest Team using `$geoNear`</h3>
     <p>
-      The core dispatch calculation executes entirely inside the MongoDB database engine using the <code>$geoNear</code> aggregation pipeline:
+      Instead of calculating distances manually in JavaScript, MongoDB computes spherical distance directly:
     </p>
-    <pre>const pipeline = [
+    <pre>// MongoDB query in server.js
+const pipeline = [
   {
     $geoNear: {
-      near: { 
-        type: 'Point', 
-        coordinates: [parseFloat(lng), parseFloat(lat)] 
-      },
-      distanceField: 'distanceMeters',
-      spherical: true,            // WGS84 Geodesic Ellipsoid Math
-      maxDistance: 25000,         // Search up to 25 km radius
-      query: { status: 'Available' }
+      near: { type: "Point", coordinates: [lng, lat] },
+      distanceField: "distanceMeters",
+      spherical: true,
+      maxDistance: 15000 // 15 km search radius
     }
   },
-  { $limit: 3 }                   // Returns top 3 candidate units with ETAs
+  { $limit: 1 }
 ];
+const nearestTeam = await db.collection('responders').aggregate(pipeline).toArray();</pre>
 
-const results = await db.collection('responders').aggregate(pipeline).toArray();</pre>
-
-    <h2>4.2 Hyperlocal Volunteer Squad Auto-Provisioning</h2>
+    <h3>Feature 2: 48-Hour Self-Cleaning (TTL Index)</h3>
+    <pre>// MongoDB TTL Index setup
+db.incidents.createIndex(
+  { resolvedAt: 1 }, 
+  { expireAfterSeconds: 172800 } // 48 Hours = 172,800 Seconds
+);</pre>
     <p>
-      If a disaster occurs outside established municipal zones where pre-deployed units are beyond 25 km, GeoPulse dynamically commissions a rapid-response community squad approximately 900 meters from the victim's coordinates and immediately issues dispatch vectors. This ensures zero unhandled distress beacons.
+      Once marked resolved, MongoDB automatically removes the record after 48 hours without requiring background cron scripts.
     </p>
 
-    <!-- ========================================== -->
-    <!-- CHAPTER 5: RESULTS & BENCHMARKS            -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Chapter 5: Results & Performance Analysis</h1>
+    <h3>Feature 3: Keyboard Accelerators for Dispatchers</h3>
+    <ul>
+      <li><kbd>/</kbd> — Jump to search bar</li>
+      <li><kbd>J</kbd> / <kbd>K</kbd> — Move up/down through incident list</li>
+      <li><kbd>M</kbd> — Match and dispatch nearest squad</li>
+      <li><kbd>R</kbd> — Mark incident as resolved</li>
+      <li><kbd>N</kbd> — Simulate incoming emergency call</li>
+    </ul>
 
-    <h2>5.1 Empirical Performance Benchmarks</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Performance Metric</th>
-          <th>Measured Value</th>
-          <th>Operational Impact</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>$geoNear Query Response Time</strong></td>
-          <td><strong>14.2 milliseconds</strong></td>
-          <td>Immediate responder assignment during the "Golden Hour".</td>
-        </tr>
-        <tr>
-          <td><strong>End-to-End Beacon Dispatch</strong></td>
-          <td><strong>38.6 milliseconds</strong></td>
-          <td>Sub-second SOS submission from citizen mobile devices.</td>
-        </tr>
-        <tr>
-          <td><strong>WebSocket Change Stream Latency</strong></td>
-          <td><strong>24.1 milliseconds</strong></td>
-          <td>Real-time synchronization across dispatcher consoles.</td>
-        </tr>
-        <tr>
-          <td><strong>Spatial Index Memory Footprint</strong></td>
-          <td><strong>1.42 MB (10,000 records)</strong></td>
-          <td>Minimal RAM utilization allowing deployment on edge nodes.</td>
-        </tr>
-        <tr>
-          <td><strong>TTL Purge Worker Overhead</strong></td>
-          <td><strong>0.00% Application CPU</strong></td>
-          <td>Runs as native MongoDB C++ background thread.</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2>5.2 Comparative Architecture Analysis</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Feature</th>
-          <th>Conventional Relational (SQL + PostGIS)</th>
-          <th>GeoPulse (Native MongoDB NoSQL)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Spatial Engine</strong></td>
-          <td>PostGIS Geometry Extensions / Haversine SQL</td>
-          <td>Native Google S2 2dsphere Hierarchical Cells</td>
-        </tr>
-        <tr>
-          <td><strong>Query Latency (15km)</strong></td>
-          <td>110 ms &ndash; 340 ms</td>
-          <td><strong>14 ms &ndash; 18 ms (84% Faster)</strong></td>
-        </tr>
-        <tr>
-          <td><strong>Message Streaming</strong></td>
-          <td>Requires External Kafka / Redis Pub-Sub</td>
-          <td><strong>Native Oplog Change Streams (Zero Broker)</strong></td>
-        </tr>
-        <tr>
-          <td><strong>Schema Evolution</strong></td>
-          <td>Rigid Tables (ALTER TABLE write locks)</td>
-          <td><strong>Polymorphic BSON Documents</strong></td>
-        </tr>
-        <tr>
-          <td><strong>Data Sunsetting</strong></td>
-          <td>Scheduled OS Cron Jobs / Batch Scripts</td>
-          <td><strong>Autonomous 48h TTL Database Index</strong></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- ========================================== -->
-    <!-- CHAPTER 6: CONCLUSION & REFERENCES         -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Chapter 6: Conclusion & Future Scope</h1>
-    
-    <h2>6.1 Conclusion</h2>
-    <p>
-      The <strong>GeoPulse</strong> project demonstrates the superiority of a pure, native NoSQL geospatial architecture for mission-critical disaster relief operations. By executing spherical Earth-distance queries, priority aggregation scoring, real-time event streaming, and autonomous data lifecycle purging within MongoDB, the platform delivers a resilient, high-speed dispatch command center that eliminates the first-hour latency gap.
-    </p>
-
-    <h2>6.2 References</h2>
-    <ol style="font-size: 10pt; line-height: 1.6;">
-      <li>MongoDB Inc., <em>"Geospatial Queries and 2dsphere Indexing Architecture,"</em> MongoDB Technical Whitepaper, 2026.</li>
-      <li>S. Shekhar, H. Xiong, <em>"Encyclopedia of GIS,"</em> Springer Science & Business Media, 2nd Edition, 2017.</li>
-      <li>Google Open Source, <em>"S2 Geometry Library: Spherical Geometry and Hierarchical Quad-Trees,"</em> GitHub, 2024.</li>
-      <li>Internet Engineering Task Force (IETF), <em>"The GeoJSON Format (RFC 7946),"</em> IETF Proposed Standard, 2016.</li>
-      <li>National Disaster Management Authority (NDMA), <em>"Incident Response System Guidelines,"</em> Government of India, 2020.</li>
-      <li>M. Stonebraker, <em>"The Case for Shared Nothing Architecture,"</em> IEEE Database Engineering Bulletin, Vol. 9, No. 1, pp. 4-9.</li>
-      <li>V. Pramanik, A. Sengupta, <em>"Evaluation of Spatial Indexing Techniques for Emergency Logistics,"</em> International Journal of Geographical Information Science, Vol. 35, Issue 4, pp. 782-804.</li>
+    <!-- 7. How to Run -->
+    <h2>7. How to Run the Project</h2>
+    <ol>
+      <li><strong>Start MongoDB:</strong> Make sure MongoDB is running on your machine (<code>net start MongoDB</code>).</li>
+      <li><strong>Start Backend:</strong> Open terminal in <code>geopulse-backend</code> and run <code>node server.js</code>.</li>
+      <li><strong>Open Frontend:</strong> Open <code>geopulse-frontend/index.html</code> in any web browser, or double click <code>start.bat</code>.</li>
     </ol>
+
+    <!-- 8. Conclusion -->
+    <h2>8. Conclusion</h2>
+    <p>
+      <strong>GeoPulse</strong> proves that an effective, mission-critical emergency response system does not require over-complicated cloud architectures. By taking full advantage of MongoDB's built-in geospatial queries and TTL indexes alongside a clean, responsive Leaflet map, GeoPulse delivers reliable, sub-second dispatch coordination to help save lives during disasters.
+    </p>
 
   </div>
 </body>
