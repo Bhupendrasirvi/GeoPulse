@@ -155,15 +155,15 @@ app.post('/api/match', async (req, res) => {
           near: { type: 'Point', coordinates: [parseFloat(lng), parseFloat(lat)] },
           distanceField: 'distanceMeters',
           spherical: true,
-          maxDistance: 15000 // 15 km radius
+          maxDistance: 25000 // 25 km radius
         }
       },
-      { $limit: 1 }
+      { $limit: 3 }
     ];
 
     let results = await db.collection('responders').aggregate(pipeline).toArray();
     
-    // If no unit registered within 15km, dynamically commission a local emergency volunteer squad ~900m away
+    // If no unit registered within radius, dynamically commission a local emergency volunteer squad ~900m away
     if (results.length === 0) {
       const autoResp = {
         id: 'R-LOC-' + Math.floor(100 + Math.random() * 900),
@@ -185,11 +185,41 @@ app.post('/api/match', async (req, res) => {
         { id: incId },
         { $set: { status: 'DISPATCHED', assignedTo: matched.name } }
       );
+
+      const candidates = results.map(r => ({
+        id: r.id,
+        name: r.name,
+        type: r.type,
+        status: r.status,
+        location: r.location,
+        distanceMeters: Math.round(r.distanceMeters),
+        etaMinutes: Math.max(1, Math.round(r.distanceMeters / 320))
+      }));
+
       console.log(`[MongoDB $geoNear] Hyperlocal match: ${matched.name} (${Math.round(matched.distanceMeters)}m away) to ${incId}`);
-      res.json({ success: true, matchedResponder: matched, distanceMeters: matched.distanceMeters });
+      res.json({
+        success: true,
+        matchedResponder: matched,
+        distanceMeters: matched.distanceMeters,
+        candidates
+      });
     } else {
-      res.json({ success: false, message: 'No available responders within 15km radius' });
+      res.json({ success: false, message: 'No available responders within 25km radius' });
     }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 4. POST /api/assign - Manually dispatch a specific candidate unit
+app.post('/api/assign', async (req, res) => {
+  try {
+    const { incId, responderName } = req.body;
+    await db.collection('incidents').updateOne(
+      { id: incId },
+      { $set: { status: 'DISPATCHED', assignedTo: responderName } }
+    );
+    res.json({ success: true, incId, assignedTo: responderName });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
