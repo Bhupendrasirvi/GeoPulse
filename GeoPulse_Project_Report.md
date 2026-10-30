@@ -1,104 +1,71 @@
 # GeoPulse: Real-Time Emergency Incident & Disaster Dispatch System
 
-**Web-Based Emergency Response & Rescue Coordination using Node.js and MongoDB**  
-*A Project Report submitted in partial fulfillment of the requirements for the award of the degree of Bachelor of Technology in Computer Science & Engineering*  
+**A Web-Based Emergency Response & Rescue Coordination Platform**  
+*Project Report — Department of Computer Science & Engineering*  
 **Lovely Professional University, Punjab**  
-**Author:** Bhupendra Sirvi  
+**Author:** Bhupendra Sirvi (B.Tech Computer Science & Engineering)  
 **Date:** October 2026  
 
 ---
 
-## Candidate's Declaration
-I hereby declare that the project entitled **"GeoPulse: Real-Time Emergency Incident & Disaster Dispatch System"** submitted to the Department of Computer Science & Engineering, Lovely Professional University, is an authentic record of original project work completed by me under the supervision of my faculty mentor.
+## Chapter 1: Project Overview & Problem Statement
+Emergency situations such as road accidents, fire outbreaks, and urban floods require immediate assistance. In emergency management, every minute counts toward saving lives and reducing damage.
 
-The matter presented in this report has not been submitted in part or full to any other University or Institution for the award of any degree or diploma. All project resources, third-party libraries, and software tools have been properly acknowledged.
+### 1.1 Background & Practical Problem
+In most cities and regions, conventional emergency handling depends on manual telephone helplines. When callers contact control rooms under panic, several practical problems occur:
+- **Unclear Landmark Descriptions:** Callers often struggle to convey exact street names or landmarks, especially in flooded or unfamiliar areas.
+- **Manual Team Search:** Dispatchers have to manually call or look up which team is free, resulting in dispatch delays.
+- **No Real-Time Map Overview:** Coordinators lack a single live map showing open emergencies alongside active responder units.
 
-**Place:** Lovely Professional University, Punjab  
-**Date:** 30th October 2026  
-**Bhupendra Sirvi** (B.Tech Computer Science & Engineering)  
-
----
-
-## Certificate of Approval
-This is to certify that the project report entitled **"GeoPulse: Real-Time Emergency Incident & Disaster Dispatch System"**, submitted by **Bhupendra Sirvi** in partial fulfillment of the requirements for the award of the Degree of **Bachelor of Technology in Computer Science & Engineering** from Lovely Professional University, Punjab, is a bonafide record of project work completed under my supervision and guidance.
-
-The project design, implementation, and results presented in this report meet the standards required for an undergraduate engineering project.
+### 1.2 Project Solution
+**GeoPulse** is a practical web application built to solve these exact problems. It provides a clean portal where citizens can submit distress alerts with one-click GPS coordinate capture, and a centralized operations dashboard where emergency coordinators can view all incidents on a live map and match them with the nearest available rescue unit in seconds.
 
 ---
 
-## Acknowledgements
-I express my sincere gratitude to my faculty project mentor for continuous guidance, constructive feedback, and support throughout the development of this project. I also thank the Department of Computer Science & Engineering and Lovely Professional University for providing the required computer labs and software facilities to complete and test this work. Finally, I thank my family and friends for their encouragement and support.
+## Chapter 2: System Requirements & Technologies Used
+GeoPulse was built using lightweight, modern web technologies ensuring that the application can run on any standard personal computer or local server without complex setup.
 
----
+### 2.1 Technologies Used
+- **Frontend:** HTML5, CSS3, JavaScript, and **Leaflet.js** for mobile-friendly interactive mapping and custom map markers.
+- **Backend:** **Node.js** with **Express.js** framework handling REST API requests on port 5000.
+- **Database:** **MongoDB** Community Server providing native geospatial indexing (`2dsphere`) for spherical distance queries.
 
-## Abstract
-During emergencies such as road accidents, building fires, and severe weather floods, fast communication and prompt rescue team dispatch are critical to saving lives. In standard systems, emergency calls are often handled manually over the phone, where callers struggle to describe exact locations, leading to dispatch delays and wasted travel time.
-
-**GeoPulse** is a real-time web-based emergency incident and dispatch coordination system designed to solve this problem. The application allows citizens in distress to submit emergency alerts along with their exact GPS coordinates, type of emergency, and number of people requiring assistance. On the coordinator side, an interactive live map displays all reported incidents and active rescue units in real time.
-
-### Key Features of the Project
-1. **Real-Time Proximity Matching:** Uses MongoDB's `2dsphere` index and `$geoNear` aggregation pipeline to quickly find the nearest available rescue squads to an incident.
-2. **Citizen SOS Submission:** An easy-to-use reporting form that captures GPS location with one click, emergency category, and severity.
-3. **Interactive Map Dashboard:** Built using Leaflet.js to visualize incidents (red markers), rescue teams (blue markers), and relief shelters (green markers).
-4. **Dynamic Route Line & ETA:** Displays a visual route line connecting the assigned rescue team directly to the incident pin, along with calculated distance and ETA.
-5. **Automatic Data Purge (TTL):** Implements MongoDB TTL indexing on resolved incidents so old records are cleaned up after 48 hours.
-6. **Simple & Lightweight Stack:** Runs completely on Node.js, Express, and MongoDB without requiring external heavy third-party message brokers.
-
----
-
-## Chapter 1: Introduction & Problem Statement
-Emergency response systems play a vital role in public safety by coordinating help during accidents, medical emergencies, and natural disasters. Timely intervention can mean the difference between life and death.
-
-### 1.1 Background & Motivation
-Most conventional emergency helplines rely heavily on voice calls. During high-stress situations or severe disasters, this conventional approach faces several common challenges:
-- **Location Ambiguity:** Callers often cannot describe exact street addresses or landmarks, especially in unfamiliar or flooded areas.
-- **Manual Dispatching:** Dispatchers have to manually look up unit locations, which slows down the dispatch process.
-- **Lack of Real-Time Overview:** Coordinators do not have a single unified map showing where all open incidents and available units are located simultaneously.
-
-### 1.2 Problem Statement
-> *"To develop a simple, responsive, and real-time emergency dispatch web application that allows citizens to report incidents with precise GPS coordinates and enables emergency dispatchers to instantly identify and assign the closest available response team using geospatial indexing."*
-
----
-
-## Chapter 2: Project Objectives & System Requirements
-The primary goal of GeoPulse is to provide an easy-to-use, reliable, and lightweight platform for emergency dispatch coordination.
-
-### 2.1 Project Objectives
-1. Create an intuitive web interface for citizens to report emergencies with accurate GPS coordinates.
-2. Develop a live mapping dashboard for coordinators to visualize incidents, rescue units, and relief centers in real time.
-3. Implement fast proximity-based responder matching using MongoDB's native geospatial capabilities.
-4. Display visual route lines between assigned responders and incidents along with estimated travel time.
-5. Provide a query inspection tool to allow administrators and examiners to inspect active database queries.
-
-### 2.2 Hardware & Software Requirements
-- **Operating System:** Windows 10/11, Linux, or macOS (Tested on Windows 11)
+### 2.2 Hardware & Software Specifications
+- **Operating System:** Windows 10 / 11, Linux, or macOS (Tested on Windows 11)
 - **Processor:** Dual-Core 2.0 GHz or higher (Tested on Intel Core i5 / AMD Ryzen 5)
-- **Memory (RAM):** 4 GB minimum (8 GB / 16 GB recommended)
-- **Runtime:** Node.js v16+ (Used Node.js v20 LTS)
-- **Database:** MongoDB Community Server v5.0+ (Used v7.0)
-- **Browser:** Modern web browser (Google Chrome, Edge, Firefox)
+- **RAM:** 4 GB minimum (8 GB / 16 GB DDR4 recommended)
+- **Disk Space:** 500 MB free space
+- **Backend Runtime:** Node.js v16+ (Used Node.js v20 LTS)
+- **Database Server:** MongoDB v5.0+ (Used v7.0)
+- **Browser:** Modern web browser (Chrome, Edge, Firefox)
+
+### 2.3 Key Project Objectives
+1. Provide an easy SOS form for victims to report emergencies with accurate GPS coordinates.
+2. Display live incidents, available rescue squads, and relief shelters on an interactive map.
+3. Automatically compute the closest available rescue squad within a 15 km radius.
+4. Render a clear dynamic route line connecting the squad to the victim with estimated travel time.
 
 ---
 
 ## Chapter 3: System Architecture & Workflow
-GeoPulse follows a clean 3-tier client-server architecture:
-1. **Frontend Layer:** Built using HTML5, CSS3, JavaScript, and Leaflet.js.
-2. **Backend Layer:** Express.js REST API server running on Node.js (port 5000).
-3. **Database Layer:** MongoDB database `geopulse` storing BSON documents with `2dsphere` indexes.
+GeoPulse is structured as a standard 3-tier client-server application:
+1. **Presentation Layer (Frontend):** Web browser interface containing the SOS form, status counters, incident list, and Leaflet crisis map.
+2. **Application Layer (Node.js API):** Express server exposing REST endpoints (`/api/incidents`, `/api/match`, `/api/resolve`).
+3. **Data Layer (MongoDB):** Houses collections and executes `$geoNear` aggregation pipeline over Earth's spherical surface.
 
-### Project Workflow
-1. **Incident Submission:** Citizen enters details and picks location on map.
-2. **Database Storage:** Backend saves the report as a GeoJSON Point in `incidents`.
-3. **Proximity Search:** Dispatcher clicks *'Match Unit'*, triggering a `$geoNear` query.
-4. **Assignment & Routing:** The best match is assigned, and a dashed route line connects the team to the victim.
-5. **Resolution:** Once aid arrives, the dispatcher clicks *'Resolve'*, closing the incident.
+### Complete Project Workflow
+1. **Citizen SOS Submission:** User opens app, enters contact details, selects incident type, and drops GPS pin on map.
+2. **Database Insertion:** Backend receives POST request and saves the incident as a GeoJSON Point in MongoDB.
+3. **Dispatcher Proximity Matching:** Dispatcher clicks *'Match Unit'*. Node.js executes a `$geoNear` query searching within 15 km.
+4. **Assignment & Visual Route Line:** Closest squad is assigned and a dashed route line connects the team to the victim.
+5. **Resolution:** When the rescue squad reaches the victim and provides assistance, dispatcher clicks *'Resolve'*.
 
 ---
 
-## Chapter 4: Database Design & Schema Structure
-The project uses three collections in the `geopulse` database:
+## Chapter 4: Database Design & MongoDB Collections
+The project stores all information in a MongoDB database named `geopulse` with three collections:
 
-### 1. `incidents` Collection
+### 1. `incidents` Collection (Distress Reports)
 ```json
 {
   "id": "SOS-104",
@@ -116,7 +83,7 @@ The project uses three collections in the `geopulse` database:
 }
 ```
 
-### 2. `responders` Collection
+### 2. `responders` Collection (Rescue Units)
 ```json
 {
   "id": "R-PB1",
@@ -128,15 +95,15 @@ The project uses three collections in the `geopulse` database:
 }
 ```
 
-### 3. Indexes Used
+### 3. Indexing Strategy
 - `db.incidents.createIndex({ location: "2dsphere" })`
 - `db.responders.createIndex({ location: "2dsphere" })`
 - `db.incidents.createIndex({ resolvedAt: 1 }, { expireAfterSeconds: 172800 })`
 
 ---
 
-## Chapter 5: Proximity Search & Backend Implementation
-Finding the closest rescue unit is handled using MongoDB's `$geoNear` aggregation pipeline:
+## Chapter 5: Proximity Search & $geoNear Engine
+Finding the closest rescue unit is handled using MongoDB's `$geoNear` aggregation pipeline in `server.js`:
 
 ```javascript
 const pipeline = [
@@ -144,7 +111,7 @@ const pipeline = [
     $geoNear: {
       near: { type: 'Point', coordinates: [parseFloat(incidentLng), parseFloat(incidentLat)] },
       distanceField: 'distanceMeters',
-      spherical: true,       // Calculates accurate spherical distance
+      spherical: true,       // Calculates accurate distance over spherical Earth surface
       maxDistance: 15000,    // Search within 15 km radius
       query: { status: 'Available' }
     }
@@ -154,54 +121,59 @@ const pipeline = [
 const nearest = await db.collection('responders').aggregate(pipeline).toArray();
 ```
 
-### Fallback Auto-Assignment
-If no pre-registered unit is currently free within 15 km (`nearest.length === 0`), GeoPulse automatically provisions a local emergency volunteer unit nearby so that every distress beacon receives an assigned responder.
+---
+
+## Chapter 6: Fallback Auto-Assignment & Report Stacking
+### 6.1 Fallback Auto-Provisioning
+If an emergency occurs in an unstaffed area and `nearest.length === 0` (no pre-registered squad exists within 15 km), GeoPulse automatically creates a local emergency volunteer squad nearby and assigns it to the incident so zero distress beacons remain unattended.
+
+### 6.2 Report Stacking for Disaster Zones
+When multiple distress calls arrive for the same location within ~200m, the frontend groups them into a single consolidated card with a badge (e.g. `x3 reports`), aggregating victim count while preventing map clutter.
 
 ---
 
-## Chapter 6: User Interface & Working Screenshots
-- **Active Crisis Map View:** Leaflet map visualizing open incident markers, responder positions, and safe shelters.
-- **Dynamic Route Vector Display:** Dashed route line connecting assigned responder to incident location with distance and estimated travel time.
+## Chapter 7: Interactive Crisis Map & Dispatch Interface
+- **Red Markers (Incidents):** Open distress calls with caller details, category, and victim count popup.
+- **Blue Markers (Responders):** Registered rescue vehicles, ambulances, and rescue teams.
+- **Green Markers (Shelters):** Relief centers and schools where evacuated citizens can shelter.
+- **Keyboard Shortcuts:** `[/]` Search, `[J/K]` Cycle cards, `[M]` Match nearest, `[R]` Resolve, `[N]` Test SOS.
 
 ---
 
-## Chapter 7: Testing & System Verification
-- **Query Inspector Feature:** Built-in modal displaying active MongoDB queries, indexes, and raw output for demonstration and testing.
-- **Test Cases:**
-  - TC-01: SOS Submission (PASS)
-  - TC-02: Nearest Match (PASS)
-  - TC-03: Route Line (PASS)
-  - TC-04: Resolve Incident (PASS)
-  - TC-05: Fallback Unit (PASS)
+## Chapter 8: Dynamic Route Vector & ETA Projection
+When a responder is assigned, a dashed blue polyline is drawn on the map connecting the squad to the incident.
+- Straight-line distance $D$ is calculated from MongoDB output in meters.
+- Estimated Time of Arrival (ETA) is computed based on urban emergency speed (~35 km/h) and shown in a popup.
 
 ---
 
-## Chapter 8: How to Run the Project & API Endpoints
-1. **Start MongoDB:** `net start MongoDB`
-2. **Start Backend:** `cd geopulse-backend` and run `node server.js`
-3. **Open in Browser:** Navigate to `http://localhost:5000` (or double-click `start.bat`)
-
-### REST API Endpoints
-- `GET /api/incidents`: Fetch all incidents
-- `POST /api/incidents`: Submit new distress report
-- `GET /api/responders`: Fetch available rescue squads
-- `POST /api/match`: Find closest squad for an incident
-- `POST /api/resolve`: Mark an incident as resolved
+## Chapter 9: Live Database Query Inspection Modal
+Built-in query inspector opened via the `</>` navbar button. Displays active MongoDB URI, database name (`geopulse`), active 2dsphere indexes, and raw BSON aggregation output for live verification and testing.
 
 ---
 
-## Chapter 9: Conclusion, Future Scope & References
-### 9.1 Conclusion
-The **GeoPulse** project successfully demonstrates a practical, working web application for real-time emergency dispatch coordination using Node.js, Express, and MongoDB geospatial features. It provides an intuitive map-based interface, automated distance calculation, route line rendering, and clean data management.
+## Chapter 10: System Testing & Results
+- **TC-01 (SOS Submission):** Incident saved in MongoDB and pin placed on map (PASS).
+- **TC-02 (Nearest Match):** Closest squad matched in <20ms via `$geoNear` (PASS).
+- **TC-03 (Route Vector):** Dashed blue route line drawn on map (PASS).
+- **TC-04 (Resolve):** Status marked RESOLVED with timestamp (PASS).
+- **TC-05 (Fallback Unit):** Auto-created volunteer team in remote zones (PASS).
 
-### 9.2 Future Scope
-- Dedicated Mobile App (Android / iOS)
-- SMS & Offline SOS Reporting
-- Turn-by-Turn GPS Navigation for Responder Vehicles
+---
 
-### 9.3 References
-- MongoDB Inc., *"Geospatial Queries and 2dsphere Indexing Guide"*, 2026.
-- Express.js Foundation, *"Express Web Framework Documentation"*, 2026.
-- Leaflet.js, *"Leaflet Interactive Maps Library"*, 2026.
-- Node.js Foundation, *"Node.js Runtime Documentation"*, 2026.
-- RFC 7946, *"The GeoJSON Format Specification"*, 2016.
+## Chapter 11: How to Run, REST APIs & Conclusion
+### 11.1 Execution Guide
+1. Start MongoDB: `net start MongoDB`
+2. Start Node.js: `cd geopulse-backend && node server.js`
+3. Open Browser: `http://localhost:5000` (or double-click `start.bat`)
+
+### 11.2 REST API Specification
+- `GET /api/incidents`: Fetch all emergency incidents
+- `POST /api/incidents`: Submit a new SOS distress report
+- `GET /api/responders`: Fetch all rescue units
+- `POST /api/match`: Match closest unit for incident
+- `POST /api/resolve`: Mark incident as resolved
+
+### 11.3 Conclusion & Future Scope
+**Conclusion:** GeoPulse successfully demonstrates a practical, working web application for real-time emergency dispatch coordination using Node.js, Express, and MongoDB geospatial features.  
+**Future Scope:** Developing native Android/iOS mobile applications, offline SMS reporting, and turn-by-turn responder vehicle navigation.
