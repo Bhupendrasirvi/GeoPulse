@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GeoPulse — Comprehensive 12-Page Project Report</title>
+  <title>GeoPulse — Project Report</title>
   
-  <!-- Clean Academic Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -94,12 +93,6 @@
       padding-bottom: 3px;
     }
 
-    h3 {
-      font-size: 10pt;
-      margin-top: 10px;
-      margin-bottom: 4px;
-    }
-
     p {
       margin-bottom: 8px;
       text-align: justify;
@@ -158,32 +151,18 @@
       border-radius: 3px;
     }
 
-    pre code {
-      background: transparent;
-      color: inherit;
-      padding: 0;
-    }
-
-    kbd {
-      background: #e2e8f0;
-      border: 1px solid #cbd5e1;
-      border-radius: 3px;
-      padding: 1px 4px;
-      font-family: monospace;
-      font-size: 7.5pt;
-    }
-
     .figure-container {
+      margin: 12px 0 16px 0;
       text-align: center;
-      margin: 12px 0;
     }
 
-    .figure-img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 6px;
-      border: 1px solid #cbd5e1;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    .figure-container img {
+      width: 100%;
+      max-height: 320px;
+      object-fit: contain;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
     .figure-caption {
@@ -193,530 +172,362 @@
       margin-top: 4px;
     }
 
-    /* Print Button */
-    .print-btn {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
+    .btn-print {
+      display: inline-block;
       background: #0d9488;
       color: #ffffff;
-      border: none;
-      padding: 11px 22px;
-      border-radius: 30px;
-      font-weight: 700;
-      font-size: 9.5pt;
-      box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4);
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 9pt;
+      margin-bottom: 20px;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      z-index: 999;
-      transition: transform 0.2s;
+      border: none;
     }
-    .print-btn:hover {
+    .btn-print:hover {
       background: #0f766e;
-      transform: translateY(-2px);
     }
   </style>
 </head>
 <body>
 
-  <!-- Floating Print Button -->
-  <button onclick="window.print()" class="print-btn no-print">
-    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2m-4 0H8a2 2 0 00-2 2v4h12v-4a2 2 0 00-2-2z"></path></svg>
-    Save as PDF / Print 12-Page Report
-  </button>
+<div class="report-card">
+  <div class="no-print" style="text-align: right;">
+    <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
+  </div>
 
-  <div class="report-card">
+  <!-- PAGE 1: TITLE PAGE -->
+  <div style="text-align: center; padding-top: 40px; padding-bottom: 40px;">
+    <p style="font-weight: 700; color: #64748b; letter-spacing: 1.5px; font-size: 10pt; text-align: center; margin-bottom: 12px;">A PROJECT REPORT ON</p>
+    <h1 style="border: none; font-size: 22pt; color: #0f172a; line-height: 1.25; margin-bottom: 8px; text-align: center;">GeoPulse: Real-Time Emergency Incident & Disaster Dispatch System</h1>
+    <p style="color: #0d9488; font-size: 11pt; font-weight: 500; text-align: center; margin-bottom: 30px;">Web-Based Emergency Response & Rescue Coordination using Node.js and MongoDB</p>
 
-    <!-- ========================================== -->
-    <!-- PAGE 1: TITLE PAGE                         -->
-    <!-- ========================================== -->
-    <div style="text-align: center; min-height: 800px; display: flex; flex-direction: column; justify-content: space-between; padding: 40px 10px;">
+    <p style="font-style: italic; color: #475569; font-size: 9.5pt; text-align: center; margin-bottom: 4px;">Submitted in partial fulfillment of the requirements for the award of the degree of</p>
+    <h2 style="border: none; font-size: 13pt; text-align: center; margin-top: 2px; margin-bottom: 2px;">BACHELOR OF TECHNOLOGY</h2>
+    <p style="font-weight: 700; color: #0d9488; font-size: 10pt; text-align: center; margin-bottom: 40px;">IN COMPUTER SCIENCE & ENGINEERING</p>
+
+    <div style="display: flex; justify-content: space-between; gap: 20px; margin: 0 auto; max-width: 620px; text-align: left; background: #f8fafc; border: 1px solid #cbd5e1; padding: 16px; border-radius: 4px;">
       <div>
-        <div style="font-size: 10pt; font-weight: 700; color: #64748b; letter-spacing: 1px; margin-bottom: 8px;">A CAPSTONE PROJECT REPORT ON</div>
-        <h1 style="font-size: 26pt; font-weight: 800; color: #0f172a; border-bottom: none; margin-bottom: 6px;">GeoPulse</h1>
-        <div style="font-size: 13pt; font-weight: 600; color: #0d9488; margin-bottom: 12px;">Real-Time Emergency Incident & Disaster Dispatch System</div>
-        <p style="font-size: 10pt; color: #64748b; font-style: italic;">Hyperlocal Resource Allocation & Rescue Coordination via Pure MongoDB Geospatial Architecture</p>
+        <p style="font-weight: 700; color: #0f172a; margin-bottom: 4px;">SUBMITTED BY:</p>
+        <p style="margin: 0; line-height: 1.4;"><b>Bhupendra Sirvi</b><br/>B.Tech Computer Science & Engineering<br/>Lovely Professional University</p>
       </div>
-
-      <div style="margin: 40px 0;">
-        <p style="font-style: italic; color: #475569; font-size: 10.5pt; margin-bottom: 6px;">Submitted in partial fulfillment of the requirements for the award of the degree of</p>
-        <p style="font-size: 14pt; font-weight: 800; color: #0f172a; margin-bottom: 3px;">BACHELOR OF TECHNOLOGY</p>
-        <p style="font-size: 11pt; font-weight: 700; color: #0d9488;">IN COMPUTER SCIENCE & ENGINEERING</p>
-      </div>
-
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; background: #f8fafc; border: 1px solid #cbd5e1; padding: 18px 24px; border-radius: 8px; margin: 30px auto; max-width: 650px;">
-        <div>
-          <strong style="color: #0f172a; font-size: 9.5pt;">SUBMITTED BY:</strong><br>
-          <span style="font-size: 11pt; font-weight: 700; color: #0f172a;">Bhupendra Sirvi</span><br>
-          <span style="color: #64748b; font-size: 9pt;">Registration No: [Registration No]<br>Roll No: [Roll No]<br>B.Tech CSE (Final Year)</span>
-        </div>
-        <div>
-          <strong style="color: #0f172a; font-size: 9.5pt;">SUPERVISED & GUIDED BY:</strong><br>
-          <span style="font-size: 11pt; font-weight: 700; color: #0f172a;">[Faculty Advisor / Guide Name]</span><br>
-          <span style="color: #64748b; font-size: 9pt;">Department of Computer Science & Engineering<br>Lovely Professional University</span>
-        </div>
-      </div>
-
       <div>
-        <p style="font-weight: 800; font-size: 11pt; color: #0f172a; margin-bottom: 2px;">DEPARTMENT OF COMPUTER SCIENCE & ENGINEERING</p>
-        <p style="font-weight: 700; font-size: 10.5pt; color: #0d9488; margin-bottom: 2px;">LOVELY PROFESSIONAL UNIVERSITY, PUNJAB</p>
-        <p style="font-size: 9.5pt; color: #64748b;">OCTOBER 2026</p>
+        <p style="font-weight: 700; color: #0f172a; margin-bottom: 4px;">SUPERVISED & GUIDED BY:</p>
+        <p style="margin: 0; line-height: 1.4;"><b>[Faculty Advisor / Guide Name]</b><br/>Department of Computer Science & Engineering<br/>Lovely Professional University</p>
       </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- PAGE 2: DECLARATION & CERTIFICATE          -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Candidate's Declaration</h1>
-    <p>
-      I hereby declare that the capstone project entitled <strong>"GeoPulse: Real-Time Emergency Incident & Disaster Dispatch System"</strong> submitted to the Department of Computer Science & Engineering, Lovely Professional University, is an authentic record of original project work completed by me under the supervision of my faculty mentor.
-    </p>
-    <p>
-      The matter embodied in this report has not been submitted in part or full to any other University or Institution for the award of any degree or diploma. All contributions, external libraries, and data sources have been duly acknowledged.
-    </p>
-    <div style="margin: 25px 0;">
-      <p><strong>Place:</strong> Lovely Professional University, Punjab</p>
-      <p><strong>Date:</strong> 30th October 2026</p>
-      <div style="width: 220px; border-top: 1px solid #0f172a; margin-top: 35px; padding-top: 4px; font-weight: 700;">
-        Bhupendra Sirvi<br>
-        <span style="font-size: 8.5pt; font-weight: 400; color: #64748b;">B.Tech Computer Science & Engineering</span>
+    <div style="margin-top: 60px;">
+      <p style="font-weight: 700; font-size: 10pt; margin: 0; text-align: center;">DEPARTMENT OF COMPUTER SCIENCE & ENGINEERING</p>
+      <p style="font-weight: 700; font-size: 9.5pt; margin: 0; text-align: center;">LOVELY PROFESSIONAL UNIVERSITY, PUNJAB</p>
+      <p style="color: #64748b; font-size: 9pt; margin-top: 4px; text-align: center;">OCTOBER 2026</p>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- PAGE 2: DECLARATION & CERTIFICATE -->
+  <h1>Candidate's Declaration</h1>
+  <p>I hereby declare that the project entitled <b>"GeoPulse: Real-Time Emergency Incident & Disaster Dispatch System"</b> submitted to the Department of Computer Science & Engineering, Lovely Professional University, is an authentic record of original project work completed by me under the supervision of my faculty mentor.</p>
+  <p>The matter presented in this report has not been submitted in part or full to any other University or Institution for the award of any degree or diploma. All project resources, third-party libraries, and software tools have been properly acknowledged.</p>
+  <br/>
+  <p><b>Place:</b> Lovely Professional University, Punjab<br/><b>Date:</b> 30th October 2026</p>
+  <br/>
+  <p>_______________________________<br/><b>Bhupendra Sirvi</b><br/>B.Tech Computer Science & Engineering</p>
+
+  <div style="margin-top: 40px;">
+    <h1>Certificate of Approval</h1>
+    <p>This is to certify that the project report entitled <b>"GeoPulse: Real-Time Emergency Incident & Disaster Dispatch System"</b>, submitted by <b>Bhupendra Sirvi</b> in partial fulfillment of the requirements for the award of the Degree of <b>Bachelor of Technology in Computer Science & Engineering</b> from Lovely Professional University, Punjab, is a bonafide record of project work completed under my supervision and guidance.</p>
+    <p>The project design, implementation, and results presented in this report meet the standards required for an undergraduate engineering project.</p>
+    <br/><br/>
+    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+      <div>
+        <p>____________________________<br/><b>[Guide / Supervisor Name]</b><br/>Project Guide & Faculty Mentor<br/>Department of CSE</p>
+      </div>
+      <div>
+        <p>____________________________<br/><b>Head of Department (HOD)</b><br/>Department of Computer Science & Engg.<br/>Lovely Professional University</p>
       </div>
     </div>
+  </div>
 
-    <h1 style="margin-top: 35px;">Certificate of Authenticity</h1>
-    <p>
-      This is to certify that the project report entitled <strong>"GeoPulse: Real-Time Emergency Incident & Disaster Dispatch System"</strong>, submitted by <strong>Bhupendra Sirvi</strong> in partial fulfillment of the requirements for the award of the Degree of <strong>Bachelor of Technology in Computer Science & Engineering</strong> from Lovely Professional University, Punjab, is an authentic and bonafide record of project work completed under my guidance.
-    </p>
-    <p>
-      The algorithms, geospatial models, database schemas, and performance benchmarks documented in this report satisfy the standards expected for an undergraduate engineering capstone dissertation.
-    </p>
-    
-    <div style="display: flex; justify-content: space-between; margin-top: 55px;">
-      <div style="text-align: center; width: 230px;">
-        <div style="border-top: 1px solid #64748b; margin-bottom: 6px;"></div>
-        <strong>[Guide / Supervisor Name]</strong><br>
-        <span style="font-size: 8.5pt; color: #64748b;">Project Guide & Faculty Mentor<br>Department of CSE</span>
-      </div>
-      <div style="text-align: center; width: 230px;">
-        <div style="border-top: 1px solid #64748b; margin-bottom: 6px;"></div>
-        <strong>Head of Department (HOD)</strong><br>
-        <span style="font-size: 8.5pt; color: #64748b;">Department of Computer Science & Engg.<br>Lovely Professional University</span>
-      </div>
-    </div>
+  <div class="page-break"></div>
 
-    <!-- ========================================== -->
-    <!-- PAGE 3: ACKNOWLEDGEMENTS & ABSTRACT        -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Acknowledgements</h1>
-    <p>
-      I express my sincere gratitude to my faculty project mentor, <strong>[Guide Name]</strong>, for invaluable technical guidance, constructive critiques, and continuous encouragement during the design and development of the GeoPulse platform. I also thank the <strong>Department of Computer Science & Engineering</strong> and <strong>Lovely Professional University</strong> for providing high-performance computing labs, software development environments, and academic testing resources. Lastly, I extend my heartfelt gratitude to my family and peers for their continuous moral support.
-    </p>
+  <!-- PAGE 3: ACKNOWLEDGEMENTS & ABSTRACT -->
+  <h1>Acknowledgements</h1>
+  <p>I express my sincere gratitude to my faculty project mentor, <b>[Guide Name]</b>, for continuous guidance, constructive feedback, and support throughout the development of this project. I also thank the <b>Department of Computer Science & Engineering</b> and <b>Lovely Professional University</b> for providing the required computer labs and software facilities to complete and test this work. Finally, I thank my family and friends for their encouragement and support.</p>
 
-    <h1 style="margin-top: 25px;">Abstract</h1>
-    <p>
-      During natural disasters like flash floods, building collapses, and structural fires, the initial 60 minutes—known as the <strong>"Golden Hour"</strong>—determine human survival rates. Conventional emergency response mechanisms rely heavily on manual telephony helplines and chronological call queues (FIFO), resulting in critical dispatch delays and squads being routed from distant sectors while closer units sit idle.
-    </p>
-    <p>
-      This report documents the design, architecture, and empirical evaluation of <strong>GeoPulse</strong>, a real-time, event-driven emergency resource coordination and proximity dispatch engine built entirely on native <strong>MongoDB NoSQL</strong> geospatial capabilities.
-    </p>
-    <p><strong>Core Architectural Innovations:</strong></p>
-    <ul>
-      <li><strong>Sub-20ms Spherical Proximity Matching:</strong> Utilizes MongoDB's native <code>2dsphere</code> index and the <code>$geoNear</code> aggregation pipeline to compute geodesic Earth-curvature distances, returning closest certified squads in 14.2 milliseconds.</li>
-      <li><strong>Polymorphic GeoJSON Modeling:</strong> Implements RFC 7946 <code>Point</code> coordinate structures embedded within flexible BSON schemas, eliminating table locking and schema migration bottlenecks during calamities.</li>
-      <li><strong>Autonomous 48-Hour TTL Data Lifecycle:</strong> Employs native database-level Time-To-Live indexing on the <code>resolvedAt</code> field to automatically sunset resolved alerts after 48 hours without external cron jobs.</li>
-      <li><strong>Dynamic Fallback Auto-Provisioning:</strong> Automatically commissions local neighborhood rapid-response squads if no pre-deployed unit exists within 15 km, ensuring zero unhandled distress beacons.</li>
-      <li><strong>Zero-Broker Real-Time Architecture:</strong> Delivers low-latency operations console synchronization using Node.js and MongoDB Change Streams without requiring Redis or Apache Kafka.</li>
-    </ul>
-    <p>
-      Empirical benchmarks confirm that GeoPulse achieves an <strong>84% reduction in spatial dispatch latency</strong> compared to traditional relational SQL GIS joins, maintaining sub-20ms query execution under concurrent disaster burst loads.
-    </p>
-    <p style="margin-top: 10px; font-size: 8.5pt;">
-      <strong>Keywords:</strong> Disaster Response, NoSQL MongoDB, 2dsphere Geospatial Index, $geoNear Aggregation, TTL Lifecycle, GeoJSON, Golden Hour Rescue.
-    </p>
+  <h1 style="margin-top: 20px;">Abstract</h1>
+  <p>During emergencies such as road accidents, building fires, and severe weather floods, fast communication and prompt rescue team dispatch are critical to saving lives. In standard systems, emergency calls are often handled manually over the phone, where callers struggle to describe exact locations, leading to dispatch delays and wasted travel time.</p>
+  <p><b>GeoPulse</b> is a real-time web-based emergency incident and dispatch coordination system designed to solve this problem. The application allows citizens in distress to submit emergency alerts along with their exact GPS coordinates, type of emergency, and number of people requiring assistance. On the coordinator side, an interactive live map displays all reported incidents and active rescue units in real time.</p>
+  
+  <h2>Key Features of the Project</h2>
+  <ul>
+    <li><b>Real-Time Proximity Matching:</b> Uses MongoDB's <code>2dsphere</code> index and <code>$geoNear</code> aggregation pipeline to quickly find the nearest available rescue squads to an incident.</li>
+    <li><b>Citizen SOS Submission:</b> An easy-to-use reporting form that captures GPS location with one click, emergency category, and severity.</li>
+    <li><b>Interactive Map Dashboard:</b> Built using Leaflet.js to visualize incidents (red markers), rescue teams (blue markers), and relief shelters (green markers).</li>
+    <li><b>Dynamic Route Line & ETA:</b> Displays a visual route line connecting the assigned rescue team directly to the incident pin, along with calculated distance and ETA.</li>
+    <li><b>Automatic Data Purge (TTL):</b> Implements MongoDB TTL indexing on resolved incidents so old records are cleaned up after 48 hours.</li>
+    <li><b>Simple & Lightweight Stack:</b> Runs completely on Node.js, Express, and MongoDB without requiring external heavy third-party message brokers.</li>
+  </ul>
+  <p><b>Keywords:</b> Emergency Response, Web Application, Node.js, Express, MongoDB, 2dsphere Index, Geospatial Proximity, Leaflet.js.</p>
 
-    <!-- ========================================== -->
-    <!-- PAGE 4: CHAPTER 1 — INTRODUCTION           -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Chapter 1: Introduction & Problem Background</h1>
-    <p>
-      Emergency logistics management is responsible for capturing citizen distress signals, assessing trauma severity, and dispatching rescue boats, ambulances, and evacuation squads. In traditional emergency systems, call intake is handled manually. Callers verbally describe landmarks over voice telephony, and dispatchers manually look up responders.
-    </p>
-    <h2>1.1 The Golden Hour Latency Crisis</h2>
-    <p>
-      Medical trauma research demonstrates that clinical mortality increases exponentially when emergency aid is delayed past the 60-minute mark. Traditional systems suffer from three fundamental bottlenecks:
-    </p>
-    <ul>
-      <li><strong>Information Fragmentation:</strong> Spoken addresses are ambiguous and imprecise in flood-ravaged informal sectors.</li>
-      <li><strong>Chronological FIFO Dispatch:</strong> Squads are dispatched by call arrival time rather than physical distance. A squad may travel 15 km across flooded roads while a volunteer squad is stationed 400m away.</li>
-      <li><strong>Relational Spatial Contention:</strong> Computing distance joins across thousands of SQL rows causes table locks and multi-second latency during crisis traffic surges.</li>
-    </ul>
-    <h2>1.2 Problem Statement</h2>
-    <p style="background: #f8fafc; border-left: 3px solid var(--accent); padding: 8px 12px; font-style: italic;">
-      "To design an event-driven, distributed computing engine that eliminates first-hour dispatch latency and automatically pairs stranded disaster victims with the nearest available rescue teams in sub-second time, without requiring external message brokers or rigid relational database migrations."
-    </p>
+  <div class="page-break"></div>
 
-    <div class="figure-container">
-      <img src="report_assets/screen_overview.png" class="figure-img" style="max-height: 230px;" alt="GeoPulse Command Overview">
-      <div class="figure-caption">Figure 1.1: GeoPulse Live Emergency Command Center Interface</div>
-    </div>
+  <!-- PAGE 4: CHAPTER 1 -->
+  <h1>Chapter 1: Introduction & Problem Statement</h1>
+  <p>Emergency response systems play a vital role in public safety by coordinating help during accidents, medical emergencies, and natural disasters. Timely intervention can mean the difference between life and death.</p>
+  
+  <h2>1.1 Background & Motivation</h2>
+  <p>Most conventional emergency helplines rely heavily on voice calls. During high-stress situations or severe disasters, this conventional approach faces several common challenges:</p>
+  <ul>
+    <li><b>Location Ambiguity:</b> Callers often cannot describe exact street addresses or landmarks, especially in unfamiliar or flooded areas.</li>
+    <li><b>Manual Dispatching:</b> Dispatchers have to manually look up unit locations, which slows down the dispatch process.</li>
+    <li><b>Lack of Real-Time Overview:</b> Coordinators do not have a single unified map showing where all open incidents and available units are located simultaneously.</li>
+  </ul>
 
-    <!-- ========================================== -->
-    <!-- PAGE 5: CHAPTER 2 — OBJECTIVES & REQS       -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Chapter 2: Project Objectives & System Requirements</h1>
-    <p>
-      GeoPulse was engineered with a clear focus on speed, operational simplicity, and zero maintenance overhead. The specific engineering objectives are summarized below:
-    </p>
-    <h2>2.1 Core Engineering Objectives</h2>
-    <ul>
-      <li><strong>Sub-20ms Proximity Matching:</strong> Execute native spherical distance queries using MongoDB's <code>2dsphere</code> index and the <code>$geoNear</code> aggregation pipeline within a 15 km radius.</li>
-      <li><strong>One-Tap Mobile Citizen SOS Portal:</strong> Allow stranded citizens to submit exact GPS coordinates, urgency classification, and casualty headcount with a single tap.</li>
-      <li><strong>Autonomous 48-Hour TTL Self-Cleaning:</strong> Automatically expire and purge closed emergency incidents after 48 hours using native database background worker threads.</li>
-      <li><strong>Smart Sector Report Stacking:</strong> Group overlapping distress calls from the same sector into a single card with an aggregated counter (e.g. <code>x3 reports</code>) to prevent screen clutter.</li>
-      <li><strong>Dynamic Fallback Auto-Provisioning:</strong> Automatically commission local community rapid units when no pre-deployed crew is within range, leaving zero victims unattended.</li>
-      <li><strong>Zero Message Broker Dependency:</strong> Eliminate external message queues (Redis Pub/Sub, Kafka), keeping the architecture clean and portable.</li>
-    </ul>
+  <h2>1.2 Problem Statement</h2>
+  <p><i>"To develop a simple, responsive, and real-time emergency dispatch web application that allows citizens to report incidents with precise GPS coordinates and enables emergency dispatchers to instantly identify and assign the closest available response team using geospatial indexing."</i></p>
 
-    <h2>2.2 Hardware & Software Specifications</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Category</th>
-          <th>Minimum Specification</th>
-          <th>Recommended Deployment</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Processor (CPU)</strong></td>
-          <td>Intel Core i3 / AMD Ryzen 3 (2.0 GHz)</td>
-          <td>Intel Core i7 / Apple Silicon M-series (8+ cores)</td>
-        </tr>
-        <tr>
-          <td><strong>System Memory (RAM)</strong></td>
-          <td>4 GB DDR4</td>
-          <td>16 GB DDR4/DDR5 (Supports 50k+ active coordinates)</td>
-        </tr>
-        <tr>
-          <td><strong>Storage</strong></td>
-          <td>500 MB free disk space</td>
-          <td>NVMe SSD with MongoDB wiredTiger write caching</td>
-        </tr>
-        <tr>
-          <td><strong>Operating System</strong></td>
-          <td>Windows 10/11, macOS, or Ubuntu 20.04+</td>
-          <td>Cross-platform portable (Linux / Windows Service)</td>
-        </tr>
-        <tr>
-          <td><strong>Runtime & Database</strong></td>
-          <td>Node.js v16+ & MongoDB Community v5.0+</td>
-          <td>Node.js v20+ LTS & MongoDB v7.0 with 2dsphere indexes</td>
-        </tr>
-        <tr>
-          <td><strong>Web Browser</strong></td>
-          <td>Any modern browser with JS enabled</td>
-          <td>Chrome / Edge / Firefox with WebGL map acceleration</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="figure-container">
+    <img src="report_assets/screen_overview.png" alt="GeoPulse Live Emergency Dashboard Interface" />
+    <div class="figure-caption">Figure 1.1: GeoPulse Live Emergency Dashboard Interface</div>
+  </div>
 
-    <!-- ========================================== -->
-    <!-- PAGE 6: CHAPTER 3 — SYSTEM ARCHITECTURE    -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Chapter 3: System Architecture & Workflow</h1>
-    <p>
-      GeoPulse is structured as an asynchronous 3-tier architecture. Each layer is decoupled, ensuring that high concurrent distress traffic does not block dashboard rendering.
-    </p>
-    <h2>3.1 Architectural Decomposition</h2>
-    <ul>
-      <li><strong>Presentation Layer (Frontend):</strong> Zero-dependency HTML5, Tailwind CSS, and Leaflet.js with Esri Dark Canvas cartography. Provides two synchronized views: Citizen SOS Beacon and Dispatcher Command Map.</li>
-      <li><strong>Application Layer (Node.js & Express):</strong> Non-blocking REST API server running on Port 5000. Handles input validation, coordinate extraction, and communicates with MongoDB via the official driver.</li>
-      <li><strong>Data & Geospatial Layer (MongoDB):</strong> Houses collections, executes <code>$geoNear</code> aggregation pipelines over Earth's curvature, and runs the background TTL purge worker thread.</li>
-    </ul>
+  <div class="page-break"></div>
 
-    <div class="figure-container">
-      <img src="report_assets/architecture_diagram.png" class="figure-img" style="max-height: 220px;" alt="3-Tier Architecture">
-      <div class="figure-caption">Figure 3.1: GeoPulse 3-Tier Distributed System Architecture</div>
-    </div>
+  <!-- PAGE 5: CHAPTER 2 -->
+  <h1>Chapter 2: Project Objectives & System Requirements</h1>
+  <p>The primary goal of GeoPulse is to provide an easy-to-use, reliable, and lightweight platform for emergency dispatch coordination. The objectives and technical requirements are detailed below.</p>
 
-    <h2>3.2 Step-by-Step Data Flow</h2>
-    <ol>
-      <li><strong>Beacon Transmit:</strong> Citizen drops GPS pin and submits category & victim count &rarr; Node.js receives JSON payload.</li>
-      <li><strong>Document Persistence:</strong> Node.js wraps coordinates into standard GeoJSON <code>Point</code> and saves to <code>incidents</code> collection.</li>
-      <li><strong>Spatial Query:</strong> Coordinator clicks <em>'Match Unit'</em> &rarr; Node.js triggers <code>$geoNear</code> pipeline searching within 15 km.</li>
-      <li><strong>Route Vector Render:</strong> The nearest squad is returned in ~14ms and a blue vector line is drawn on the map connecting squad to victim.</li>
-      <li><strong>Incident Resolution & TTL:</strong> Coordinator clicks <em>'Resolve'</em> &rarr; <code>resolvedAt</code> timestamp is set &rarr; MongoDB auto-deletes record after 48h.</li>
-    </ol>
+  <h2>2.1 Project Objectives</h2>
+  <ol>
+    <li>Create an intuitive web interface for citizens to report emergencies with accurate GPS coordinates.</li>
+    <li>Develop a live mapping dashboard for coordinators to visualize incidents, rescue units, and relief centers in real time.</li>
+    <li>Implement fast proximity-based responder matching using MongoDB's native geospatial capabilities.</li>
+    <li>Display visual route lines between assigned responders and incidents along with estimated travel time.</li>
+    <li>Provide a query inspection tool to allow administrators and examiners to inspect active database queries.</li>
+  </ol>
 
-    <!-- ========================================== -->
-    <!-- PAGE 7: CHAPTER 4 — DATABASE DESIGN        -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Chapter 4: Database Design & Schema Specifications</h1>
-    <p>
-      MongoDB stores data as flexible BSON documents. GeoPulse uses three collections in the <code>geopulse</code> database: <code>incidents</code>, <code>responders</code>, and <code>shelters</code>.
-    </p>
+  <h2>2.2 Hardware & Software Requirements</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Minimum Requirement</th>
+        <th>Used in this Project</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Operating System</td><td>Windows 10 / 11, Linux, or macOS</td><td>Windows 11 (64-bit)</td></tr>
+      <tr><td>Processor</td><td>Dual-Core 2.0 GHz or higher</td><td>Intel Core i5 / AMD Ryzen 5</td></tr>
+      <tr><td>RAM</td><td>4 GB RAM</td><td>8 GB / 16 GB DDR4</td></tr>
+      <tr><td>Disk Space</td><td>500 MB free space</td><td>Standard SSD storage</td></tr>
+      <tr><td>Runtime Environment</td><td>Node.js v16 or higher</td><td>Node.js v20 LTS</td></tr>
+      <tr><td>Database</td><td>MongoDB v5.0 or higher</td><td>MongoDB Community Server v7.0</td></tr>
+      <tr><td>Web Browser</td><td>Google Chrome / Edge / Firefox</td><td>Google Chrome (Latest)</td></tr>
+    </tbody>
+  </table>
 
-    <div class="figure-container">
-      <img src="report_assets/database_collections.png" class="figure-img" style="max-height: 215px;" alt="MongoDB Collections">
-      <div class="figure-caption">Figure 4.1: The Three Core MongoDB Collections and Index Structure</div>
-    </div>
+  <div class="page-break"></div>
 
-    <h2>4.1 BSON Document Schemas</h2>
-    <h3>Collection 1: 'incidents' (Citizen Distress Reports)</h3>
-    <pre>{
+  <!-- PAGE 6: CHAPTER 3 -->
+  <h1>Chapter 3: System Architecture & Workflow</h1>
+  <p>GeoPulse follows a standard 3-tier client-server architecture consisting of the presentation layer (frontend), application layer (Node.js backend), and database layer (MongoDB).</p>
+
+  <h2>3.1 Three-Tier Architecture</h2>
+  <ul>
+    <li><b>Frontend Layer:</b> Built using HTML5, CSS3, JavaScript, and Leaflet.js. It provides the citizen SOS reporting panel, incident list, and interactive map.</li>
+    <li><b>Backend Layer:</b> An Express.js REST API server running on Node.js (port 5000). It receives requests from the frontend, validates parameters, and interacts with MongoDB.</li>
+    <li><b>Database Layer:</b> MongoDB Community Server storing BSON documents with 2dsphere indexes for fast spatial queries.</li>
+  </ul>
+
+  <div class="figure-container">
+    <img src="report_assets/architecture_diagram.png" alt="GeoPulse System Architecture Diagram" />
+    <div class="figure-caption">Figure 3.1: GeoPulse System Architecture Diagram</div>
+  </div>
+
+  <h2>3.2 Project Workflow</h2>
+  <ol>
+    <li><b>Incident Submission:</b> Citizen enters name, contact, incident category, victim count, and selects location on the map.</li>
+    <li><b>Database Storage:</b> Backend saves the report as a GeoJSON Point in the <code>incidents</code> collection.</li>
+    <li><b>Proximity Search:</b> Dispatcher clicks <i>'Match Unit'</i>. The backend triggers a <code>$geoNear</code> query to find available squads within 15 km.</li>
+    <li><b>Assignment & Routing:</b> The best match is assigned, and a dashed route line connects the team to the victim on the map.</li>
+    <li><b>Resolution:</b> Once aid arrives, the dispatcher clicks <i>'Resolve'</i>, closing the incident.</li>
+  </ol>
+
+  <div class="page-break"></div>
+
+  <!-- PAGE 7: CHAPTER 4 -->
+  <h1>Chapter 4: Database Design & Schema Structure</h1>
+  <p>The project uses MongoDB database named <code>geopulse</code>. MongoDB was chosen because of its native support for GeoJSON geographic data types and fast spatial indexing.</p>
+
+  <div class="figure-container">
+    <img src="report_assets/database_collections.png" alt="MongoDB Collections and Field Relationships" />
+    <div class="figure-caption">Figure 4.1: MongoDB Collections and Field Relationships</div>
+  </div>
+
+  <h2>4.1 Collections Overview</h2>
+  <p><b>1. 'incidents' Collection (SOS Reports):</b></p>
+  <pre>{
   "id": "SOS-104", "caller": "Kavita Sharma", "phone": "+91 98141-89210",
   "category": "Medical / Trauma", "severity": "CRITICAL", "victims": 2,
-  "note": "Diabetic patient experiencing chest pain; road knee-deep in water.",
+  "note": "Patient experiencing chest pain; road knee-deep in water.",
   "location": { "type": "Point", "coordinates": [75.7050, 31.2555] },
   "status": "OPEN", "assignedTo": null, "createdAt": "2026-10-15T14:30:00Z", "resolvedAt": null
 }</pre>
 
-    <h3>Collection 2: 'responders' (Rescue Squads & Vehicles)</h3>
-    <pre>{
+  <p><b>2. 'responders' Collection (Emergency Units):</b></p>
+  <pre>{
   "id": "R-PB1", "name": "LPU Campus Quick Response Squad",
   "type": "Rescue Team", "status": "Available", "contact": "+91 98761-11001",
   "location": { "type": "Point", "coordinates": [75.7045, 31.2560] }
 }</pre>
 
-    <h2>4.2 Indexing Strategy</h2>
-    <ul>
-      <li><strong>2dsphere Indexes:</strong> <code>db.incidents.createIndex({ location: '2dsphere' })</code> and <code>db.responders.createIndex({ location: '2dsphere' })</code> build S2 hierarchical quad-tree cells over Earth's WGS84 ellipsoid.</li>
-      <li><strong>TTL Index:</strong> <code>db.incidents.createIndex({ resolvedAt: 1 }, { expireAfterSeconds: 172800 })</code> activates autonomous 48-hour data purging.</li>
-    </ul>
+  <h2>4.2 Indexing Used</h2>
+  <ul>
+    <li><b>2dsphere Index:</b> Created on <code>location</code> fields of both incidents and responders collections to enable geospatial search.</li>
+    <li><b>TTL Index:</b> Created on <code>resolvedAt</code> to automatically remove closed incidents after 48 hours.</li>
+  </ul>
 
-    <!-- ========================================== -->
-    <!-- PAGE 8: CHAPTER 5 — CORE ALGORITHMS        -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Chapter 5: Core Algorithm & Implementation</h1>
-    <p>
-      The proximity matching engine executes entirely inside MongoDB's C++ aggregation engine using the <code>$geoNear</code> pipeline, avoiding slow trigonometric math loops in application code.
-    </p>
+  <div class="page-break"></div>
 
-    <div class="figure-container">
-      <img src="report_assets/geonear_algorithm.png" class="figure-img" style="max-height: 215px;" alt="Proximity Matching Algorithm">
-      <div class="figure-caption">Figure 5.1: Proximity Matching Pipeline & Fallback Auto-Provisioning</div>
-    </div>
+  <!-- PAGE 8: CHAPTER 5 -->
+  <h1>Chapter 5: Proximity Search & Backend Implementation</h1>
+  <p>Finding the closest rescue unit is the core feature of GeoPulse. Rather than writing slow distance calculations in JavaScript loops, the search is handled directly by MongoDB's <code>$geoNear</code> aggregation pipeline.</p>
 
-    <h2>5.1 The $geoNear Aggregation Pipeline (server.js)</h2>
-    <pre>const pipeline = [
+  <div class="figure-container">
+    <img src="report_assets/geonear_algorithm.png" alt="Proximity Search Pipeline and Fallback Matching Workflow" />
+    <div class="figure-caption">Figure 5.1: Proximity Search Pipeline and Fallback Matching Workflow</div>
+  </div>
+
+  <h2>5.1 The $geoNear Aggregation Code (in server.js)</h2>
+  <pre>const pipeline = [
   {
     $geoNear: {
       near: { type: 'Point', coordinates: [parseFloat(incidentLng), parseFloat(incidentLat)] },
       distanceField: 'distanceMeters',
-      spherical: true,       // Evaluates true geodesic curvature over Earth's ellipsoid
-      maxDistance: 15000,    // Configurable 15 km search radius
+      spherical: true,       // Calculates accurate distance over spherical Earth surface
+      maxDistance: 15000,    // Search within 15 km radius
       query: { status: 'Available' }
     }
   },
-  { $limit: 3 } // Returns top 3 candidate units with calculated ETAs
+  { $limit: 3 } // Returns top 3 candidate units with distance
 ];
 const nearest = await db.collection('responders').aggregate(pipeline).toArray();</pre>
 
-    <h2>5.2 Key Algorithmic Advantages</h2>
-    <ul>
-      <li><strong>Elimination of Haversine SQL Joins:</strong> In SQL/PostGIS, calculating distance between an incident and 1,000 units requires calculating trigonometric functions across every row, causing high CPU spikes. MongoDB's S2 engine filters cells hierarchically in logarithmic time.</li>
-      <li><strong>Dynamic Fallback Auto-Provisioning:</strong> If an emergency occurs in an unstaffed rural sector where <code>nearest.length === 0</code>, GeoPulse automatically commissions a local community squad ~900m away and saves it into MongoDB so <strong>zero victims are left unattended</strong>.</li>
-      <li><strong>Zero-Broker Real-Time Streaming:</strong> By tapping directly into MongoDB's replica oplog via Change Streams, live updates are broadcast to connected dashboards without maintaining external Redis or Kafka clusters.</li>
-    </ul>
+  <h2>5.2 Fallback Auto-Assignment</h2>
+  <p>In rural or remote areas where no pre-registered unit is currently free within 15 km (<code>nearest.length === 0</code>), GeoPulse automatically generates and provisions a local emergency volunteer unit nearby so that every distress beacon receives an assigned responder.</p>
 
-    <!-- ========================================== -->
-    <!-- PAGE 9: CHAPTER 6 — UI & VISUAL ERGONOMICS -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Chapter 6: User Interface Design & Visual Ergonomics</h1>
-    <p>
-      Emergency operations centers require high visual contrast, fast scanning, and zero unnecessary mouse interactions. GeoPulse implements a high-contrast dark cartography theme with tactile controls.
-    </p>
+  <div class="page-break"></div>
 
-    <h2>6.1 Active Crisis Map & Responder Fleet Tracking</h2>
-    <p>
-      The command center displays live emergency pins with pulse rings. Red pins indicate unassigned emergencies, blue pins mark deployed squads, and green pins indicate safe relief shelters.
-    </p>
-    <div class="figure-container">
-      <img src="report_assets/screen_dispatch_map.png" class="figure-img" style="max-height: 195px;" alt="Crisis Map">
-      <div class="figure-caption">Figure 6.1: Active Crisis Map with Deployed Responders in Punjab Region</div>
-    </div>
+  <!-- PAGE 9: CHAPTER 6 -->
+  <h1>Chapter 6: User Interface & Working Screenshots</h1>
+  <p>The web interface was designed to be clean, intuitive, and responsive so coordinators can view incoming alerts and make quick decisions without distraction.</p>
 
-    <h2>6.2 Dynamic Route Vector Visualization</h2>
-    <p>
-      When an incident is matched via <code>$geoNear</code>, a high-visibility dashed blue route vector connects the assigned squad directly to the victim's GPS pin, showing distance and estimated travel time.
-    </p>
-    <div class="figure-container">
-      <img src="report_assets/screen_route_vector.png" class="figure-img" style="max-height: 195px;" alt="Route Vector">
-      <div class="figure-caption">Figure 6.2: Dynamic Proximity Route Vector Connecting Rescue Squad to Victim</div>
-    </div>
+  <h2>6.1 Active Crisis Map View</h2>
+  <p>The map visualizes open incident markers across the region. Coordinators can click any marker to inspect incident details, caller notes, and victim counts.</p>
 
-    <p style="font-size: 8.5pt; color: #475569;">
-      <strong>Keyboard Accelerators:</strong> <kbd>[/]</kbd> Jump to search &bull; <kbd>[J/K]</kbd> Cycle incident cards &bull; <kbd>[M]</kbd> Match nearest squad &bull; <kbd>[R]</kbd> Mark resolved &bull; <kbd>[N]</kbd> Simulate SOS.
-    </p>
-
-    <!-- ========================================== -->
-    <!-- PAGE 10: CHAPTER 7 — TESTING & BENCHMARKS   -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Chapter 7: System Testing & Performance Benchmarks</h1>
-    <p>
-      GeoPulse was subjected to extensive stress testing and query execution tracing using MongoDB's built-in <code>explain('executionStats')</code> and simulated load generators.
-    </p>
-
-    <h2>7.1 Real-Time MongoDB Query Inspection</h2>
-    <p>
-      Clicking the <code>&lt;/&gt;</code> button in the top navbar opens the live database inspector, displaying the active indexing strategy and the exact <code>$geoNear</code> aggregation pipeline query for examiners.
-    </p>
-    <div class="figure-container">
-      <img src="report_assets/screen_inspector_modal.png" class="figure-img" style="max-height: 165px;" alt="MongoDB Inspector Modal">
-      <div class="figure-caption">Figure 7.1: Live MongoDB Aggregation Inspector Modal</div>
-    </div>
-
-    <h2>7.2 Empirical Performance Benchmarks</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Performance Metric</th>
-          <th>Measured Value</th>
-          <th>Operational Significance</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>$geoNear Query Time</strong></td>
-          <td><strong>14.2 milliseconds</strong></td>
-          <td>Instant squad pairing during the critical Golden Hour</td>
-        </tr>
-        <tr>
-          <td><strong>End-to-End SOS Latency</strong></td>
-          <td><strong>38.6 milliseconds</strong></td>
-          <td>Sub-second distress signal delivery from citizen mobile phones</td>
-        </tr>
-        <tr>
-          <td><strong>Comparison vs SQL GIS</strong></td>
-          <td><strong>84% Faster</strong></td>
-          <td>Eliminates slow multi-table spatial joins and table locks</td>
-        </tr>
-        <tr>
-          <td><strong>TTL Cleanup Overhead</strong></td>
-          <td><strong>0.00% App CPU</strong></td>
-          <td>Runs as an autonomous C++ background thread inside MongoDB</td>
-        </tr>
-        <tr>
-          <td><strong>System Concurrency</strong></td>
-          <td><strong>250+ req/sec</strong></td>
-          <td>100% success rate with zero dropped SOS beacons under disaster load</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="figure-container">
-      <img src="report_assets/benchmark_metrics.png" class="figure-img" style="max-height: 145px;" alt="Benchmark Analysis">
-      <div class="figure-caption">Figure 7.2: Benchmark Metrics & Performance Analysis Summary</div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- PAGE 11: CHAPTER 8 — DEPLOYMENT GUIDE      -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Chapter 8: Deployment & Execution Guide</h1>
-    <p>
-      GeoPulse is designed for simple, self-contained deployment on standard laptop, workstation, or edge server hardware. Follow the steps below to run the complete stack locally:
-    </p>
-
-    <h2>8.1 Execution Steps</h2>
-    <ol>
-      <li><strong>Start MongoDB Service:</strong><br>Ensure MongoDB is installed and running on default port <code>27017</code>:<br><code>net start MongoDB</code> (Windows) or <code>sudo systemctl start mongod</code> (Linux).</li>
-      <li><strong>Start Node.js Backend Server:</strong><br>Open a terminal in the <code>geopulse-backend/</code> folder and start the API server:<br><code>node server.js</code> &rarr; Server starts on <code>http://localhost:5000</code>.</li>
-      <li><strong>Launch Frontend Console:</strong><br>Open <code>http://localhost:5000</code> in any web browser, or double-click <code>start.bat</code> in the project root.</li>
-    </ol>
-
-    <h2>8.2 REST API Specification</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Method</th>
-          <th>Endpoint</th>
-          <th>Payload / Parameters</th>
-          <th>Database Operation</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>GET</code></td>
-          <td><code>/api/incidents</code></td>
-          <td>None</td>
-          <td>Fetches all active & resolved distress calls</td>
-        </tr>
-        <tr>
-          <td><code>POST</code></td>
-          <td><code>/api/incidents</code></td>
-          <td>caller, phone, category, lat, lng, victims</td>
-          <td>Inserts new GeoJSON document into incidents</td>
-        </tr>
-        <tr>
-          <td><code>GET</code></td>
-          <td><code>/api/responders</code></td>
-          <td>None</td>
-          <td>Fetches registered squad positions and status</td>
-        </tr>
-        <tr>
-          <td><code>POST</code></td>
-          <td><code>/api/match</code></td>
-          <td>incId, lat, lng</td>
-          <td>Executes $geoNear pipeline within 15 km radius</td>
-        </tr>
-        <tr>
-          <td><code>POST</code></td>
-          <td><code>/api/resolve</code></td>
-          <td>incId</td>
-          <td>Sets status to RESOLVED & stamps resolvedAt TTL</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2>8.3 One-Click Launcher (start.bat)</h2>
-    <p>
-      A Windows batch file (<code>start.bat</code>) is provided in the repository. Double-clicking it automatically opens the default web browser to <code>http://localhost:5000</code> and launches the Node.js backend server with zero manual configuration.
-    </p>
-
-    <!-- ========================================== -->
-    <!-- PAGE 12: CHAPTER 9 — CONCLUSION & REFS     -->
-    <!-- ========================================== -->
-    <div class="page-break"></div>
-    <h1>Chapter 9: Conclusion, Future Scope & References</h1>
-    
-    <h2>9.1 Conclusion & Real-World Impact</h2>
-    <p>
-      The <strong>GeoPulse</strong> capstone project successfully demonstrates that an effective, mission-critical emergency disaster dispatch system does not require complex, multi-tiered cloud infrastructure or expensive commercial GIS licenses. By consolidating coordinate storage, spherical proximity matching (<code>$geoNear</code>), and autonomous lifecycle cleanup (<code>TTL</code>) directly inside a native MongoDB NoSQL architecture, the system achieves sub-20ms victim-to-squad pairing.
-    </p>
-    <p>
-      The platform eliminates the critical 'Golden Hour' dispatch latency gap, protects system resources through self-cleaning database indexes, and delivers an intuitive, keyboard-accelerated command interface that can be deployed on standard laptops or edge nodes during live crisis operations.
-    </p>
-
-    <h2>9.2 Future Scope & Research Directions</h2>
-    <ul>
-      <li><strong>LoRaWAN Offline Mesh Integration:</strong> Enabling citizen SOS beacons to be transmitted over low-power, long-range radio frequencies (LoRaWAN) when cellular infrastructure is destroyed by storms.</li>
-      <li><strong>Autonomous Drone Dispatch:</strong> Extending the <code>$geoNear</code> pipeline to calculate 3D altitude clearance vectors for medical drone supply drops.</li>
-      <li><strong>Predictive Flood Inundation Modeling:</strong> Integrating real-time IoT river water level sensors into MongoDB Change Streams to alert downstream neighborhoods prior to embankment breach.</li>
-    </ul>
-
-    <h2>9.3 References</h2>
-    <ol style="font-size: 8.5pt; line-height: 1.5;">
-      <li>MongoDB Inc., <em>'Geospatial Queries and 2dsphere Indexing Architecture,'</em> MongoDB Official Documentation, 2026.</li>
-      <li>S. Shekhar and H. Xiong, <em>'Encyclopedia of GIS,'</em> Springer Science & Business Media, 2nd Edition, 2017.</li>
-      <li>Google Open Source, <em>'S2 Geometry Library: Spherical Geometry and Hierarchical Space-Filling Quad-Trees,'</em> GitHub, 2024.</li>
-      <li>Internet Engineering Task Force (IETF), <em>'The GeoJSON Format (RFC 7946),'</em> IETF Standards Track, 2016.</li>
-      <li>National Disaster Management Authority (NDMA), <em>'Incident Response System Guidelines,'</em> Government of India, 2020.</li>
-      <li>M. Stonebraker, <em>'The Case for Shared Nothing Architecture,'</em> IEEE Database Engineering Bulletin, Vol. 9, No. 1, pp. 4-9.</li>
-      <li>V. Pramanik and A. Sengupta, <em>'Evaluation of Spatial Indexing Techniques for Emergency Logistics,'</em> International Journal of Geographical Information Science, Vol. 35, Issue 4, pp. 782-804.</li>
-    </ol>
-
+  <div class="figure-container">
+    <img src="report_assets/screen_dispatch_map.png" alt="Active Crisis Map with Responder Locations" />
+    <div class="figure-caption">Figure 6.1: Active Crisis Map with Responder Locations</div>
   </div>
+
+  <h2>6.2 Dynamic Route Vector Display</h2>
+  <p>When a responder is matched, a dashed blue route line is drawn between the squad and the victim, displaying real-time distance and estimated travel time.</p>
+
+  <div class="figure-container">
+    <img src="report_assets/screen_route_vector.png" alt="Route Vector Connecting Assigned Responder to Incident Location" />
+    <div class="figure-caption">Figure 6.2: Route Vector Connecting Assigned Responder to Incident Location</div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- PAGE 10: CHAPTER 7 -->
+  <h1>Chapter 7: Testing & System Verification</h1>
+  <p>All modules of GeoPulse were thoroughly tested to verify correct data handling, accurate proximity calculations, and responsive interface behavior.</p>
+
+  <h2>7.1 Query Inspector Feature</h2>
+  <p>A live database inspector modal is built into the application. Clicking the <code>&lt;/&gt;</code> button in the navigation bar displays the current MongoDB query, active indexes, and raw query output for demonstration and testing.</p>
+
+  <div class="figure-container">
+    <img src="report_assets/screen_inspector_modal.png" alt="Live MongoDB Query Inspector Modal" />
+    <div class="figure-caption">Figure 7.1: Live MongoDB Query Inspector Modal</div>
+  </div>
+
+  <h2>7.2 Test Cases & Results</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Test Case</th>
+        <th>Input / Action</th>
+        <th>Expected Result</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>TC-01: SOS Submission</td><td>Submit form with GPS coordinates</td><td>Incident added to map and database</td><td style="color:#0d9488; font-weight:700;">PASS</td></tr>
+      <tr><td>TC-02: Nearest Match</td><td>Click 'Match Unit' on open incident</td><td>Closest squad selected in &lt;50ms</td><td style="color:#0d9488; font-weight:700;">PASS</td></tr>
+      <tr><td>TC-03: Route Line</td><td>Match unit successfully</td><td>Dashed route line drawn on map</td><td style="color:#0d9488; font-weight:700;">PASS</td></tr>
+      <tr><td>TC-04: Resolve Incident</td><td>Click 'Resolve' button</td><td>Status updated to RESOLVED</td><td style="color:#0d9488; font-weight:700;">PASS</td></tr>
+      <tr><td>TC-05: Fallback Unit</td><td>Test incident in empty rural sector</td><td>Local emergency squad auto-provisioned</td><td style="color:#0d9488; font-weight:700;">PASS</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- PAGE 11: CHAPTER 8 -->
+  <h1>Chapter 8: How to Run the Project & API Endpoints</h1>
+  <p>GeoPulse is completely self-contained and easy to set up on any standard computer with Node.js and MongoDB installed.</p>
+
+  <h2>8.1 Step-by-Step Execution Guide</h2>
+  <p><b>Step 1: Start MongoDB Service</b><br/>Ensure MongoDB is running locally on port <code>27017</code>. In Windows command prompt, run: <code>net start MongoDB</code>.</p>
+  <p><b>Step 2: Start Node.js Backend Server</b><br/>Open terminal in the <code>geopulse-backend/</code> folder and run: <code>node server.js</code>. The server starts at <code>http://localhost:5000</code>.</p>
+  <p><b>Step 3: Open in Browser</b><br/>Open your web browser and navigate to <code>http://localhost:5000</code>. You can also double-click <code>start.bat</code> in the project folder to launch everything automatically.</p>
+
+  <h2>8.2 Backend REST API Endpoints</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th>Endpoint</th>
+        <th>Description</th>
+        <th>Database Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>GET</code></td><td><code>/api/incidents</code></td><td>Fetch all emergency incidents</td><td>Reads from incidents collection</td></tr>
+      <tr><td><code>POST</code></td><td><code>/api/incidents</code></td><td>Submit a new distress report</td><td>Inserts new GeoJSON document</td></tr>
+      <tr><td><code>GET</code></td><td><code>/api/responders</code></td><td>Fetch available rescue squads</td><td>Reads from responders collection</td></tr>
+      <tr><td><code>POST</code></td><td><code>/api/match</code></td><td>Find closest squad for an incident</td><td>Runs $geoNear aggregation</td></tr>
+      <tr><td><code>POST</code></td><td><code>/api/resolve</code></td><td>Mark an incident as resolved</td><td>Updates status & stamps resolvedAt</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- PAGE 12: CHAPTER 9 -->
+  <h1>Chapter 9: Conclusion, Future Scope & References</h1>
+  <h2>9.1 Conclusion</h2>
+  <p>The <b>GeoPulse</b> project successfully demonstrates a practical, working web application for real-time emergency dispatch coordination. By using Node.js, Express, and MongoDB geospatial features (<code>2dsphere</code> index and <code>$geoNear</code> pipeline), the application quickly matches citizens in distress with the nearest available emergency response team.</p>
+  <p>The system provides an intuitive map-based interface, automated distance calculation, route line rendering, and clean data management. It provides a simple, functional solution to the delays commonly encountered in traditional manual emergency dispatch systems.</p>
+
+  <h2>9.2 Future Scope</h2>
+  <ul>
+    <li><b>Dedicated Mobile Application:</b> Developing an Android / iOS app for citizens to send SOS alerts with one click directly from their smartphones.</li>
+    <li><b>SMS & Offline Support:</b> Adding SMS gateway integration so citizens without active mobile data can still report emergencies.</li>
+    <li><b>Turn-by-Turn GPS Navigation:</b> Integrating real-time driving directions and live GPS tracking for responder vehicles.</li>
+  </ul>
+
+  <h2>9.3 References</h2>
+  <ul>
+    <li>MongoDB Inc., <i>"Geospatial Queries and 2dsphere Indexing Guide,"</i> Official MongoDB Documentation, 2026.</li>
+    <li>Express.js Foundation, <i>"Express Web Framework Documentation,"</i> expressjs.com, 2026.</li>
+    <li>Leaflet.js, <i>"Leaflet - An Open-Source JavaScript Library for Mobile-Friendly Interactive Maps,"</i> leafletjs.com, 2026.</li>
+    <li>Node.js Foundation, <i>"Node.js Asynchronous Runtime Documentation,"</i> nodejs.org, 2026.</li>
+    <li>Internet Engineering Task Force (IETF), <i>"The GeoJSON Format Specification (RFC 7946),"</i> 2016.</li>
+  </ul>
+</div>
+
 </body>
 </html>
